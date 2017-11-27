@@ -5,10 +5,10 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.sql.expression import text
 from sqlalchemy.orm import Session
 
-from patton.config import engine_url
+from patton.config import DB_URL
 
 
-engine = sqlalchemy.create_engine(engine_url, client_encoding='utf8')
+engine = sqlalchemy.create_engine(DB_URL, client_encoding='utf8')
 
 
 Base = declarative_base()
