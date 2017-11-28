@@ -52,5 +52,3 @@ class Cpe23(Base):
             }
             for cpe23 in root.iter('{*}cpe23-item')
         ]
-
-

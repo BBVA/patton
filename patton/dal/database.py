@@ -2,7 +2,6 @@ from contextlib import contextmanager
 
 import sqlalchemy
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.sql.expression import text
 from sqlalchemy.orm import Session
 
 from patton.config import DB_URL
