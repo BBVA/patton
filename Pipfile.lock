@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "a26453ac6bc32a05396c65027e74afb529e59817efedc383e7e6578bc23e160e"
+            "sha256": "d87d3ffccc500094fcc74f37b841c72d8911d0284f5a2489277693561c4066cc"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -392,13 +392,6 @@
             ],
             "version": "==0.7.4"
         },
-        "pluggy": {
-            "hashes": [
-                "sha256:48096d7015b8d87a83fc064e8b5cc61ea2e235f1b86dd67889d8d53257f350c6",
-                "sha256:159cc783e056c07da6552aa5aef6b1e6c0064b4f18bd49c531fd2d40aafb0ea3"
-            ],
-            "version": "==0.3.1"
-        },
         "prompt-toolkit": {
             "hashes": [
                 "sha256:3f473ae040ddaa52b52f97f6b4a493cfa9f5920c255a12dc56a7d34397a398a4",
@@ -513,13 +506,6 @@
             ],
             "version": "==1.0.1"
         },
-        "tox": {
-            "hashes": [
-                "sha256:1823c93ca378092c10bbde428213d3f5066b30adb09e5c001087a83e3e0a402a",
-                "sha256:bf7fcc140863820700d3ccd65b33820ba747b61c5fe4e2b91bb8c64cb21a47ee"
-            ],
-            "version": "==2.3.1"
-        },
         "traitlets": {
             "hashes": [
                 "sha256:c6cb5e6f57c5a9bdaa40fa71ce7b4af30298fbab9ece9815b5d995ab6217c7d9",
@@ -533,13 +519,6 @@
                 "sha256:cc44da8e1145637334317feebd728bd869a35285b93cbb4cca2577da7e62db4f"
             ],
             "version": "==1.22"
-        },
-        "virtualenv": {
-            "hashes": [
-                "sha256:39d88b533b422825d644087a21e78c45cf5af0ef7a99a1fc9fbb7b481e5c85b0",
-                "sha256:02f8102c2436bb03b3ee6dede1919d1dac8a427541652e5ec95171ec8adbc93a"
-            ],
-            "version": "==15.1.0"
         },
         "wcwidth": {
             "hashes": [
