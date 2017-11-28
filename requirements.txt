@@ -1,5 +1,0 @@
-lxml==4.1.1
-sqlalchemy==1.2.0b3
-Flask==0.12.2
-SQLAlchemy-Utils==0.32.21
-pg8000==1.11.0
