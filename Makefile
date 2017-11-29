@@ -39,7 +39,7 @@ test: install-dev ## run tests quickly with the default Python
 	@pipenv run py.test
 
 pipenv: 
-	@pip show pipenv -q || (pip install pipenv && echo '-----')
+	@pip show pipenv -q || (pip install -U pipenv && echo '-----')
 
 .PHONY: install
 install: pipenv  ## install production packages
