@@ -2,6 +2,10 @@ language: python
 python:
     - "3.6"
 
+services:
+  - postgresql
+  - docker
+
 # command to install dependencies
 install: "make"
 
@@ -9,6 +13,9 @@ addons:
   apt:
     packages:
       - libenchant-dev
+
+before_script:
+   psql -c 'create database patton;' -U postgres
 
 # command to run tests
 script:
