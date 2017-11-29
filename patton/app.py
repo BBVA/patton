@@ -4,9 +4,10 @@ from sanic.exceptions import NotFound
 
 from .dal.database import session_ctx
 from .dal.models import VulnProduct
-from .config import HTTP_PORT
+from . import config
 
 app = Sanic(__name__)
+app.config.from_object(config)
 
 
 @app.route('/')
