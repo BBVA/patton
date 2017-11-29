@@ -1,13 +1,15 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 set -xeu
+
+source ${ENV:-.env}
 
 # INFO: set this to 1 to check the xml schema and analyze the db table structure
 download_schema=
 
 download_path=/tmp/patton/
 rm -rf $download_path
-
 mkdir -p $download_path
+
 download(){
 	file=$(basename $1)
 	wget -q $1 -O $download_path/$file && gunzip $download_path/$file || true
@@ -28,5 +30,3 @@ download_cve() {
 
 download_cpe
 download_cve
-python db.py --recreate
-time python loader.py

@@ -70,6 +70,11 @@ version:
 run: install ## execute web app
 	@pipenv run python main.py
 
+.PHONY: recreate
+recreate: install ## reinstalls the db
+	@./load_assets.sh
+	@pipenv run python main.py -r
+
 .PHONY: docs
 docs: install-dev ## generate and shows documentation
 	@make -C docs spelling html
