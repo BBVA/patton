@@ -24,7 +24,3 @@ async def package_search(request, name, version, *args, **kwargs):
 @app.exception(NotFound)
 async def ignore_404s(request, exception):
     return text("", status=404)
-
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=HTTP_PORT)

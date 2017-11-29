@@ -66,6 +66,10 @@ test-coverage: install-dev ## check code coverage
 version:
 	@echo 0.0.1 #version
 
+.PHONY: run
+run: install ## execute web app
+	@pipenv run python main.py
+
 .PHONY: docs
 docs: install-dev ## generate and shows documentation
 	@make -C docs spelling html
