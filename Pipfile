@@ -13,7 +13,6 @@ asyncpg = "*"
 SQLAlchemy = "==1.2.0b3"
 Flask = "==0.12.2"
 "pg8000" = "==1.11.0"
-patton = {path = ".", editable = true}
 
 
 [dev-packages]

@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from pip.download import PipSession
-from pip.req import parse_requirements
+from pipenv.utils import convert_deps_to_pip
+from pipenv.project import Project
+
 from setuptools import setup, find_packages
 from os import path
 
@@ -11,9 +12,9 @@ here = path.abspath(path.dirname(__file__))
 with open(path.join(here, 'README.md')) as f:
     readme = f.read()
 
-requirements = [str(ir.req) for ir in parse_requirements('requirements.txt', session=PipSession())]
-
-test_requirements = [str(ir.req) for ir in parse_requirements('requirements_test.txt', session=PipSession())]
+pfile = Project(chdir=False).parsed_pipfile
+requirements = convert_deps_to_pip(pfile['packages'], r=False)
+test_requirements = convert_deps_to_pip(pfile['dev-packages'], r=False)
 
 setup(
     name='patton',

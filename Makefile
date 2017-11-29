@@ -3,8 +3,10 @@
 
 
 # AutoEnv
-ENV ?= .env
-ENV_GEN := $(shell ./.env.gen ${ENV} .env.required)
+ifeq (${CI},) # This ensures the CI skips dotenv
+	ENV ?= .env
+	ENV_GEN := $(shell ./.env.gen ${ENV} .env.required)
+endif
 
 
 # AutoDoc
@@ -37,7 +39,7 @@ test: install-dev ## run tests quickly with the default Python
 	@pipenv run py.test
 
 pipenv: 
-	@which pipenv &>/dev/null || (pip install pipenv && echo '-----')
+	@pip show pipenv -q || (pip install pipenv && echo '-----')
 
 .PHONY: install
 install: pipenv  ## install production packages
@@ -55,21 +57,17 @@ license: install-dev ## check license incompatibilities
 	@pipenv run yolk -l -f License | grep 'GPL' -B 1
 
 .PHONY: test-coverage
-.ONESHELL:
 test-coverage: install-dev ## check code coverage
-	-@pipenv shell
-	@coverage run --source=patton -m pytest
-	@coverage report -m --fail-under 80
-	@coverage xml -o coverage-reports/report.xml
+	@pipenv run coverage run --source=patton -m pytest
+	@pipenv run coverage report -m --fail-under 80
+	@pipenv run coverage xml -o coverage-reports/report.xml
 
 .PHONY: version
 version:
 	@echo 0.0.1 #version
 
-.ONESHELL:
 .PHONY: docs
 docs: install-dev ## generate and shows documentation
-	-@pipenv shell
 	@make -C docs spelling html
 	# Replace files with .md extension with .html extension
 	@find ./docs/_build/ -name '*.html' -exec sed -i 's/\(\w*\)\.md\(W*\)/\1.html\2/g' {} \;
