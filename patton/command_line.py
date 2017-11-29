@@ -8,20 +8,9 @@ def argument_parser():
     )
 
     parser.add_argument(
-        '-s', '--separator', help='Configure separator for packer version tuples: default " "',
-        type=str,
-        default=' ',
-    )
-
-    parser.add_argument(
         '-r', '--recreate', help='Wipe current db and recreate the schema',
         action='store_true',
         default=False
-    )
-
-    parser.add_argument(
-        '-u', '--update', help='Update the DB',
-        action='store_true',
     )
 
     parser.add_argument(
@@ -48,6 +37,11 @@ def main():
             cpe_loader()
             cve_loader()
 
+        else:
+            from .app import app
 
-if __name__ == '__main__':
-    main()
+            app.run(
+                host=app.config.HTTP_HOST,
+                port=app.config.HTTP_PORT,
+                workers=app.config.HTTP_WORKERS,
+            )
