@@ -3,10 +3,8 @@
 
 
 # AutoEnv
-ifeq (${BUILD_NUMBER},) # This ensures the CI skips dotenv
-	ENV ?= .env
-	ENV_GEN := $(shell ./.env.gen ${ENV} .env.required)
-endif
+ENV ?= .env
+ENV_GEN := $(shell ./.env.gen ${ENV} .env.required)
 
 
 # AutoDoc
