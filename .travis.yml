@@ -19,9 +19,6 @@ addons:
     packages:
       - libenchant-dev
 
-before_script:
-   psql -c 'create database patton;' -U postgres
-
 # command to run tests
 script:
     - make lint test-coverage

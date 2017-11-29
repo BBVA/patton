@@ -11,8 +11,8 @@ lxml = "==4.1.1"
 Sanic = "==0.6.0"
 asyncpg = "*"
 SQLAlchemy = "==1.2.0b3"
-Flask = "==0.12.2"
-"pg8000" = "==1.11.0"
+"psycopg2" = "*"
+SQLAlchemy-Utils = "*"
 
 
 [dev-packages]

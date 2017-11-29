@@ -40,6 +40,9 @@ def main():
         print(args)
 
         if args.recreate:
+            from .dal.database import recreate
+            recreate()
+
             # INFO: this needs to be after recreating the DB in order to avoid circular import errors
             from .dal.loader import cpe_loader, cve_loader
             cpe_loader()
