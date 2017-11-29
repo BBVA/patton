@@ -1,0 +1,17 @@
+language: python
+python:
+    - "3.6"
+
+# command to install dependencies
+install: "make"
+
+# command to run tests
+script:
+    - make lint test-coverage
+
+deploy:
+    # release image to DockerHub
+  - provider: script
+    script: release/image_dockerhub.sh
+    on:
+      branch: master
