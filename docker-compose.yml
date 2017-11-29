@@ -1,0 +1,19 @@
+---
+version: "3"
+
+services:
+
+  postgres:
+    image: postgres:latest
+    env_file: ${ENV:-.env}
+    restart: "always"
+    ports:
+      - "5432:5432"
+    environment:
+        POSTGRES_PASSWORD: postgres
+
+  redis:
+    image: redis:4.0
+    env_file: ${ENV:-.env}
+    ports:
+      - "6379:6379"
