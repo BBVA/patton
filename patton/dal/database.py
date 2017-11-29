@@ -15,10 +15,9 @@ Base = declarative_base()
 
 
 @contextmanager
-def session_ctx(*args, **kwargs):
-    session = Session(*args, bind=engine, **kwargs)
+def session_ctx():
+    session = Session(bind=engine)
     try:
-        session.begin(subtransactions=True)
         yield session
         session.commit()
     except Exception as e:
