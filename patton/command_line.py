@@ -41,7 +41,7 @@ def main():
 
         if args.recreate:
             # INFO: this needs to be after recreating the DB in order to avoid circular import errors
-            from patton.dal.loader import cpe_loader, cve_loader
+            from .dal.loader import cpe_loader, cve_loader
             cpe_loader()
             cve_loader()
 

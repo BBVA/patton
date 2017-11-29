@@ -1,7 +1,7 @@
 from sqlalchemy.sql.expression import insert
 from lxml import etree
 
-from patton.config import download_folder
+from ..config import download_folder
 from . import models
 from .database import session_ctx
 

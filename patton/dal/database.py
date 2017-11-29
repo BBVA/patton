@@ -4,7 +4,7 @@ import sqlalchemy
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Session
 
-from patton.config import DB_URL
+from ..config import DB_URL
 
 
 engine = sqlalchemy.create_engine(DB_URL, client_encoding='utf8')

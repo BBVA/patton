@@ -2,9 +2,9 @@ from sanic import Sanic
 from sanic.response import text, json
 from sanic.exceptions import NotFound
 
-from patton.dal.database import session_ctx
-from patton.dal.models import VulnProduct
-from patton.config import HTTP_PORT
+from .dal.database import session_ctx
+from .dal.models import VulnProduct
+from .config import HTTP_PORT
 
 app = Sanic(__name__)
 
