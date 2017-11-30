@@ -72,7 +72,7 @@ run: install ## execute web app
 
 .PHONY: recreate
 recreate: install ## reinstalls the db
-	@./load_assets.sh
+	@pipenv run ./load_assets.sh
 	@pipenv run python main.py -r
 
 .PHONY: docs

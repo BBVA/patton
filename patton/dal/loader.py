@@ -1,14 +1,14 @@
 from sqlalchemy.sql.expression import insert
 from lxml import etree
 
-from ..config import download_folder
+from ..config import DOWNLOAD_FOLDER
 from . import models
 from .database import session_ctx
 
 
 def cpe_loader():
     with session_ctx() as session, \
-         open(f'{download_folder}/official-cpe-dictionary_v2.3.xml', 'r') as markup:
+         open(f'{DOWNLOAD_FOLDER}/official-cpe-dictionary_v2.3.xml', 'r') as markup:
 
         root = etree.parse(markup)
 
@@ -33,7 +33,7 @@ def cpe_loader():
 def cve_loader():
     with session_ctx() as session:
         for year in range(2002, 2018):
-            with open(f'{download_folder}/nvdcve-2.0-{year}.xml', 'r') as markup:
+            with open(f'{DOWNLOAD_FOLDER}/nvdcve-2.0-{year}.xml', 'r') as markup:
 
                 print(f'loading year: {year}')
                 root = etree.parse(markup)

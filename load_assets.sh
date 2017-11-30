@@ -6,7 +6,7 @@ source ${ENV:-.env}
 # INFO: set this to 1 to check the xml schema and analyze the db table structure
 download_schema=
 
-download_path=/tmp/patton/
+download_path=${PATTON_DOWNLOAD_FOLDER}
 rm -rf $download_path
 mkdir -p $download_path
 

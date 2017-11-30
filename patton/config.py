@@ -11,4 +11,4 @@ DB_PASS = os.getenv('POSTGRES_PASSWORD', 'postgres')
 
 DB_URL = os.getenv('PATTON_DB_URL', f'postgres+psycopg2://postgres:{DB_PASS}@localhost:5432/patton')
 
-download_folder = '/tmp/patton'
+DOWNLOAD_FOLDER = os.getenv('PATTON_DOWNLOAD_FOLDER', '/tmp/patton')
