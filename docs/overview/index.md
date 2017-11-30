@@ -1,4 +1,4 @@
-# patton
+# Patton
 Pattern extraction for vulnerabilities
 
 
