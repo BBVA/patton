@@ -145,3 +145,4 @@ ENV/
 
 NOTES*
 nohup.out
+.DS_Store
