@@ -8,11 +8,11 @@ name = "pypi"
 [packages]
 
 lxml = "==4.1.1"
-Sanic = "==0.6.0"
+sanic = "==0.6.0"
 asyncpg = "*"
-SQLAlchemy = "==1.2.0b3"
+sqlalchemy = "==1.2.0b3"
 "psycopg2" = "*"
-SQLAlchemy-Utils = "*"
+sqlalchemy-utils = "*"
 
 
 [dev-packages]
@@ -20,10 +20,10 @@ SQLAlchemy-Utils = "*"
 pytest = "==2.9.2"
 coverage = "==4.4.1"
 bumpversion = "==0.5.3"
-Sphinx = "==1.6.3"
+sphinx = "==1.6.3"
 sphinxcontrib-spelling = "==2.3.0"
 recommonmark = "==0.4.0"
-ipdb = "==0.10.3"
+ipdb = "*"
 "yolk3k" = "*"
 
 
