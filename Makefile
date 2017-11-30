@@ -77,7 +77,7 @@ recreate: install ## reinstalls the db
 
 .PHONY: docs
 docs: install-dev ## generate and shows documentation
-	@make -C docs spelling html
+	@pipenv run make -C docs spelling html
 	# Replace files with .md extension with .html extension
-	@find ./docs/_build/ -name '*.html' -exec sed -i 's/\(\w*\)\.md\(W*\)/\1.html\2/g' {} \;
+	-@find ./docs/_build/ -name '*.html' -exec sed -i 's/\(\w*\)\.md\(W*\)/\1.html\2/g' {} \;
 	@python -m webbrowser -t docs/_build/html/index.html

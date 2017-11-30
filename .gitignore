@@ -103,6 +103,8 @@ instance/
 
 # Sphinx documentation
 docs/_build/
+docs/*.rst
+!docs/index.rst
 
 # PyBuilder
 target/
