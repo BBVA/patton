@@ -1,5 +1,6 @@
 # Patton
 Pattern extraction for vulnerabilities
+![travis ci](https://api.travis-ci.org/BBVA/patton.svg?branch=master)
 
 
 ---
