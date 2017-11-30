@@ -44,4 +44,5 @@ def main():
                 host=app.config.HTTP_HOST,
                 port=app.config.HTTP_PORT,
                 workers=app.config.HTTP_WORKERS,
+                debug=app.config.DEBUG,
             )
