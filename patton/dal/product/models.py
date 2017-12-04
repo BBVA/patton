@@ -25,6 +25,15 @@ class Prod(Base):
             for cpe in root.iter('{*}cpe-item')
         ]
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'title_lang': self.title_lang,
+            'references': self.references,
+            'cpe23': self.cpe23,
+        }
+
 
 class ProdReference(Base):
     __tablename__ = 'prod_reference'
@@ -44,6 +53,12 @@ class ProdReference(Base):
             for ref in root.iter('{*}reference')
         ]
 
+    def to_dict(self):
+        return {
+            'href': self.href,
+            'description': self.description,
+        }
+
 
 class Cpe23(Base):
     __tablename__ = 'cpe23'
@@ -58,3 +73,8 @@ class Cpe23(Base):
             }
             for cpe23 in root.iter('{*}cpe23-item')
         ]
+
+    def to_dict(self) -> dict:
+        return {
+            'id': self.id
+        }
