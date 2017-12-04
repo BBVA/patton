@@ -2,9 +2,8 @@ from sanic import Sanic
 from sanic.response import text, json
 from sanic.exceptions import NotFound
 
-from .dal.database import session_ctx
-from .dal.models import VulnProduct
 from . import config
+from . import __version__
 
 app = Sanic(__name__)
 app.config.from_object(config)
@@ -12,7 +11,7 @@ app.config.from_object(config)
 
 @app.route('/')
 async def hello_world(*args, **kwargs):
-    return text('Hello, World!')
+    return text(f'Welcome to patton! {__version__}')
 
 
 @app.route('/pkg/<name>/<version>')
