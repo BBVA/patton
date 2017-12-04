@@ -22,6 +22,9 @@ export PRINT_HELP_PYSCRIPT
 help:
 	@python -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
 
+require-%:
+	$(if $(shell command -v $* 2> /dev/null), , $(error Please install `$*` ***))
+
 clean: ## remove all build, test, coverage and Python artifacts
 	rm -rf build dist .eggs .cache .tox .coverage htmlcov coverage-reports
 	find . -name '*.egg-info' -exec rm -fr {} +
@@ -67,8 +70,12 @@ version:
 	@echo 0.0.1 #version
 
 .PHONY: run
-run: install ## execute web app
+run: require-pipenv ## Run locally a web instance
 	@pipenv run python main.py
+
+.PHONY: watch
+watch: require-ag require-entr ## Reload on code changes
+	@ag -l -G py | entr -r make run
 
 .PHONY: recreate
 recreate: install ## reinstalls the db
