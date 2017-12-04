@@ -1,4 +1,6 @@
 from sqlalchemy import Column, String, ForeignKey
+from sqlalchemy.orm import relationship
+
 from ..database import Base
 from . import fields
 
@@ -8,6 +10,10 @@ class Prod(Base):
     cpe22 = Column(String, primary_key=True)
     title = Column(String)
     title_lang = Column(String)
+
+    references = relationship('ProdReference', backref='prod_reference')
+    cpe23 = relationship('Cpe23', backref='cpe23')
+    vulns = relationship('VulnProduct', back_populates='prod')
 
     def loader_map(root):
         return [
