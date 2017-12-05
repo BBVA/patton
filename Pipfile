@@ -25,6 +25,8 @@ sphinxcontrib-spelling = "==2.3.0"
 recommonmark = "==0.4.0"
 ipdb = "*"
 "yolk3k" = "*"
+"flake8" = "*"
+"flake8-mypy" = "*"
 
 
 [requires]
