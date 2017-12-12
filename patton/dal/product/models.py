@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
 
-from ..database import Base
+from patton.dal.database import Base
 from . import fields
 
 
