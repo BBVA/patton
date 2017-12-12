@@ -18,7 +18,7 @@ class Prod(Base):
     def loader_map(root):
         return [
             {
-                'id': cpe.attrib['name'],
+                'id': fields.cpe_norm('prod', cpe.attrib['name']),
                 'title': cpe.find('{*}title').text,
                 'title_lang': cpe.find('{*}title').attrib['{http://www.w3.org/XML/1998/namespace}lang']
             }
@@ -46,7 +46,7 @@ class ProdReference(Base):
         return [
             {
                 'id': fields.uuid(),
-                'cpe': ref.getparent().getparent().attrib['name'],
+                'prod_id': fields.cpe_norm('prod_reference', ref.getparent().getparent().attrib['name']),
                 'href': ref.attrib['href'],
                 'description': ref.text
             }
@@ -68,8 +68,8 @@ class Cpe23(Base):
     def loader_map(root):
         return [
             {
-                'id': cpe23.attrib['name'],
-                'prod': cpe23.getparent().attrib['name'],
+                'id': fields.cpe_norm('cpe23', cpe23.attrib['name']),
+                'prod': fields.cpe_norm('cpe23', cpe23.getparent().attrib['name']),
             }
             for cpe23 in root.iter('{*}cpe23-item')
         ]
