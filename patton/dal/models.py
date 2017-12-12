@@ -25,7 +25,7 @@ class VulnProduct(Base):
             {
                 'id': fields.uuid(),
                 'vuln_id': prod.getparent().getparent().attrib['id'],
-                'prod_id': prod.text,
+                'prod_id': fields.cpe_norm('vuln_product', prod.text),
             }
             for prod in root.iter('{*}product')
         ]
