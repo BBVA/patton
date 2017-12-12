@@ -27,9 +27,13 @@ def _rfill(arr: List, padding: int, value: Any):
     arr.extend([value] * (padding - len(arr)))
 
 
+def _safe_split(string: str) -> list:
+    return string.replace('\:', '%3A').split(':')
+
+
 def _cpe22_to_wfn(value: str) -> List[Any]:
     """ Digest cpe22 to well formed names """
-    vals = value.split(':')
+    vals = _safe_split(value)
     _rfill(vals, 7, fill)
 
     # INFO: clean format `cpe:/{part}:{rest ...}` to a useful content
@@ -56,8 +60,7 @@ def _cpe22_to_wfn(value: str) -> List[Any]:
 
 def _cpe23_to_wfn(value: str) -> List[Any]:
     """ Digest cpe23 to well formed names """
-    vals = value.split(':')
-    print(vals)
+    vals = _safe_split(value)
     _rfill(vals, 13, wild)
 
     return vals[2:]
