@@ -73,6 +73,12 @@ version:
 run: require-pipenv ## Run locally a web instance
 	@pipenv run python main.py
 
+
+.PHONY: repl
+repl: require-pipenv ## Run locally a web instance
+	@pipenv run ipython
+
+
 .PHONY: watch
 watch: require-ag require-entr ## Reload on code changes
 	@ag -l -G py | entr -r make run

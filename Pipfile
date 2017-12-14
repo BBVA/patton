@@ -28,6 +28,7 @@ ipdb = "*"
 "flake8" = "*"
 "flake8-mypy" = "*"
 pdbpp = "*"
+ipython = "*"
 
 
 [requires]
