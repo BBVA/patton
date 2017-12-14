@@ -12,5 +12,6 @@ RUN pipenv install --system --deploy
 
 COPY patton patton
 COPY main.py .
+COPY load_assets.sh .
 
 CMD ["python", "main.py"]
