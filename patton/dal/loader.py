@@ -1,4 +1,4 @@
-from sqlalchemy.sql.expression import insert
+from sqlalchemy.dialects.postgresql import insert
 from lxml import etree
 
 from ..config import DOWNLOAD_FOLDER
@@ -51,6 +51,12 @@ def cve_loader():
                 session.execute(
                     insert(models.VulnScore),
                     models.VulnScore.loader_map(root)
+                )
+
+                session.execute(
+                    insert(models.Prod).values(
+                        models.VulnProduct.preload_fk_map(root)
+                    ).on_conflict_do_nothing()
                 )
 
                 session.execute(
