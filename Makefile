@@ -65,6 +65,11 @@ test-coverage: install-dev ## check code coverage
 	@pipenv run coverage report -m # --fail-under 80
 	@pipenv run coverage xml -o coverage-reports/report.xml
 
+
+.PHONY: codecov
+codecov: ## push to codecov the coverage
+	@pipenv run codecov
+
 .PHONY: version
 version:
 	@echo 0.0.1 #version
