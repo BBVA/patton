@@ -5,6 +5,7 @@ from .database import Base, engine
 
 from .common import fields
 from .product.models import Prod, ProdReference, Cpe23  # noqa
+from .common.fields import __CpeNorm__  # noqa
 from .vulnerability.models import Vuln, VulnReference, VulnScore # noqa
 
 
