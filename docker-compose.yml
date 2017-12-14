@@ -9,6 +9,13 @@ services:
     depends_on:
      - redis
      - postgres
+    ports:
+      - "${PATTON_HTTP_PORT}:80"
+    environment:
+      - "PATTON_DB_URL=postgres+psycopg2://postgres:postgres@postgres:5432/patton"
+      - PATTON_HTTP_PORT=80
+      - PATTON_DOWNLOAD_FOLDER=/tmp/patton
+      - PATTON_HTTP_DEBUG=True
 
   postgres:
     image: postgres:latest
