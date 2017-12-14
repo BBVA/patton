@@ -4,7 +4,7 @@ version: "3"
 services:
 
   patton:
-    image: ${BUILD_IMAGE}
+    build: .
     env_file: ${ENV:-.env}
     depends_on:
      - redis

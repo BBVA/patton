@@ -76,12 +76,12 @@ run: require-pipenv ## Run locally a web instance
 
 .PHONY: compose
 compose: ## run locally your application
-	@BUILD_IMAGE=$(shell docker build . -q) docker-compose up -d
+	@docker-compose up -d --build
 
 
 .PHONY: compose-init
 compose-init: ## populate db
-	@BUILD_IMAGE=$(shell docker build . -q) docker-compose run patton \
+	@docker-compose run patton \
 		bash -c "bash ./load_assets.sh ; python main.py -r"
 
 
