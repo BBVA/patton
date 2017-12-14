@@ -21,6 +21,16 @@ class VulnProduct(Base):
     vuln = relationship('Vuln', back_populates='prods')
     prod = relationship('Prod', back_populates='vulns')
 
+    def preload_fk_map(root):
+        return [
+            {
+                'id': fields.cpe_norm('vuln_product', prod.text),
+                'title': None,
+                'title_lang': None,
+            }
+            for prod in root.iter('{*}product')
+        ]
+
     def loader_map(root):
         return [
             {
