@@ -13,4 +13,4 @@ RUN pipenv install --system --deploy
 COPY patton patton
 COPY main.py .
 
-CMD ["pipenv", "run", "python", "main.py"]
+CMD ["python", "main.py"]
