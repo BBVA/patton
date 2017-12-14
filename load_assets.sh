@@ -1,7 +1,8 @@
 #!/usr/bin/env sh
-set -xeu
 
 source ${ENV:-.env}
+
+set -xeu
 
 download_path=${PATTON_DOWNLOAD_FOLDER}
 rm -rf $download_path
