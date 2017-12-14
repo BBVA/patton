@@ -16,7 +16,7 @@ def is_empty(part: str) -> bool:
 
 def is_meaningful(arr: list) -> bool:
     if len(arr) > 1:
-        for item in arr:
+        for item in arr[1:]:
             if not is_empty(item):
                 return True
     return False
@@ -99,10 +99,9 @@ def _wfn_to_cpe22(
     if is_meaningful([edition, language, sw_edition, target_sw, target_hw, other]):
         optionals = f':{edition}~{language}~{sw_edition}~{target_sw}~{target_hw}~{other}'  # noqa
     else:
-        optionals = ''
+        optionals = f':{edition}'
 
-    return f'cpe:/{part}:{vendor}:{product}:{version}:{update}{optionals}'.replace(':~~~~~~', '').\
-        rstrip('::').rstrip(':*')
+    return f'cpe:/{part}:{vendor}:{product}:{version}:{update}{optionals}'.rstrip(':*')
 
 
 class __CpeNorm__(Base):
