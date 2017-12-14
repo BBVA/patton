@@ -29,6 +29,7 @@ ipdb = "*"
 "flake8-mypy" = "*"
 pdbpp = "*"
 ipython = "*"
+codecov = "*"
 
 
 [requires]
