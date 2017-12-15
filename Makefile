@@ -72,7 +72,7 @@ codecov: ## push to codecov the coverage
 
 .PHONY: version
 version:
-	@echo 0.0.1 #version
+	@echo 0.0.2 #version
 
 bump-%:
 	@pipenv run bumpversion $*
