@@ -5,7 +5,7 @@
 [![PyVersions](https://img.shields.io/pypi/pyversions/patton.svg)](https://pypi.org/project/patton)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-# Patton 0.0.2
+# Patton 0.0.3
 Package Vulnerabilities Extractor
 
 
