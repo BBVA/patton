@@ -74,11 +74,10 @@ codecov: ## push to codecov the coverage
 version:
 	@echo 0.0.1 #version
 
-bump-*:
+bump-%:
 	@pipenv run bumpversion $*
-
-
-
+	@git push
+	@git push --tags
 
 
 .PHONY: run
