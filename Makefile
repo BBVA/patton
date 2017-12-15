@@ -74,6 +74,13 @@ codecov: ## push to codecov the coverage
 version:
 	@echo 0.0.1 #version
 
+bump-*:
+	@pipenv run bumpversion $*
+
+
+
+
+
 .PHONY: run
 run: require-pipenv ## Run locally a web instance
 	@pipenv run python main.py
