@@ -25,14 +25,6 @@ class Prod(Base):
             for cpe in root.iter('{*}cpe-item')
         ]
 
-    def to_dict(self):
-        return {
-            'id': self.id,
-            'title': self.title,
-            'title_lang': self.title_lang,
-            'references': self.references,
-            'cpe23': self.cpe23,
-        }
 
 
 class ProdReference(Base):

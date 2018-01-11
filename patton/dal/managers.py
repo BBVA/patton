@@ -9,20 +9,12 @@ search_statement = text(
     """
     select  prod.id,
             vuln.id,
-            vuln.published,
-            vr.reference_type,
-            vr.href,
-            vr.href_description,
-            vs.score,
-            vs.access_vector,
-            vs.source
+            vuln.score
 
         from public.prod as prod
 
         join public.vuln_product as vp on prod.id = vp.prod_id
         join public.vuln as vuln on vuln.id = vp.vuln_id
-        join public.vuln_reference as vr on vr.vuln_id = vuln.id
-        join public.vuln_score as vs on vs.vuln_id = vuln.id
 
         where prod.id @@ to_tsquery(:query);
     """)
