@@ -1,20 +1,6 @@
 Patton - The vulnerability knowledge store
 ==========================================
 
-
-.. image:: https://travis-ci.org/BBVA/patton.svg?branch=master)](https://travis-ci.org/BBVA/patton
-
-.. image:: https://codecov.io/gh/BBVA/patton/branch/master/graph/badge.svg)](https://codecov.io/gh/BBVA/patton
-
-.. image:: https://readthedocs.org/projects/patton/badge/?version=latest)](http://patton.readthedocs.io/?badge=latest
-
-.. image:: https://img.shields.io/pypi/v/patton.svg)](https://pypi.org/project/patton
-
-.. image:: https://img.shields.io/pypi/pyversions/patton.svg)](https://pypi.org/project/patton
-
-.. image:: https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0
-
-
 +----------------+-----------------------------------------------+
 |Current version | 0.0.3                                         |
 +----------------+-----------------------------------------------+

@@ -24,7 +24,7 @@ setup(
     author='BBVA Labs',
     description='Vulnerability Matching',
     entry_points={'console_scripts': [
-        'patton-server = patton.command_line:main',
+        'patton-server = patton_server.command_line:main',
     ]},
     classifiers=[
         'Environment :: Console',
