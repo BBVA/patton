@@ -12,13 +12,24 @@ services:
   - docker
 
 # command to install dependencies
-install: "make"
+#install: "make"
 
-addons:
-  apt:
-    packages:
-      - libenchant-dev
+#addons:
+#  apt:
+#    packages:
+#      - libenchant-dev
 
 # command to run tests
-script:
-    - make lint test-coverage codecov
+#script:
+#    - make lint test-coverage codecov
+
+deploy:
+
+  # Deploy to PyPI
+  - provider: pypi
+    user: $PYPI_USER
+    password: $PYPI_PASSWD
+    distributions: "sdist"
+    skip_cleanup: true
+    on:
+      branch: tag
