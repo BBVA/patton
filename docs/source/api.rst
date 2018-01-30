@@ -3,7 +3,7 @@ API
 
 
 Getting CVEs from library names
--------------------------------
++++++++++++++++++++++++++++++++
 
 .. http:post:: /api/v1/check-dependencies/?(int:cpeDetailed)
 

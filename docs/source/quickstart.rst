@@ -4,7 +4,7 @@ Quick start
 This document is a quick introduction for use Patton Service
 
 First of run Patton Server
-==========================
+++++++++++++++++++++++++++
 
 1 - Install Patton Server
 -------------------------
@@ -38,7 +38,7 @@ Third step we need to populate database:
 
 
 Running Patton Server
-=====================
++++++++++++++++++++++
 
 After install and populate Patton database, we can start Patton server:
 
@@ -48,7 +48,7 @@ After install and populate Patton database, we can start Patton server:
 
 
 Updating Patton database
-========================
+++++++++++++++++++++++++
 
 Patton borrow the vulnerability information from NIST, updating their database with new information form them.
 

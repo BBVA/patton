@@ -2,4 +2,4 @@
 
 sphinx
 sphinxcontrib.spelling
-sphinxcontrib-httpexample
+sphinxcontrib.httpdomain
