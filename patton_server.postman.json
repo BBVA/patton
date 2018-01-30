@@ -1,0 +1,170 @@
+{
+	"info": {
+		"name": "Patton",
+		"_postman_id": "bcfbb01b-13ba-1255-26ac-60022e29f8f6",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "from lib (v1)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{HOST}}:{{PORT}}/django/1.2",
+					"protocol": "http",
+					"host": [
+						"{{HOST}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"django",
+						"1.2"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "From many libs (v1)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n\t[\"django\", \"1.1\"],\n\t[\"windows\", \"95\"],\n\t[\"request\", \"2.18.4\"],\n\t[\"request\", \"2.1\"],\n\t[\"postgres\", \"8\"]\n]"
+				},
+				"url": {
+					"raw": "http://{{HOST}}:{{PORT}}/batch/",
+					"protocol": "http",
+					"host": [
+						"{{HOST}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"batch",
+						""
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "From libraries  (v2)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"method\": \"auto\",\n    \"libraries\" : [\n        {\n            \"library\": \"django\",\n            \"version\": \"1.2\"\n        },\n        {\n            \"library\": \"windows\",\n            \"version\": \"95\"\n        },\n        {\n            \"library\": \"postgres\",\n            \"version\": \"8\"\n        }\n    ]\n}"
+				},
+				"url": {
+					"raw": "http://{{HOST}}:{{PORT}}/api/v1/check-dependencies",
+					"protocol": "http",
+					"host": [
+						"{{HOST}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"check-dependencies"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "From libraries Detailed CPEs  (v2)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"method\": \"auto\",\n    \"libraries\" : [\n        {\n            \"library\": \"django\",\n            \"version\": \"1.2\"\n        },\n        {\n            \"library\": \"windows\",\n            \"version\": \"95\"\n        },\n        {\n            \"library\": \"postgres\",\n            \"version\": \"8\"\n        }\n    ]\n}"
+				},
+				"url": {
+					"raw": "http://{{HOST}}:{{PORT}}/api/v1/check-dependencies?cpeDetailed=1",
+					"protocol": "http",
+					"host": [
+						"{{HOST}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"check-dependencies"
+					],
+					"query": [
+						{
+							"key": "cpeDetailed",
+							"value": "1",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "From Banners  (v2) ",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"method\": \"auto\",\n    \"libraries\" : [\n        {\n            \"library\": \"django\",\n            \"version\": \"1.2\"\n        },\n        {\n            \"library\": \"windows\",\n            \"version\": \"95\"\n        },\n        {\n            \"library\": \"postgres\",\n            \"version\": \"8\"\n        }\n    ]\n}"
+				},
+				"url": {
+					"raw": "http://{{HOST}}:{{PORT}}/api/v1/check-dependencies",
+					"protocol": "http",
+					"host": [
+						"{{HOST}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"check-dependencies"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
