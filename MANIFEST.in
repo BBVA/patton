@@ -1,5 +1,5 @@
 include requirements.txt VERSION README.rst
-recursive-include patton/dal/ *sql
+recursive-include patton_server/dal/ *sql
 
 recursive-exclude * __pycache__
 recursive-exclude * *.pyc
