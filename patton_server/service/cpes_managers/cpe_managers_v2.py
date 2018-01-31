@@ -1,6 +1,8 @@
 from typing import List, Dict
 from collections import defaultdict
 
+from ..input_sources import build_full_text
+
 
 async def _do_query(db_pool, query: str) -> Dict[str, List]:
     results = dict()
@@ -48,12 +50,14 @@ async def _do_query_detailed(db_pool, query: str) -> Dict[str, List]:
                     map_cpe_cves[row[2]].append({
                             "cve": row[1],
                             "score": row[3],
+                            "summary": row[4],
                     })
                     results[row[0]]["cpes_temp"].append(row[2])
                     results[row[0]]["cves"].append(
                         {
                             "cve": row[1],
                             "score": row[3],
+                            "summary": row[4]
                         }
                     )
                 except KeyError:
@@ -66,6 +70,7 @@ async def _do_query_detailed(db_pool, query: str) -> Dict[str, List]:
                         {
                             "cve": row[1],
                             "score": row[3],
+                            "summary": row[4]
                         }
                     )
     # Add mapping
@@ -94,6 +99,7 @@ def _build_cpe_query(packages_versions: Dict) -> str:
     query = []
 
     search_method = packages_versions.get("method", "auto")
+    version_source = packages_versions.get("source", "auto")
 
     for i, lib in enumerate(packages_versions.get("libraries", [])):
 
@@ -105,10 +111,14 @@ def _build_cpe_query(packages_versions: Dict) -> str:
 
         lib_and_package = f"{library.lower()}:{version.lower()}"
 
-        full_text_query = f"({library.lower()}:* & {version.lower()}:*)"
+        # full_text_query = f"({library.lower()}:* & {version.lower()}:*)"
+        full_text_query = build_full_text(version_source,
+                                          library,
+                                          version)
 
         q_select = f"(Select '{lib_and_package}' as t{i}, v.cve as cpe_{i}, " \
-                   f"v.cpe as cpe_{i}, v.cvss as cvss_{i} from " \
+                   f"v.cpe as cpe_{i}, v.cvss as cvss_{i}, " \
+                   f"v.summary as summary_{i} from " \
                    f"prodvuln_view " \
                    f"as v where to_tsvector('english', v.cpe) @@ to_tsquery(" \
                    f"'{full_text_query}') order by v.cvss desc limit 10) "
@@ -128,40 +138,3 @@ async def query_cpe(db_pool,
     else:
         return await _do_query(db_pool, query)
 
-
-# --------------------------------------------------------------------------
-# Banner Calls
-# --------------------------------------------------------------------------
-def _build_banner_query(packages_versions: List[List[str]]) -> str:
-    query = []
-
-    search_method = packages_versions.get("method", "auto")
-
-    for i, lib in enumerate(packages_versions.get("libraries", [])):
-
-        library = lib.get("library", None)
-        version = lib.get("version", None)
-
-        if not library or not version:
-            continue
-
-        lib_and_package = f"{library.lower()}:{version.lower()}"
-
-        full_text_query = f"({library.lower()}:* & {version.lower()}:*)"
-
-        q_select = f"(Select '{lib_and_package}' as t{i}, v.cve as cpe_{i}, " \
-                   f"v.cpe as cpe_{i}, v.cvss as cvss_{i} from " \
-                   f"prodvuln_view " \
-                   f"as v where to_tsvector('english', v.cpe) @@ to_tsquery(" \
-                   f"'{full_text_query}') order by v.cvss desc limit 10) "
-
-        query.append(q_select)
-
-    return " UNION ALL".join(query)
-
-
-async def query_banners(db_pool, banners: List[str]) \
-        -> Dict[str, List]:
-    query = _build_cpe_query(banners)
-
-    return await _do_query(db_pool, query)

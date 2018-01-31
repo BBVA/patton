@@ -3,11 +3,9 @@ import os.path as op
 
 from sqlalchemy.ext.declarative import declarative_base
 
-from ..config import DB_URL
-
-engine = sqlalchemy.create_engine(DB_URL,
-                                  client_encoding='utf8',
-                                  use_batch_mode=True)
+# engine = sqlalchemy.create_engine(DB_URL,
+#                                   client_encoding='utf8',
+#                                   use_batch_mode=True)
 
 
 async def create(db_pool):

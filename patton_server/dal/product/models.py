@@ -22,7 +22,8 @@ class Prod(Base):
             (
                 fields.cpe_norm('prod', cpe.attrib['name']),
                 cpe.find('{*}title').text,
-                cpe.find('{*}title').attrib['{http://www.w3.org/XML/1998/namespace}lang']
+                cpe.find('{*}title').attrib[
+                    '{http://www.w3.org/XML/1998/namespace}lang']
             )
             for cpe in root.iter('{*}cpe-item')
         )

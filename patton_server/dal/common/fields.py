@@ -4,7 +4,8 @@ from typing import List, Any
 from sqlalchemy.sql.expression import insert
 from sqlalchemy import Column, String
 
-from patton_server.dal.database import engine, Base
+# from patton_server.dal.database import engine, Base
+from patton_server.dal.database import Base
 
 wild = '*'
 fill = ''
@@ -131,15 +132,19 @@ class cpe(object):
         return _wfn_to_cpe23(*_cpe23_to_wfn(cpe))
 
 
-def _store_transform(transformation: str, origin: str, input: str, output: str) -> str:
+def _store_transform(transformation: str,
+                     origin: str,
+                     input: str,
+                     output: str) -> str:
     if input != output:
-        engine.execute(insert(__CpeNorm__), {
-            'id': uuid(),
-            'transformation': transformation,
-            'origin': origin,
-            'input': input,
-            'output': output
-        })
+        # engine.execute(insert(__CpeNorm__), {
+        #     'id': uuid(),
+        #     'transformation': transformation,
+        #     'origin': origin,
+        #     'input': input,
+        #     'output': output
+        # })
+        pass
     return output
 
 
@@ -172,7 +177,8 @@ def cpe23_to_cpe22(origin: str, value: str) -> str:
 
 
 def cpe_norm(origin: str, value: str) -> str:
-    return normalize_cpe23(origin, value) if value.startswith('cpe:2.3') else normalize_cpe22(origin, value)
+    return normalize_cpe23(origin, value) \
+        if value.startswith('cpe:2.3') else normalize_cpe22(origin, value)
 
 
 def uuid() -> str:

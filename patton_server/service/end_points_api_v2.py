@@ -1,7 +1,8 @@
 from sanic import Blueprint
 from sanic.response import json
 
-from .managers_v2 import query_cpe, query_banners
+from .cpes_managers.cpe_managers_v2 import query_cpe
+from .banners_managers.banners_managers_v2 import query_banners
 
 end_points_api_v2 = Blueprint("end_points_api_v2")
 

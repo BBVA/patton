@@ -1,7 +1,8 @@
 from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
 
-from .database import Base, engine
+from .database import Base
+# from .database import Base, engine
 
 from .common import fields
 from .product.models import Prod, ProdReference, Cpe23  # noqa
@@ -49,4 +50,4 @@ class VulnProduct(Base):
 
 
 # Everything else...
-Base.metadata.reflect(bind=engine)
+# Base.metadata.reflect(bind=engine)

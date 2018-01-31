@@ -2,6 +2,8 @@ import logging
 import argparse
 import os.path as op
 
+logging.basicConfig(format='[%(levelname)-s] %(message)s',
+                    level=logging.INFO)
 log = logging.getLogger("patton-server")
 
 
@@ -15,6 +17,12 @@ def argument_parser():
         dest="LOG_LEVEL",
         help='log level',
         default=3
+    )
+    parser.add_argument(
+        '-C', '--connection-string',
+        dest="PATTON_DB_URL",
+        help='connection string to the database',
+        default="postgres://postgres:postgres@localhost:5432/patton"
     )
 
     subparsers = parser.add_subparsers(help='Options', dest="option")
@@ -50,6 +58,12 @@ def argument_parser():
     # Parser: update
     # --------------------------------------------------------------------------
     init_db = subparsers.add_parser('init-db', help='create and populate DB')
+    init_db.add_argument(
+        '-D', '--download-folder',
+        dest="PATTON_DOWNLOAD_FOLDER",
+        help='download folder for temporal data',
+        default=None
+    )
 
     update = subparsers.add_parser('update-db', help='update CVE & CPE info')
     update.add_argument(
@@ -58,18 +72,25 @@ def argument_parser():
         help='url to notify new loaded CVEs',
         default=None
     )
-
-    # TODO
-    # backup = subparsers.add_parser('backup',
-    #                                help='create a backup of database data')
-    # backup.add_argument(
-    #     '-f', '--dump-file',
-    #     dest="DUMP_FILE",
-    #     help='file name to store the results. Must be .sql',
-    #     default=False
-    # )
+    update.add_argument(
+        '-D', '--download-folder',
+        dest="PATTON_DOWNLOAD_FOLDER",
+        help='download folder for temporal data',
+        default=None
+    )
 
     return parser.parse_args()
+
+
+def _get_log_level(level: int) -> int:
+
+    # If quiet mode selected -> decrease log level
+    input_level = level * 10
+
+    if input_level > 50:
+        input_level = 50
+
+    return 60 - input_level
 
 
 def main():
@@ -77,8 +98,10 @@ def main():
     parsed_cmd = argument_parser()
 
     # set logger level
-    log_level = abs(50 - ((parsed_cmd.LOG_LEVEL * 10) % 50))
-    log.setLevel(log_level)
+    log.setLevel(_get_log_level(parsed_cmd.LOG_LEVEL))
+
+    # Config in dict format
+    config = dict(parsed_cmd._get_kwargs())
 
     #
     # Run actions
@@ -88,7 +111,8 @@ def main():
 
         here = op.abspath(op.dirname(__file__))
 
-        app = make_app(op.join(here, "config.py"))
+        # app = make_app(op.join(here, "config.py"))
+        app = make_app(config)
         app.run(
             host=parsed_cmd.listen,
             port=parsed_cmd.port,
@@ -97,15 +121,7 @@ def main():
             debug=parsed_cmd.debug)
 
     if parsed_cmd.option in ("update-db", "init-db"):
-        from patton_server import update_db, load_config_from_pyfile
-
-        # Get general config
-        config = load_config_from_pyfile(
-            op.join(op.dirname(__file__), "config.py")
-        )
-
-        # Overwrite with command line options
-        config.update(dict(parsed_cmd._get_kwargs()))
+        from patton_server import update_db
 
         if parsed_cmd.option == "update-db":
             update_db(**config)

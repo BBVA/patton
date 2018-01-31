@@ -9,6 +9,11 @@ Getting CVEs from library names
 
    Parameter `cpeDetailed` is optional. By default their value is '0'. Setting their value to 1, Patton Server return a more detailed list of CPE and CVEs
 
+   JSON parameter `source` would have these values:
+   - auto
+   - For Ubuntu / Debian-like systems: dpkg
+   - Python source libraries: python
+
    **Example request**:
 
    .. sourcecode:: http
@@ -19,6 +24,7 @@ Getting CVEs from library names
 
       {
           "method": "auto",
+          "source": "auto",
           "libraries" : [
               {
                   "library": "django",
@@ -113,6 +119,7 @@ Getting CVEs from library names
 
       {
           "method": "auto",
+          "source": "auto",
           "libraries" : [
               {
                   "library": "django",

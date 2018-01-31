@@ -4,7 +4,7 @@ from typing import List, Dict
 def _build_cpe_query(packages_versions: List[List[str]]) -> str:
     query = []
 
-    for i, (library, version) in enumerate(packages_versions):
+    for i, (lang, library, version) in enumerate(packages_versions):
         lib_and_package = f"{library.lower()}:{version.lower()}"
 
         full_text_query = f"({library.lower()}:* & {version.lower()}:*)"

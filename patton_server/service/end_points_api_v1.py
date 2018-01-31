@@ -1,7 +1,7 @@
 from sanic import Blueprint
 from sanic.response import json
 
-from .managers_v1 import query_cpe
+from .cpes_managers.cpe_managers_v1 import query_cpe
 
 end_points_api_v1 = Blueprint("end_points_api_v1")
 
@@ -32,9 +32,7 @@ async def package_search(request, package, version):
 
 
 @end_points_api_v1.route('/batch/', methods=['POST'])
-async def batch_package_search(request,
-                               package=None,
-                               version=None):
+async def batch_package_search(request):
     """
     Input JSON format:
 
@@ -64,11 +62,7 @@ async def batch_package_search(request,
     """
 
     try:
-        if request.method == "GET":
-            return json(await query_cpe(request.app.pool,
-                                        [[package, version]]))
-        else:
-            return json(await query_cpe(request.app.pool, request.json))
+        return json(await query_cpe(request.app.pool, request.json))
     except (Exception, ValueError) as e:
         return json({"message": e}, 400)
 

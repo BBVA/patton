@@ -100,7 +100,8 @@ def download_assets(download_path: str,
 async def create_view(db_pool):
     # Update Views
     q_views = "CREATE MATERIALIZED VIEW prodvuln_view AS SELECT " \
-              "vuln.id as CVE, prod.id as CPE, vuln.cvss_score AS CVSS " \
+              "vuln.id as CVE, prod.id as CPE, vuln.cvss_score AS CVSS, " \
+              "vuln.summary as SUMMARY " \
               "FROM vuln JOIN vuln_product ON vuln.id = vuln_product.vuln_id "\
               "JOIN prod ON prod.id = vuln_product.prod_id; " \
               "CREATE INDEX tsv_cpe ON prodvuln_view USING " \
