@@ -28,3 +28,4 @@ Contents
 
    quickstart
    api
+   fails
