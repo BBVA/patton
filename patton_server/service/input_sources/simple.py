@@ -13,7 +13,7 @@ def simple_builder(package: List[Dict[str, str]]) -> str:
         if not library or not version:
             continue
 
-        full_text_query = f"{library.lower()}:* & {version.lower()}:*"
+        full_text_query = f"{library.lower()}:D & {version.lower()}:D"
 
         q_select = f"(Select '{library.lower()}:{version.lower()}', " \
                    f"v.cve, " \

@@ -4,6 +4,7 @@ from patton_server.exceptions import PSException
 
 from .dpkg import dpkg_builder
 from .simple import simple_builder
+from .alpine import alpine_builder
 
 SOURCES = {
     # Ubuntu-like parsers
@@ -13,7 +14,11 @@ SOURCES = {
 
     # Default
     'auto': simple_builder,
-    'simple': simple_builder
+    'simple': simple_builder,
+
+    # Alpine-like
+    'alpine': alpine_builder,
+    'apk': alpine_builder
 }
 
 SQL_WHERE = ''

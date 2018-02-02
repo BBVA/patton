@@ -2,68 +2,40 @@ import re
 
 from typing import List, Dict
 
+RELEASE_REGEX = re.compile(r'''([\d\.]+)(-)([\d]+)''')
+
 UNNECESSARY_FILES = {
     "base-files",
     "ca-certificates",
-    "cloud-guest-utils",
-    "cloud-init",
-    "cloud-initramfs-copymods",
-    "command-not-found",
-    "command-not-found-data",
-    "debianutils",
-    "debconf",
-    "debconf-i18n",
-    "distro-info-data",
-    "dpkg",
+    "apk",
     "e2fslibs",
     "e2fsprogs",
     "ed",
     "eject",
     "file",
-    "fonts-ubuntu-font-family-console",
-    "geoip-database",
     "hostname",
-    "init-system-helpers",
-    "install-info",
-    "keyboard-configuration",
-    "language-selector-common",
-    "linux-base",
     "locales",
     "man-db",
     "manpages",
-    "mime-support",
     "mlocate",
-    "readline-common",
-    "rename",
     "sed",
     "grep",
     "ed",
     "awk",
     "gawk",
-    "software-properties-common",
-    "sosreport",
-    "ubuntu-minimal",
-    "ubuntu-release-upgrader-core",
-    "ubuntu-standard",
-    "unattended-upgrades",
-    "update-manager-core",
-    "update-notifier-common",
-    "uuid-runtime",
     "vim-common",
-    "at"
+    "at",
 }
 
-RELEASE_REGEX = re.compile(r'''([\d\.]+)(-)([\d]+)''')
 
-
-def dpkg_builder(package: List[Dict[str, str]]) -> str:
+def alpine_builder(package: List[Dict[str, str]]) -> str:
     """Return the full text query"""
     query = set()
     for lib in package:
         library = lib.get("library", None)
         version = lib.get("version", None)
 
-        if not library or not version or library in UNNECESSARY_FILES:
+        if not library or not version and library not in UNNECESSARY_FILES:
             continue
 
         # --------------------------------------------------------------------------
@@ -75,9 +47,17 @@ def dpkg_builder(package: List[Dict[str, str]]) -> str:
         if library.startswith("lib"):
             library = library[len("lib"):]
 
-        # python3-* -> *
+        # python2|python3-* -> *
         if library.startswith(("python3-", "python2-")):
             library = library[len("python3-"):]
+
+        # py2|py3-* -> *
+        if library.startswith(("py3-", "py2-")):
+            library = library[len("py2-"):]
+
+        # py-* -> *
+        if library.startswith("py-"):
+            library = library[len("py-"):]
 
         # *-examples
         if any(library.endswith(x) for x in (
@@ -87,46 +67,27 @@ def dpkg_builder(package: List[Dict[str, str]]) -> str:
                 "-common"
         )):
             continue
+
         library_full_text = f'{library.lower()}:D'
 
         # --------------------------------------------------------------------------
         # Filter for versions
         # --------------------------------------------------------------------------
-        has_two_points = version.find(":")
-        if has_two_points:
-            version = version[has_two_points + 1:]
+        #
+        # 2.5.4-r0 -> 2.5.4:r0
+        revision_index = version.find("-r")
+        if revision_index:
+            _version = version[:revision_index]
+            _release = version[revision_index:].replace("-r", "rc")
 
-        # Case to parse:
-        #   5.22.1-9ubuntu0.2
-        # Valid result:
-        #   5.22.1:rc9
-        # TODO: Improve that: if we uncomment bellow code query to database is
-        # TODO: really slow
-        release = None
-        has_sep = version.find("-")
-        if has_sep:
-            _re = RELEASE_REGEX.search(version)
-            if _re:
-                version, _, release = _re.groups()
-
-        if release:
-            # version_full_text = f"({version}:D | {release}:*)"
-            version_full_text = f"{version}:D"
+            version_full_text = f"({_version}:D | {_release}:*)"
         else:
             version_full_text = f"{version}:D"
-
-        # Case to parse:
-        #   1.3.dfsg2-1build1
-        # Valid result
-        #   1.3:rc2
 
         # --------------------------------------------------------------------------
         # Build queries
         # --------------------------------------------------------------------------
-        full_text_query = f"{library_full_text} & {version_full_text}"
-
-        if library == "at":
-            print(library)
+        full_text_query = f"{library_full_text} & {version_full_text.lower()}"
 
         q_select = f"(Select '{library.lower()}:{version.lower()}', " \
                    f"v.cve, " \
