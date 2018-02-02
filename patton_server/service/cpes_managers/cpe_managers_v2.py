@@ -130,15 +130,17 @@ async def _do_query_detailed(db_pool, query: str) -> Dict[str, List]:
 
 async def query_cpe(db_pool,
                     arr: Dict,
-                    detailed_cpe: int = False) -> Dict[str, List]:
+                    detailed_cpe: int = False,
+                    max_concurrent_analyze: int = 300) -> Dict[str, List]:
     # --------------------------------------------------------------------------
     # Build query
     # --------------------------------------------------------------------------
     search_method = arr.get("method", "auto")
     version_source = arr.get("source", "auto")
-    query = specific_build_db_query(source=version_source,
-                                    package=arr.get("libraries",
-                                                    []))
+    query = specific_build_db_query(
+        source=version_source,
+        package=arr.get("libraries", []),
+        maximum_concurrent_packages_to_analyze=max_concurrent_analyze)
 
     # --------------------------------------------------------------------------
     # Launch it

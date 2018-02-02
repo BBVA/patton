@@ -54,11 +54,15 @@ UNNECESSARY_FILES = {
 }
 
 RELEASE_REGEX = re.compile(r'''([\d\.]+)(-)([\d]+)''')
+OPTIMUM_LIMIT_FOR_ADD_RELEASE = 80
 
 
-def dpkg_builder(package: List[Dict[str, str]]) -> str:
+def dpkg_builder(package: List[Dict[str, str]],
+                 max_packages_to_analyze: int = 300) -> str:
     """Return the full text query"""
     query = set()
+    packages_to_analyze = 0
+    total_packages = len(package)
     for lib in package:
         library = lib.get("library", None)
         version = lib.get("version", None)
@@ -110,8 +114,11 @@ def dpkg_builder(package: List[Dict[str, str]]) -> str:
                 version, _, release = _re.groups()
 
         if release:
-            # version_full_text = f"({version}:D | {release}:*)"
-            version_full_text = f"{version}:D"
+            # With more than 100 elements, PostgresSQL Query is very slow
+            if total_packages < OPTIMUM_LIMIT_FOR_ADD_RELEASE:
+                version_full_text = f"({version}:D | {release}:*)"
+            else:
+                version_full_text = f"{version}:D"
         else:
             version_full_text = f"{version}:D"
 
@@ -119,6 +126,9 @@ def dpkg_builder(package: List[Dict[str, str]]) -> str:
         #   1.3.dfsg2-1build1
         # Valid result
         #   1.3:rc2
+
+        if packages_to_analyze > max_packages_to_analyze:
+            break
 
         # --------------------------------------------------------------------------
         # Build queries
@@ -134,9 +144,12 @@ def dpkg_builder(package: List[Dict[str, str]]) -> str:
                    f"v.summary " \
                    f"from prodvuln_view " \
                    f"as v where to_tsvector('english', v.cpe) @@ to_tsquery(" \
-                   f"'{full_text_query}') order by v.cvss desc limit 10) "
+                   f"'{full_text_query}') order by v.cpe desc, " \
+                   f"v.cvss desc limit 10) "
 
         query.add(q_select)
+
+        packages_to_analyze += 1
 
     q = " UNION ALL ".join(query)
     return q

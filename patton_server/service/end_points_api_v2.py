@@ -99,7 +99,8 @@ async def check_libraries_v2(request):
 
         return json(await query_cpe(request.app.pool,
                                     request.json,
-                                    detailed_cpe))
+                                    detailed_cpe,
+                                    request.app.config["MAXIMUM_CONCURRENT"]))
     except (Exception, ValueError) as e:
         return json({"message": e}, 400)
 

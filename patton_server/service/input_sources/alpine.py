@@ -27,10 +27,15 @@ UNNECESSARY_FILES = {
     "at",
 }
 
+OPTIMUM_LIMIT_FOR_ADD_RELEASE = 80
 
-def alpine_builder(package: List[Dict[str, str]]) -> str:
+
+def alpine_builder(package: List[Dict[str, str]],
+                   max_packages_to_analyze: int = 300) -> str:
     """Return the full text query"""
     query = set()
+    packages_to_analyze = 0
+    total_packages = len(package)
     for lib in package:
         library = lib.get("library", None)
         version = lib.get("version", None)
@@ -79,10 +84,15 @@ def alpine_builder(package: List[Dict[str, str]]) -> str:
         if revision_index:
             _version = version[:revision_index]
             _release = version[revision_index:].replace("-r", "rc")
-
-            version_full_text = f"({_version}:D | {_release}:*)"
+            if total_packages < OPTIMUM_LIMIT_FOR_ADD_RELEASE:
+                version_full_text = f"({_version}:D | {_release}:*)"
+            else:
+                version_full_text = f"{version}:D"
         else:
             version_full_text = f"{version}:D"
+
+        if packages_to_analyze > max_packages_to_analyze:
+            break
 
         # --------------------------------------------------------------------------
         # Build queries
@@ -95,9 +105,12 @@ def alpine_builder(package: List[Dict[str, str]]) -> str:
                    f"v.summary " \
                    f"from prodvuln_view " \
                    f"as v where to_tsvector('english', v.cpe) @@ to_tsquery(" \
-                   f"'{full_text_query}') order by v.cvss desc limit 10) "
+                   f"'{full_text_query}') " \
+                   f"order by v.cpe desc, v.cvss desc limit 10) "
 
         query.add(q_select)
+
+        packages_to_analyze += 1
 
     q = " UNION ALL ".join(query)
     return q

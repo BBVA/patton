@@ -10,10 +10,11 @@ from patton_server.service.end_points_home import *
 
 def make_app(config_file: dict) -> Sanic:
     class _fake:
-        pass
+        def __init__(self, **kwargs):
+            for k, v in kwargs.items():
+                setattr(self, k.upper(), v)
 
-    _A = _fake()
-    _A.__dict__.update(config_file)
+    _A = _fake(**config_file)
 
     app = Sanic(__name__)
     app.config.from_object(_A)

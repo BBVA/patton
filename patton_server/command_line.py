@@ -53,6 +53,11 @@ def argument_parser():
         '-d', '--debug', help='enable debug. Default: disabled',
         default=0
     )
+    serve.add_argument(
+        '-M', '--maximum-concurrent',
+        help="maximum packages to analyze (DON'T TOUCH THIS OPTION!)",
+        default=300
+    )
 
     # --------------------------------------------------------------------------
     # Parser: update
@@ -109,9 +114,6 @@ def main():
     if parsed_cmd.option == "serve":
         from patton_server import make_app
 
-        here = op.abspath(op.dirname(__file__))
-
-        # app = make_app(op.join(here, "config.py"))
         app = make_app(config)
         app.run(
             host=parsed_cmd.listen,

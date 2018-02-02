@@ -13,6 +13,7 @@ SOURCES = {
     'debian': dpkg_builder,
 
     # Default
+    'python': simple_builder,
     'auto': simple_builder,
     'simple': simple_builder,
 
@@ -21,10 +22,10 @@ SOURCES = {
     'apk': alpine_builder
 }
 
-SQL_WHERE = ''
 
-
-def specific_build_db_query(source: str, package: List[Dict[str, str]]) \
+def specific_build_db_query(source: str,
+                            package: List[Dict[str, str]],
+                            maximum_concurrent_packages_to_analyze: int = 300)\
         -> Union[str, PSException]:
     """
     input format for libraries:
@@ -44,10 +45,10 @@ def specific_build_db_query(source: str, package: List[Dict[str, str]]) \
         return {}
 
     if not source:
-        return simple_builder(package)
+        return simple_builder(package, maximum_concurrent_packages_to_analyze)
 
     try:
-        r = SOURCES[source](package)
+        r = SOURCES[source](package, maximum_concurrent_packages_to_analyze)
         return r
     except KeyError:
         raise PSException(f"Invalid source. "
