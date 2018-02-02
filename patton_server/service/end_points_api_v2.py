@@ -104,6 +104,35 @@ async def check_libraries_v2(request):
         return json({"message": e}, 400)
 
 
+@end_points_api_v2.route('/api/v1/cve/<cve>', methods=['GET'])
+async def get_cve_info(request, cve):
+
+    try:
+        db_pool = request.app.pool
+
+        query = "select summary, cvss_score from vuln where vuln.id like %s;"
+
+        results = []
+        results_append = results.append
+        async with db_pool.acquire() as connection:
+            async with connection.cursor() as cur:
+                await cur.execute(query, (cve, ))
+
+                async for row in cur:
+                    results_append(
+                        {
+                            "href": f"https://cve.mitre.org/"
+                                    f"cgi-bin/cvename.cgi?name={cve}",
+                            "description": row[0],
+                            "score": row[1],
+                        }
+                    )
+
+        return json(results)
+    except (Exception, ValueError) as e:
+        return json({"message": e}, 400)
+
+
 @end_points_api_v2.route('/api/v1/check-banners',
                          methods=['POST'])
 async def check_banners(request):

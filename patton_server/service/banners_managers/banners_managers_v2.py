@@ -1,7 +1,7 @@
 from typing import List, Dict
 from collections import defaultdict
 
-from ..input_sources import build_full_text
+from ..input_sources import specific_build_db_query
 
 
 async def _do_query(db_pool, query: str) -> Dict[str, List]:

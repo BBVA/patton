@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Union, Dict, List
 
 from patton_server.exceptions import PSException
 
@@ -16,15 +16,34 @@ SOURCES = {
     'simple': simple_builder
 }
 
+SQL_WHERE = ''
 
-def build_full_text(source: str, library: str, version: str) \
+
+def specific_build_db_query(source: str, package: List[Dict[str, str]]) \
         -> Union[str, PSException]:
+    """
+    input format for libraries:
 
-    if not version or not source or not library:
-        return simple_builder(library, version)
+    [
+        {
+            "library": "django",
+            "version": "1.2"
+        },
+        {
+            "library": "flask",
+            "version": "1.00.1"
+        }
+    ]
+    """
+    if not package:
+        return {}
+
+    if not source:
+        return simple_builder(package)
 
     try:
-        return SOURCES[source](library, version)
+        r = SOURCES[source](package)
+        return r
     except KeyError:
         raise PSException(f"Invalid source. "
                           f"Valid sources are: {SOURCES.keys()}")

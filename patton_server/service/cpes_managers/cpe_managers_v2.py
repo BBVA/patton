@@ -1,7 +1,7 @@
 from typing import List, Dict
 from collections import defaultdict
 
-from ..input_sources import build_full_text
+from ..input_sources import specific_build_db_query
 
 
 async def _do_query(db_pool, query: str) -> Dict[str, List]:
@@ -48,9 +48,9 @@ async def _do_query_detailed(db_pool, query: str) -> Dict[str, List]:
             async for row in cur:
                 try:
                     map_cpe_cves[row[2]].append({
-                            "cve": row[1],
-                            "score": row[3],
-                            "summary": row[4],
+                        "cve": row[1],
+                        "score": row[3],
+                        "summary": row[4],
                     })
                     results[row[0]]["cpes_temp"].append(row[2])
                     results[row[0]]["cves"].append(
@@ -95,44 +95,54 @@ async def _do_query_detailed(db_pool, query: str) -> Dict[str, List]:
 # --------------------------------------------------------------------------
 # CPE Calls
 # --------------------------------------------------------------------------
-def _build_cpe_query(packages_versions: Dict) -> str:
-    query = []
-
-    search_method = packages_versions.get("method", "auto")
-    version_source = packages_versions.get("source", "auto")
-
-    for i, lib in enumerate(packages_versions.get("libraries", [])):
-
-        library = lib.get("library", None)
-        version = lib.get("version", None)
-
-        if not library or not version:
-            continue
-
-        lib_and_package = f"{library.lower()}:{version.lower()}"
-
-        # full_text_query = f"({library.lower()}:* & {version.lower()}:*)"
-        full_text_query = build_full_text(version_source,
-                                          library,
-                                          version)
-
-        q_select = f"(Select '{lib_and_package}' as t{i}, v.cve as cpe_{i}, " \
-                   f"v.cpe as cpe_{i}, v.cvss as cvss_{i}, " \
-                   f"v.summary as summary_{i} from " \
-                   f"prodvuln_view " \
-                   f"as v where to_tsvector('english', v.cpe) @@ to_tsquery(" \
-                   f"'{full_text_query}') order by v.cvss desc limit 10) "
-
-        query.append(q_select)
-
-    return " UNION ALL".join(query)
-
+# def _build_cpe_query(packages_versions: Dict) -> str:
+#     search_method = packages_versions.get("method", "auto")
+#     version_source = packages_versions.get("source", "auto")
+#
+#     # for i, lib in enumerate(packages_versions.get("libraries", [])):
+#     #
+#     #     library = lib.get("library", None)
+#     #     version = lib.get("version", None)
+#     #
+#     #     if not library or not version:
+#     #         continue
+#     #
+#     #     lib_and_package = f"{library.lower()}:{version.lower()}"
+#     #
+#     #     # full_text_query = f"({library.lower()}:* & {version.lower()}:*)"
+#     #     full_text_query = specific_build_db_query(version_source,
+#     #                                               library,
+#     #                                               version)
+#     #
+#     #     q_select = f"(Select '{lib_and_package}' as t{i}, v.cve as cpe_{i}, " \
+#     #                f"v.cpe as cpe_{i}, v.cvss as cvss_{i}, " \
+#     #                f"v.summary as summary_{i} from " \
+#     #                f"prodvuln_view " \
+#     #                f"as v where to_tsvector('english', v.cpe) @@ to_tsquery(" \
+#     #                f"'{full_text_query}') order by v.cvss desc limit 10) "
+#     #
+#     #     query.append(q_select)
+#
+#     return specific_build_db_query(source=version_source,
+#                                    package=packages_versions.get("libraries",
+#                                                                  []))
+#
 
 async def query_cpe(db_pool,
                     arr: Dict,
                     detailed_cpe: int = False) -> Dict[str, List]:
-    query = _build_cpe_query(arr)
+    # --------------------------------------------------------------------------
+    # Build query
+    # --------------------------------------------------------------------------
+    search_method = arr.get("method", "auto")
+    version_source = arr.get("source", "auto")
+    query = specific_build_db_query(source=version_source,
+                                    package=arr.get("libraries",
+                                                    []))
 
+    # --------------------------------------------------------------------------
+    # Launch it
+    # --------------------------------------------------------------------------
     if detailed_cpe == 1:
         return await _do_query_detailed(db_pool, query)
     else:
