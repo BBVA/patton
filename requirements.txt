@@ -8,3 +8,4 @@ psycopg2
 sqlalchemy-utils
 requests
 tqdm
+sanic-cors
