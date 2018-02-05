@@ -10,7 +10,12 @@ COPY --from=python-base requirements.txt .
 
 # Copy binary dependencies
 COPY --from=python-base /usr/lib/*xslt* /usr/lib/
+COPY --from=python-base /usr/lib/libssl* /usr/lib/
+COPY --from=python-base /usr/lib/libcrypto* /usr/lib/
+COPY --from=python-base /usr/lib/libldap* /usr/lib/
+COPY --from=python-base /usr/lib/liblber* /usr/lib/
 COPY --from=python-base /usr/lib/*libxml* /usr/lib/
+COPY --from=python-base /usr/lib/libsasl2* /usr/lib/
 COPY --from=python-base /usr/lib/*libgcrypt* /usr/lib/
 COPY --from=python-base /usr/lib/*libgpg-error* /usr/lib/
 COPY --from=python-base /usr/lib/libpq* /usr/lib/

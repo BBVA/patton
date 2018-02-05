@@ -117,7 +117,7 @@ def main():
         app = make_app(config)
         app.run(
             host=parsed_cmd.listen,
-            port=parsed_cmd.port,
+            port=int(parsed_cmd.port),
             workers=parsed_cmd.workers,
             backlog=parsed_cmd.backlog,
             debug=parsed_cmd.debug)
