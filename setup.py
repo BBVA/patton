@@ -23,7 +23,7 @@ setup(
     url='https://github.com/bbva/patton-server',
     license='MIT',
     author='BBVA Labs',
-    description='Vulnerability Matching',
+    description='The vulnerability knowledge store',
     entry_points={'console_scripts': [
         'patton-server = patton_server.command_line:main',
     ]},
