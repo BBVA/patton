@@ -12,11 +12,13 @@ It will with parameters:
 
 - Listen por 9000
 - Database:
--- host: 127.0.0.1
--- port: 5432
--- user: postgres
--- password: postgres
--- database name: patton
+
+  - host: 127.0.0.1
+  - port: 5432
+  - user: postgres
+  - password: postgres
+  - database name: patton
+
 - Maximum concurrent connections: 512
 
 
@@ -35,6 +37,6 @@ Patton server Docker has these configuration environment vars:
 - POSTGRES_DB (default: patton)
 
 
-.. code-block::
+.. code-block:: bash
 
     > docker run --rm -e BACKLOG=512 -e LISTEN_PORT=8080 -e POSTGRES_USER=my_user -p 8080:8080 bbvalabs/patton-server
