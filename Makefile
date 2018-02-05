@@ -39,11 +39,11 @@ upload-pypi:
 	pip install --upgrade pip setuptools wheel
 	pip install twine
 	python setup.py sdist
-	twine upload dist/* --skip-existing --username "$PYPI_PASSWD" --password "$PYPI_USER"
+	twine upload dist/* --skip-existing --username "${PYPI_PASSWD}" --password "${PYPI_USER}"
 
 .PHONY: upload-docker
 upload-docker:
-	docker login -u $DOCKER_USER -p $DOCKER_PASS
+	docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
 	docker build -t patton-server .
 	docker tag patton-server ${DOCKER_USER}/patton-server:`cat VERSION`
 	docker push ${DOCKER_USER}/patton-server:`cat VERSION`
