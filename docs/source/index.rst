@@ -28,4 +28,5 @@ Contents
 
    quickstart
    api
+   docker
    fails

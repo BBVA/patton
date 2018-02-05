@@ -1,20 +1,25 @@
-FROM python:3.6
+FROM cr0hn/python3.6-alpine-make:latest as python-base
+COPY requirements.txt .
+RUN apk update && apk upgrade && apk del openssl-dev && apk add postgresql-dev
+RUN pip install -U -r requirements.txt
 
-WORKDIR "/usr/src/app"
+# Build clean image
+FROM cr0hn/python3.6-alpine-gosu:latest
+COPY --from=python-base /root/.cache /root/.cache
+COPY --from=python-base requirements.txt .
 
-RUN apt-get update && apt-get install -y \
-    libenchant-dev
+# Copy binary dependencies
+COPY --from=python-base /usr/lib/*xslt* /usr/lib/
+COPY --from=python-base /usr/lib/*libxml* /usr/lib/
+COPY --from=python-base /usr/lib/*libgcrypt* /usr/lib/
+COPY --from=python-base /usr/lib/*libgpg-error* /usr/lib/
+COPY --from=python-base /usr/lib/libpq* /usr/lib/
 
-RUN pip --no-cache-dir install pipenv
+RUN pip install -U -r requirements.txt
+RUN pip install patton-server
+RUN rm -rf /root/.cache
 
-COPY Pipfile .
+ADD ./deploy/run_patton.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/run_patton.sh
 
-COPY Pipfile.lock .
-
-RUN pipenv install --system --deploy
-
-COPY patton patton
-COPY main.py .
-COPY load_assets.sh .
-
-CMD ["python", "main.py"]
+ENTRYPOINT ["/usr/local/bin/run_patton.sh"]
