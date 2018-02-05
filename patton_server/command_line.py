@@ -1,6 +1,5 @@
 import logging
 import argparse
-import os.path as op
 
 logging.basicConfig(format='[%(levelname)-s] %(message)s',
                     level=logging.INFO)
@@ -112,7 +111,7 @@ def main():
     # Run actions
     #
     if parsed_cmd.option == "serve":
-        from patton_server import make_app
+        from patton_server.service.make_web_app import make_app
 
         app = make_app(config)
         app.run(
@@ -123,7 +122,7 @@ def main():
             debug=parsed_cmd.debug)
 
     if parsed_cmd.option in ("update-db", "init-db"):
-        from patton_server import update_db
+        from patton_server.dal.updater import update_db
 
         if parsed_cmd.option == "update-db":
             update_db(**config)
