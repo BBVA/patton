@@ -38,8 +38,7 @@ test: install-dev ## run tests quickly with the default Python
 upload-pypi:
 	pip install --upgrade pip setuptools wheel
 	pip install twine
-	python setup.py sdist
-	twine upload dist/* --skip-existing --username "${PYPI_PASSWD}" --password "${PYPI_USER}"
+	sh deploy/pypi_upload.sh
 
 .PHONY: upload-docker
 upload-docker:
