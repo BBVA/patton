@@ -13,6 +13,17 @@ Patton - The vulnerability knowledge store
 |Python versions | 3.6 or above                                  |
 +----------------+-----------------------------------------------+
 
+How it works
+============
+
+patton-server is a small service that preprocess CVE and CPEs from NIST and perform intelligent queries to a postgres database. You can consume the service via api, cli o with the postman in the repository. 
+
+.. image:: patton-diagram.png
+   :width: 80 %
+   :scale: 50 %
+   :alt: diagram
+   :align: center
+
 What's Patton Server
 ====================
 
