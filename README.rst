@@ -16,7 +16,7 @@ Patton - The vulnerability knowledge store
 How it works
 ============
 
-patton-server is a small service that preprocess CVE and CPEs from NIST and perform intelligent queries to a postgres database. You can consume the service via api, cli o with the postman in the repository. 
+patton-server is a small service that preprocess CVEs and CPEs from NIST and perform intelligent queries to a postgres database. You can consume the service via api, cli or with the postman in this repository. 
 
 .. image:: patton-diagram.png
    :width: 80 %
