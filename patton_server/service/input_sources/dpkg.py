@@ -142,10 +142,12 @@ def dpkg_builder(package: List[Dict[str, str]],
                    f"v.cve, " \
                    f"v.cpe, v.cvss, " \
                    f"v.summary " \
-                   f"from prodvuln_view " \
-                   f"as v where to_tsvector('english', v.cpe) @@ to_tsquery(" \
-                   f"'{full_text_query}') order by v.cpe desc, " \
-                   f"v.cvss desc limit 10) "
+                   f"from prodvuln_view as v " \
+                   f"where to_tsvector('english', v.cpe) @@ to_tsquery(" \
+                   f"'{library_full_text}') AND " \
+                   f"to_tsvector('english', v.cpe) @@ to_tsquery(" \
+                   f"'{version_full_text}')  " \
+                   f"order by v.cpe desc, v.cvss desc limit 10) "
 
         query.add(q_select)
 

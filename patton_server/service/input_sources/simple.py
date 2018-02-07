@@ -18,15 +18,15 @@ def simple_builder(package: List[Dict[str, str]],
         if packages_to_analyze > max_packages_to_analyze:
             break
 
-        full_text_query = f"{library.lower()}:D & {version.lower()}:D"
-
         q_select = f"(Select '{library.lower()}:{version.lower()}', " \
                    f"v.cve, " \
                    f"v.cpe, v.cvss, " \
                    f"v.summary from " \
-                   f"prodvuln_view " \
-                   f"as v where to_tsvector('english', v.cpe) @@ to_tsquery(" \
-                   f"'{full_text_query}') " \
+                   f"prodvuln_view as v " \
+                   f"where to_tsvector('english', v.cpe) @@ to_tsquery(" \
+                   f"'{library.lower()}:D') AND " \
+                   f"to_tsvector('english', v.cpe) @@ to_tsquery(" \
+                   f"'{version.lower()}:D') " \
                    f"order by v.cpe desc, v.cvss desc limit 10) "
 
         query.add(q_select)
