@@ -16,7 +16,7 @@ Patton - The vulnerability knowledge store
 How it works
 ============
 
-patton-server is a small service that preprocess CVEs and CPEs from NIST and perform intelligent queries to a postgres database. You can consume the service via api, cli or with the postman in this repository. 
+patton-server is a small service that preprocess CVEs and CPEs from NIST and perform intelligent queries to a postgres database. You can consume the service via api, cli or with the postman in this repository.
 
 .. image:: patton-diagram.png
    :width: 80 %
@@ -27,7 +27,7 @@ patton-server is a small service that preprocess CVEs and CPEs from NIST and per
 What's Patton Server
 ====================
 
-Patton server is project that store the vulnerability information (CVEs) and link it with product details (CPE) and allow to ask in a very clever way.
+Patton server is project that store the vulnerability information (CVEs) and link it with product details (CPE) and allow to ask **in a very clever way**.
 
 For example:
 
@@ -45,6 +45,26 @@ Finding software from raw text
 - Given a HTTP server banner, i.e: "Apache 2.2-ubuntu2 +PHP Mod"
 
 Patton can find, with a very exact way, vulnerabilities for Apache and the specific version
+
+What's the different with other projects?
+=========================================
+
+There're other project, like `CVE Search <https://github.com/cve-search/cve-search>`_ that also stores CVE information. What's is the difference then with Patton?
+
+Clever matching
+---------------
+
+Differing with the approach of CVE-Search (and other projects) Patton don't need a CPE as input. Patton **deduces the CPE**.
+
+**The actually Patton purpose is build clever queries** and deduce information. Por example: from a library name and their version, can deduce the related CPEs and associated CVEs.
+
+Be updated
+----------
+
+Patton can alert you when new vulnerabilities are released:
+
+You can configure the Patton web-hook and it will alert you with ONLY with new vulnerabilities published.
+
 
 How to use Patton server?
 =========================

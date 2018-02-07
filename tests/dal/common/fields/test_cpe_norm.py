@@ -1,4 +1,4 @@
-from patton.dal.common.fields import cpe
+from patton_client.dal.common.fields import cpe
 
 
 def test_cpe_22():
