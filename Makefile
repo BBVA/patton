@@ -44,7 +44,7 @@ upload-pypi:
 upload-docker:
 	docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
 	docker build -t patton-server .
-	docker tag patton-server ${DOCKER_USER}/patton-server:`cat VERSION`
-	docker push ${DOCKER_USER}/patton-server:`cat VERSION`
-	docker tag patton-server ${DOCKER_USER}/patton-server:latest
-	docker push ${DOCKER_USER}/patton-server:latest
+	docker tag patton-server bbvalabs/patton-server:`cat VERSION`
+	docker push bbvalabs/patton-server:`cat VERSION`
+	docker tag patton-server bbvalabs/patton-server:latest
+	docker push bbvalabs/patton-server:latest

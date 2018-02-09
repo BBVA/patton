@@ -22,10 +22,3 @@ services:
     env_file: ${ENV:-.env}
     ports:
       - "5432:5432"
-
-  redis:
-    image: redis:4.0
-    env_file: ${ENV:-.env}
-    ports:
-      - "6379:6379"
-

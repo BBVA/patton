@@ -50,7 +50,8 @@ def argument_parser():
     )
     serve.add_argument(
         '-d', '--debug', help='enable debug. Default: disabled',
-        default=0
+        action="store_true",
+        default=False
     )
     serve.add_argument(
         '-M', '--maximum-concurrent',
