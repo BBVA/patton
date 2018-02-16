@@ -153,11 +153,11 @@ async def cpe_update(db_pool, download_path: str):
             await con.copy_records_to_table("prod_reference",
                                             records=d)
 
-        log.debug("Start loading CPE:Cpe23")
-        d = models.Cpe23.loader_map(root)
-        async with db_pool.acquire() as con:
-            await con.copy_records_to_table("cpe23",
-                                            records=d)
+        # log.debug("Start loading CPE:Cpe23")
+        # d = models.Cpe23.loader_map(root)
+        # async with db_pool.acquire() as con:
+        #     await con.copy_records_to_table("cpe23",
+        #                                     records=d)
 
     log.info('cpe_loaded')
 
