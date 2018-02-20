@@ -20,7 +20,11 @@ Patton uses a PostgresSQL database. The most easy way to install is using Docker
 
 .. code-block:: bash
 
-  > docker run -d -p 5432:5432 -e POSTGRES_USER=patton -e POSTGRES_DB=patton postgres
+  > docker run -d -p 5432:5432 -e POSTGRES_USER=patton -e POSTGRES_DB=patton postgres:10.1
+
+.. note::
+
+    Pay attention on de Postgres version. Patton-Server was tested with PostgresSQL 10.1 only. We recommend use that version.
 
 3 - Initialize database
 -----------------------
@@ -30,7 +34,6 @@ Third step we need to populate database:
 .. code-block:: bash
 
   > patton-server init-db
-
 
 .. note::
 
@@ -60,7 +63,7 @@ To update Patton server you only need to execute:
 
    > patton-server update-db
 
-Optionally, you can choose a webhook to call with the news CVEs, when the updating process was done:
+Optionally, you can choose a web-hook to call with the news CVEs, when the updating process was done:
 
 
 .. code-block:: bash
