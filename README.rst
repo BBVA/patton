@@ -23,6 +23,15 @@ patton-server is a small service that preprocess CVEs and CPEs from NIST and per
    :scale: 50 %
    :alt: diagram
    :align: center
+   
+You can see the Demo video for a quick start:
+
+.. image:: http://img.youtube.com/vi/g5pROiIQUzk/0.jpg
+   :target: http://www.youtube.com/watch?v=g5pROiIQUzk
+   :width: 80 %
+   :scale: 50 %
+   :alt: diagram
+   :align: center
 
 What's Patton Server
 ====================
