@@ -118,8 +118,8 @@ def main():
         app.run(
             host=parsed_cmd.listen,
             port=int(parsed_cmd.port),
-            workers=parsed_cmd.workers,
-            backlog=parsed_cmd.backlog,
+            workers=int(parsed_cmd.workers),
+            backlog=int(parsed_cmd.backlog),
             debug=parsed_cmd.debug)
 
     if parsed_cmd.option in ("update-db", "init-db"):
