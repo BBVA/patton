@@ -20,11 +20,21 @@ COPY --from=python-base /usr/lib/*libgcrypt* /usr/lib/
 COPY --from=python-base /usr/lib/*libgpg-error* /usr/lib/
 COPY --from=python-base /usr/lib/libpq* /usr/lib/
 
-RUN pip install -U -r requirements.txt
+RUN pip install -U -r requirements.txt && apk update && apk add bash apk-cron
 RUN pip install patton-server
-RUN rm -rf /root/.cache
+#ADD ./ /tmp/patton_server/
+#RUN cd /tmp/patton_server && python setup.py install && cd && rm -rf /tmp/patton_server
+
+RUN rm -rf /root/.cache && rm -rf /var/cache/apk/*
 
 ADD ./deploy/run_patton.sh /usr/local/bin/
+ADD ./deploy/wait-for-it.sh /usr/local/bin/
+ADD ./deploy/make_cron_task.sh /usr/local/bin/
+ADD ./deploy/update_vulns.sh /usr/local/bin/
+
 RUN chmod +x /usr/local/bin/run_patton.sh
+RUN chmod +x /usr/local/bin/update_vulns.sh
+RUN chmod +x /usr/local/bin/wait-for-it.sh
+RUN chmod +x /usr/local/bin/make_cron_task.sh
 
 ENTRYPOINT ["/usr/local/bin/run_patton.sh"]

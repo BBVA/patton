@@ -1,6 +1,6 @@
 aiohttp
 aiopg
-sanic == 0.6.0
+sanic >= 0.7
 lxml ==4.1.1
 asyncpg
 sqlalchemy ==1.2.0b3

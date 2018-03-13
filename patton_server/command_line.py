@@ -120,7 +120,7 @@ def main():
             port=int(parsed_cmd.port),
             workers=int(parsed_cmd.workers),
             backlog=int(parsed_cmd.backlog),
-            debug=parsed_cmd.debug)
+            debug=bool(parsed_cmd.debug))
 
     if parsed_cmd.option in ("update-db", "init-db"):
         from patton_server.dal.updater import update_db

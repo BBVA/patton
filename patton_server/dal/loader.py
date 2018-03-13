@@ -109,7 +109,10 @@ async def create_view(db_pool):
 
     log.info("Creating view and indexes")
     async with db_pool.acquire() as con:
-        await con.execute(q_views)
+        try:
+            await con.execute(q_views)
+        except Exception as e:
+            log.debug(e)
 
 
 async def refresh_view(db_pool):

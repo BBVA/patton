@@ -42,14 +42,5 @@ echo "[*] Waiting por PostgresDB"
 /usr/local/bin/wait-for-it.sh ${POSTGRES_HOST}:${POSTGRES_PORT}
 
 # Populate DB
-echo "[*] Population Patton DB"
-patton-server -C ${CONNECTION_STRING} -v init-db
-
-# Run the service
-echo "[*] Launching Patton service"
-exec gosu 1000:1 patton-server -C ${CONNECTION_STRING} \
-                  serve \
-                  --listen 0.0.0.0 \
-                  --port ${LISTEN_PORT} \
-                  --workers ${WORKERS} \
-                  --backlog ${BACKLOG}
+echo "[*] Updating Patton DB"
+patton-server -C ${CONNECTION_STRING} -v update-db
