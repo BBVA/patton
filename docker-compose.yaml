@@ -9,7 +9,7 @@ services:
       - POSTGRES_PASSWORD=patton
     restart: always
     volumes:
-      - /data:/var/lib/postgresql/data
+      - /data/patton:/var/lib/postgresql/data
 
   patton:
     image: bbvalabs/patton-server
