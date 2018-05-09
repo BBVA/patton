@@ -6,16 +6,13 @@ from .dpkg import dpkg_builder
 from .simple import simple_builder
 from .alpine import alpine_builder
 
+DEFAULT_BUILDER = simple_builder
+
 SOURCES = {
     # Ubuntu-like parsers
     'dpkg': dpkg_builder,
     'ubuntu': dpkg_builder,
     'debian': dpkg_builder,
-
-    # Default
-    'python': simple_builder,
-    'auto': simple_builder,
-    'simple': simple_builder,
 
     # Alpine-like
     'alpine': alpine_builder,
@@ -51,5 +48,6 @@ def specific_build_db_query(source: str,
         r = SOURCES[source](package, maximum_concurrent_packages_to_analyze)
         return r
     except KeyError:
-        raise PSException(f"Invalid source. "
-                          f"Valid sources are: {SOURCES.keys()}")
+        r = DEFAULT_BUILDER(package, maximum_concurrent_packages_to_analyze)
+    finally:
+        return r
