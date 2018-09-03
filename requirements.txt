@@ -9,3 +9,4 @@ sqlalchemy-utils
 requests
 tqdm
 sanic-cors
+python-slugify

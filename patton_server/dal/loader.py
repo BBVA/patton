@@ -225,6 +225,9 @@ async def build_cves_cve_rel(db_pool, cves: List[str]):
     """From CVEs, get relations: CPE <1---N> CVE"""
     results = defaultdict(list)
 
+    if not cves:
+        return results
+
     cve_search_query = " or ".join(f"cve = '{c}'" for c in cves)
 
     q = f"﻿select cpe, cve from prodvuln_view where {cve_search_query};"

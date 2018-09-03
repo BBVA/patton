@@ -1,6 +1,6 @@
 import logging
-import tempfile
 import asyncio
+import tempfile
 
 import aiohttp
 import asyncpg
@@ -13,9 +13,10 @@ from patton_server.dal.loader import first_populate_cve_loader, \
 log = logging.getLogger("patton-server")
 
 
-async def notify_weeb_hook(url, info):
+async def notify_web_hook(url, info):
     async with aiohttp.ClientSession() as session:
-        async with session.get(f'{url}/patton/webhook') as resp:
+        async with session.post(url,
+                                json=info) as resp:
             if resp.status == 200:
                 return None
             else:
@@ -50,7 +51,7 @@ async def _update_db(path: str,
 
     else:
         if not await check_if_db_already_created(db_pool):
-            log.error("! You need to initializate database firt of update it")
+            log.error("! You need to initialize the database before update it")
             return
 
         # Download only the incremental CVE file
@@ -61,12 +62,12 @@ async def _update_db(path: str,
         await update_cves(db_pool, path)
         await refresh_view(db_pool)
         await update_indexes(db_pool)
-
+        print(new_cves)
         if web_hook:
-            cve_cpe_relation = await build_cves_cve_rel(new_cves)
-            oks = await notify_weeb_hook(cve_cpe_relation)
+            cve_cpe_relation = await build_cves_cve_rel(db_pool, new_cves)
+            oks = await notify_web_hook(web_hook, cve_cpe_relation)
             if not oks:
-                print(f"Couldn't notify the weebhook. Error: {oks}")
+                print(f"Couldn't notify the web-hook. Error: {oks}")
 
 
 def update_db(**kwargs):

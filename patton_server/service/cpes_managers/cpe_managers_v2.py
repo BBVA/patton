@@ -99,10 +99,10 @@ async def query_cpe(db_pool,
                     arr: Dict,
                     detailed_cpe: int = False,
                     max_concurrent_analyze: int = 300) -> Dict[str, List]:
+    """Build the query to get the check database"""
     # --------------------------------------------------------------------------
     # Build query
     # --------------------------------------------------------------------------
-    search_method = arr.get("method", "auto")
     version_source = arr.get("source", "auto")
     query = specific_build_db_query(
         source=version_source,

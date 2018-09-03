@@ -1,5 +1,5 @@
-API
-===
+Rest API
+========
 
 
 Getting CVEs from library names
@@ -7,23 +7,24 @@ Getting CVEs from library names
 
 .. http:post:: /api/v1/check-dependencies/?(int:cpeDetailed)
 
-   Parameter `cpeDetailed` is optional. By default their value is '0'. Setting their value to 1, Patton Server return a more detailed list of CPE and CVEs
+   Parameter ``cpeDetailed`` is optional. By default their value is '0'. Setting their value to 1, Patton Server return a more detailed list of CPE and CVEs
 
-   JSON parameter `source` would have these values:
-   - auto
-   - For Ubuntu / Debian-like systems: dpkg
-   - Python source libraries: python
+   JSON parameter ``source`` would have these values:
 
-   **Example request**:
+   - **auto**: a synonym of python
+   - **dpkg**: For Ubuntu / Debian-like systems
+   - **alpine**: Alpine Docker system
+   - **python**: Python source libraries
+
+   **Example request**
 
    .. sourcecode:: http
 
       POST /api/v1/check-dependencies/ HTTP/1.1
-      Host: patton.owaspmadrid.org
+      Host: patton.owaspmadrid.org:8000
       Content-Type: application/json
 
       {
-          "method": "auto",
           "source": "auto",
           "libraries" : [
               {
@@ -109,16 +110,17 @@ Getting CVEs from library names
    :statuscode 200: no error
    :statuscode 404: there's no user
 
-  **Example request with param: 'cpeDetailed'**:
+
+   **Example request with param** ``cpeDetailed``:
 
    .. sourcecode:: http
 
+
       POST /api/v1/check-dependencies?cpeDetailed=1 HTTP/1.1
-      Host: patton.owaspmadrid.org
+      Host: patton.owaspmadrid.org:8000
       Accept: application/json
 
       {
-          "method": "auto",
           "source": "auto",
           "libraries" : [
               {
@@ -132,7 +134,8 @@ Getting CVEs from library names
           ]
       }
 
-   ** Example response with param 'cpeDetailed'**
+
+   **Example response with param** ``cpeDetailed``:
 
    .. sourcecode:: http
 
@@ -230,3 +233,35 @@ Getting CVEs from library names
               ]
           }
       }
+
+Getting CVE Information from CVE
++++++++++++++++++++++++++++++++++
+
+.. http:get:: /api/v1/cve/{cve:string}
+
+   ``cve`` parameter is an string that contains a valid CVE.
+
+   **Example request**
+
+   .. sourcecode:: http
+
+      GET /api/v1/cve/CVE-2017-17837 HTTP/1.1
+      Host: patton.owaspmadrid.org:8000
+      Accept: application/json
+
+
+   **Example response**
+
+   .. sourcecode:: http
+
+      HTTP/1.1 200 OK
+      Vary: Accept
+      Content-Type: application/json
+
+        [
+            {
+                "href": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-17837",
+                "description": "The Apache DeltaSpike-JSF 1.8.0 module has a XSS injection leak in the windowId handling. The default size of the windowId get's cut off after 10 characters (by default), so the impact might be limited. A fix got applied and released in Apache deltaspike-1.8.1.",
+                "score": 4.3
+            }
+        ]

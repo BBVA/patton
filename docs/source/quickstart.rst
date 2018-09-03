@@ -1,73 +1,52 @@
 Quick start
 ===========
 
-This document is a quick introduction for use Patton Service
+This document is a quick introduction to Patton Server.
 
-First of run Patton Server
-++++++++++++++++++++++++++
+What's Patton Server
+--------------------
 
-1 - Install Patton Server
+Patton Server can resolve any library name to their CPE. Then returns the associated CVEs for this CPE.
+
+Finding library vulnerabilities
+-------------------------------
+
+- Given a software library in raw format, i.e: django
+- And a version in a possible version, i.e: 1.2
+
+Patton can find all the Product Identification for **Django** and their public vulnerabilities.
+
+How to use Patton server?
 -------------------------
 
-.. code-block:: bash
+Patton serve has a REST API. You can check if in different ways:
 
-  > python3.6 -m pip install patton-server
+- Using raw curl / wget / [YOUR FAVORITE HTTP CLIENT]
+- Using the `Postman collection <https://github.com/BBVA/patton-server/blob/master/Patton.postman_collection.json>`_. **Postman 2.1 is needed to open collection**.
+- Using `Patton-cli <https://github.com/bbva/patton-cli/>`_: We recommend to use this way. Patton-cli is a powerful client for Patton server that allow to extract and check vulnerabilities for your systems in a many different ways.
 
-2 - Install PostgresSQL
------------------------
+Example using curl:
 
-Patton uses a PostgresSQL database. The most easy way to install is using Docker:
+.. code-block:: console
 
-.. code-block:: bash
-
-  > docker run -d -p 5432:5432 -e POSTGRES_USER=patton -e POSTGRES_DB=patton postgres:10.1
-
-.. note::
-
-    Pay attention on de Postgres version. Patton-Server was tested with PostgresSQL 10.1 only. We recommend use that version.
-
-3 - Initialize database
------------------------
-
-Third step we need to populate database:
-
-.. code-block:: bash
-
-  > patton-server init-db
-
-.. note::
-
-  This process could take some time. I our benchmarks, time should round between 4 - 6 minutes
+    > curl -X POST -d '{"source": "auto", "libraries" : [{"library": "Microsoft IIS","version": "7"}]' --header "Content-Type: application/json" http://my-patton-service.com
 
 
-Running Patton Server
-+++++++++++++++++++++
+What's the different with other projects?
+-----------------------------------------
 
-After install and populate Patton database, we can start Patton server:
+There're other project, like `CVE Search <https://github.com/cve-search/cve-search>`_ that also stores CVE information. What's is the difference then with Patton?
 
-.. code-block:: bash
+Clever matching
++++++++++++++++
 
-  > patton-server serve
+Differing with the approach of CVE-Search (and other projects) Patton don't need a CPE as input. Patton **deduces the CPE**.
 
+**The actually Patton purpose is build clever queries** and deduce information. Por example: from a library name and their version, can deduce the related CPEs and associated CVEs.
 
-Updating Patton database
-++++++++++++++++++++++++
+Be updated
+----------
 
-Patton borrow the vulnerability information from NIST, updating their database with new information form them.
+Patton can alert you when new vulnerabilities are released:
 
-Usually NIST releases new vulnerability information around 2 hours (following the NIST guidelines). Then, choice an update time, no less than 2 hours. 1 or 2 times per day should be a reasonable balance.
-
-To update Patton server you only need to execute:
-
-.. code-block:: bash
-
-   > patton-server update-db
-
-Optionally, you can choose a web-hook to call with the news CVEs, when the updating process was done:
-
-
-.. code-block:: bash
-
-   > patton-server update-db -W http://mysite.com/
-
-
+You can configure the Patton web-hook and it will alert you with ONLY with new vulnerabilities published.

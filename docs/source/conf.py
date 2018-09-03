@@ -121,29 +121,14 @@ todo_include_todos = False
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'alabaster'
+html_theme = 'sphinx_rtd_theme'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 
 html_theme_options = {
-    'logo': 'patton-logo.png',
-    'description': 'The vulnerability knowledge store',
-    'github_user': 'bbva',
-    'github_repo': 'patton-server',
-    'github_button': True,
-    'github_type': 'star',
-    'github_banner': True,
-    'travis_button': True,
-    'codecov_button': True,
-    # 'pre_bg': '#FFF6E5',
-    # 'note_bg': '#E5ECD1',
-    # 'note_border': '#BFCF8C',
-    # 'body_text': '#482C0A',
-    # 'sidebar_text': '#49443E',
-    # 'sidebar_header': '#4B4032',
-    'show_powered_by': False
+    'logo_only': True,
 }
 
 

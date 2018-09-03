@@ -1,3 +1,5 @@
+import slugify
+
 from typing import List, Dict
 
 
@@ -9,8 +11,8 @@ def simple_builder(package: List[Dict[str, str]],
     packages_to_analyze = 0
     for lib in package:
 
-        library = lib.get("library", None)
-        version = lib.get("version", None)
+        library = slugify.slugify(lib.get("library", None))
+        version = slugify.slugify(lib.get("version", None))
 
         if not library or not version:
             continue

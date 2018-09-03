@@ -5,6 +5,7 @@ from patton_server.exceptions import PSException
 from .dpkg import dpkg_builder
 from .simple import simple_builder
 from .alpine import alpine_builder
+from .maven import maven_builder
 
 SOURCES = {
     # Ubuntu-like parsers
@@ -19,7 +20,11 @@ SOURCES = {
 
     # Alpine-like
     'alpine': alpine_builder,
-    'apk': alpine_builder
+    'apk': alpine_builder,
+
+    # Java
+    'java': maven_builder,
+    'maven': maven_builder
 }
 
 

@@ -18,8 +18,6 @@ What's Patton Server
 
 Patton server is project that store the vulnerability information (CVEs) and link it with product details (CPE) and allow to ask in a very clever way.
 
-For example:
-
 Contents
 ========
 
@@ -27,6 +25,9 @@ Contents
    :maxdepth: 2
 
    quickstart
+   install
+   server_configuration
    api
+   webhook
    docker
    fails
