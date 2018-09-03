@@ -1,11 +1,11 @@
-Patton - The vulnerability knowledge store
-==========================================
-
 .. image:: https://badge.fury.io/py/patton-server.svg
     :target: https://badge.fury.io/py/patton-server
 
 .. image:: https://img.shields.io/badge/style-flat-green.svg?longCache=true&style=flat&logo=docker
     :target: https://hub.docker.com/r/bbvalabs/patton-server/
+
+Patton - The vulnerability knowledge store
+==========================================
 
 +----------------+-----------------------------------------------+
 |Current version | 1.0.1                                         |
