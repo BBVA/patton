@@ -13,9 +13,7 @@ How it works
 
 patton-server is a small service that resolve CVEs and CPEs from NIST and perform intelligent queries to a postgres database. You can consume the service via api, cli or with the postman in this repository.
 
-.. image:: patton-diagram.png
-   :width: 80 %
-   :scale: 50 %
+.. image:: _static/patton-diagram.png
    :alt: diagram
    :align: center
 
