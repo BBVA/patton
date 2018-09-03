@@ -8,8 +8,28 @@ What's Patton Server
 
 Patton Server can resolve any library name to their CPE. Then returns the associated CVEs for this CPE.
 
+How it works
+++++++++++++
+
+patton-server is a small service that resolve CVEs and CPEs from NIST and perform intelligent queries to a postgres database. You can consume the service via api, cli or with the postman in this repository.
+
+.. image:: patton-diagram.png
+   :width: 80 %
+   :scale: 50 %
+   :alt: diagram
+   :align: center
+
+You can see the Demo video for a quick start:
+
+.. image:: http://img.youtube.com/vi/g5pROiIQUzk/0.jpg
+   :target: http://www.youtube.com/watch?v=g5pROiIQUzk
+   :width: 80 %
+   :scale: 50 %
+   :alt: diagram
+   :align: center
+
 Finding library vulnerabilities
--------------------------------
++++++++++++++++++++++++++++++++
 
 - Given a software library in raw format, i.e: django
 - And a version in a possible version, i.e: 1.2
@@ -17,7 +37,7 @@ Finding library vulnerabilities
 Patton can find all the Product Identification for **Django** and their public vulnerabilities.
 
 How to use Patton server?
--------------------------
++++++++++++++++++++++++++
 
 Patton serve has a REST API. You can check if in different ways:
 
@@ -30,7 +50,6 @@ Example using curl:
 .. code-block:: console
 
     > curl -X POST -d '{"source": "auto", "libraries" : [{"library": "Microsoft IIS","version": "7"}]' --header "Content-Type: application/json" http://my-patton-service.com
-
 
 What's the different with other projects?
 -----------------------------------------

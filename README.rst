@@ -1,8 +1,14 @@
 Patton - The vulnerability knowledge store
 ==========================================
 
+.. image:: https://badge.fury.io/py/patton-server.svg
+    :target: https://badge.fury.io/py/patton-server
+
+.. image:: https://img.shields.io/badge/style-flat-green.svg?longCache=true&style=flat&logo=docker
+    :target: https://hub.docker.com/r/bbvalabs/patton-server/
+
 +----------------+-----------------------------------------------+
-|Current version | 0.0.4                                         |
+|Current version | 1.0.1                                         |
 +----------------+-----------------------------------------------+
 |Project site    | https://github.com/bbva/patton-server         |
 +----------------+-----------------------------------------------+
@@ -12,26 +18,6 @@ Patton - The vulnerability knowledge store
 +----------------+-----------------------------------------------+
 |Python versions | 3.6 or above                                  |
 +----------------+-----------------------------------------------+
-
-How it works
-============
-
-patton-server is a small service that preprocess CVEs and CPEs from NIST and perform intelligent queries to a postgres database. You can consume the service via api, cli or with the postman in this repository.
-
-.. image:: patton-diagram.png
-   :width: 80 %
-   :scale: 50 %
-   :alt: diagram
-   :align: center
-
-You can see the Demo video for a quick start:
-
-.. image:: http://img.youtube.com/vi/g5pROiIQUzk/0.jpg
-   :target: http://www.youtube.com/watch?v=g5pROiIQUzk
-   :width: 80 %
-   :scale: 50 %
-   :alt: diagram
-   :align: center
 
 What's Patton Server
 ====================
