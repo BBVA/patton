@@ -15,6 +15,7 @@ Getting CVEs from library names
    - **dpkg**: For Ubuntu / Debian-like systems
    - **alpine**: Alpine Docker system
    - **python**: Python source libraries
+   - **maven**: Maven format as a source
 
    **Example request**
 

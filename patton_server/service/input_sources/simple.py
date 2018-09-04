@@ -12,7 +12,7 @@ def simple_builder(package: List[Dict[str, str]],
     for lib in package:
 
         library = slugify.slugify(lib.get("library", None))
-        version = slugify.slugify(lib.get("version", None))
+        version = slugify.slugify(lib.get("version", None), separator=".")
 
         if not library or not version:
             continue

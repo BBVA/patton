@@ -12,7 +12,22 @@ def maven_builder(package: List[Dict[str, str]],
     for lib in package:
 
         library = slugify.slugify(lib.get("library", None))
-        version = slugify.slugify(lib.get("version", None))
+        version = slugify.slugify(lib.get("version", None), separator=".")
+
+        # ---------------------------------------------------------------------
+        # Cleaning version
+        # ---------------------------------------------------------------------
+        # For versions formats like: 5.0.0-FINAL, 1.0.0RELEASE, 1.0.0-RELEASE
+        # To -> 5.0.0 | 1.0.0 | 1.0.0
+        ending_position = None
+        for i, letter in enumerate(version):
+            _letter: str = letter
+            if not _letter.isdigit() and not _letter == ".":
+                ending_position = i
+                break
+
+        if ending_position is not None:
+            version = version[:ending_position]
 
         if not library or not version:
             continue
