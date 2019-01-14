@@ -116,7 +116,13 @@ async def get_cve_info(request, cve):
         {
             "href": "URL",
             "description": "LONG DESCRIPTION OF CVE",
-            "score": "X.Y"
+            "score": "X.Y",
+            "cvss_access_vector" = "NETWORK",
+            "cvss_access_complexity" = "LOW",
+            "cvss_authentication" = "NONE",
+            "cvss_confidentiality_impact" = "COMPLETE",
+            "cvss_integrity_impact" = "PARTIAL",
+            "cvss_availability_impact" = "PARTIAL",
         }
     ]
 
@@ -125,7 +131,7 @@ async def get_cve_info(request, cve):
     try:
         db_pool = request.app.pool
 
-        query = "select summary, cvss_score from vuln where vuln.id like %s;"
+        query = "select summary, cvss_score, cvss_access_vector, cvss_access_complexity, cvss_authentication, cvss_confidentiality_impact, cvss_integrity_impact, cvss_availability_impact from vuln where vuln.id like %s;"
 
         results = []
         results_append = results.append
@@ -140,6 +146,12 @@ async def get_cve_info(request, cve):
                                     f"cgi-bin/cvename.cgi?name={cve}",
                             "description": row[0],
                             "score": row[1],
+                            "cvss_access_vector" = row[2],
+                            "cvss_access_complexity" = row[3],
+                            "cvss_authentication" = row[4],
+                            "cvss_confidentiality_impact" = row[5],
+                            "cvss_integrity_impact" = row[6],
+                            "cvss_availability_impact" = row[7]
                         }
                     )
 
