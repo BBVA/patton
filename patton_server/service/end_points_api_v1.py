@@ -117,12 +117,12 @@ async def get_cve_info(request, cve):
             "href": "URL",
             "description": "LONG DESCRIPTION OF CVE",
             "score": "X.Y",
-            "cvss_access_vector" = "NETWORK",
-            "cvss_access_complexity" = "LOW",
-            "cvss_authentication" = "NONE",
-            "cvss_confidentiality_impact" = "COMPLETE",
-            "cvss_integrity_impact" = "PARTIAL",
-            "cvss_availability_impact" = "PARTIAL",
+            "cvss_access_vector": "NETWORK",
+            "cvss_access_complexity": "LOW",
+            "cvss_authentication": "NONE",
+            "cvss_confidentiality_impact": "COMPLETE",
+            "cvss_integrity_impact": "PARTIAL",
+            "cvss_availability_impact": "PARTIAL",
         }
     ]
 
