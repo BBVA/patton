@@ -6,7 +6,7 @@ Customizing Server
 
 By default Patton-Serve will listen at **port 8000**.
 
-To check all the options for Patton-Serve you can type:
+To check for all the options and their defaults that Patton-Server provides you can type:
 
 .. code-block:: console
 
@@ -32,14 +32,9 @@ To check all the options for Patton-Serve you can type:
 Customizing Postgres Connection
 -------------------------------
 
-Patton Server needs to connect to a Postgres Server. These connection is setted as a connection string.
+Patton Server needs to connect to a Postgres Server in which its database lives. These connection is set as a connection string.
 
-The default connection string is: ``postgres://postgres:postgres@localhost:5432/patton``
-
-Where:
-
-- ``postgres:postgres``: referees to user / password.
-- ``/patton``: referees to the database where connect to.
+The default connection string is: ``postgres://username:password@localhost:5432/dbname``
 
 You can specify a custom connection string using ``-C`` parameter in Patton-Server:
 
@@ -49,7 +44,7 @@ You can specify a custom connection string using ``-C`` parameter in Patton-Serv
 
 .. note::
 
-    Be careful with the database. Database must be created into PostgresSQL before Patton starts.
+    Be careful, the database must be created into PostgresSQL before Patton starts.
 
 .. note::
 

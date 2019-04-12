@@ -16,7 +16,7 @@ Welcome to Patton-Server's documentation!
 What's Patton Server
 ====================
 
-Patton server is project that store the vulnerability information (CVEs) and link it with product details (CPE) and allow to ask in a very clever way.
+Patton Server project provides a service that builds a knowledge database about vulnerability information (CVEs), this information is then linked with product details (CPE) to finally allow to ask in a very clever way.
 
 Contents
 ========

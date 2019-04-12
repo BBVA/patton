@@ -9,7 +9,7 @@ Getting CVEs from library names
 
    Parameter ``cpeDetailed`` is optional. By default their value is '0'. Setting their value to 1, Patton Server return a more detailed list of CPE and CVEs
 
-   JSON parameter ``source`` would have these values:
+   JSON parameter ``source`` could take these values:
 
    - **auto**: a synonym of python
    - **dpkg**: For Ubuntu / Debian-like systems
@@ -109,7 +109,7 @@ Getting CVEs from library names
        }
 
    :statuscode 200: no error
-   :statuscode 404: there's no user
+   :statuscode 404: there's no CVE information
 
 
    **Example request with param** ``cpeDetailed``:

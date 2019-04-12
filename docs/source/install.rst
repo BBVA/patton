@@ -1,7 +1,7 @@
 Installation
 ============
 
-This document is a quick introduction to install Patton Server
+This document gives you quick introduction to install an evaluation Patton Server instance.
 
 Before running Patton Server
 ++++++++++++++++++++++++++++
@@ -24,7 +24,7 @@ Patton uses a PostgresSQL database. The most easy way to install is using Docker
 
 .. note::
 
-    Pay attention on de Postgres version. Patton-Server was tested with PostgresSQL 10.1 only. We recommend use that version.
+    Pay attention to the Postgres version. Patton-Server was tested only with PostgresSQL 10.1. We recommend use that version.
 
 3 - Initialize database
 -----------------------
@@ -53,18 +53,17 @@ After install and populate Patton database, we can start Patton server:
 Updating Patton database
 ++++++++++++++++++++++++
 
-Patton borrow the vulnerability information from NIST, updating their database with new information form them.
+Patton borrows the vulnerability information from NIST database, and provides a way for update its own database with new information from NIST.
 
-Usually NIST releases new vulnerability information around 2 hours (following the NIST guidelines). Then, choice an update time, no less than 2 hours. 1 or 2 times per day should be a reasonable balance.
+NIST usually releases new vulnerability information every 2 hours (following the NIST guidelines). Then, choice an update time, no less than 2 hours. 1 or 2 times per day should be a reasonable balance.
 
-To update Patton server you only need to execute:
+To update Patton database you only need to execute:
 
 .. code-block:: console
 
    > patton-server update-db
 
-Optionally, you can choose a web-hook to call with the news CVEs, when the updating process was done:
-
+Optionally, you can choose a web-hook to call to with the new information retrieved, when the updating process was done:
 
 .. code-block:: console
 
