@@ -1,8 +1,6 @@
 # Contributing
 
-Want to hack on API Test? Awesome! Here are instructions to get you
-started. They are probably not perfect, please let us know if anything
-feels wrong or incomplete.
+Want to hack on Patton? Awesome! Here are instructions to get you started. They are probably not perfect, please let us know if anything feels wrong or incomplete.
 
 In general, we follow the "fork-and-pull" Git workflow.
 
