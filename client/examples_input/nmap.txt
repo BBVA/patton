@@ -1,0 +1,23 @@
+# Nmap 7.60 scan initiated Sun Jan 28 22:09:02 2018 as: nmap -A -p 5432 -n -oN nmap.txt 127.0.0.1
+Nmap scan report for 127.0.0.1
+Host is up (0.00026s latency).
+
+PORT     STATE SERVICE    VERSION
+5432/tcp open  postgresql PostgreSQL DB 9.6.0 or later
+| fingerprint-strings: 
+|   SMBProgNeg: 
+|     SFATAL
+|     VFATAL
+|     C0A000
+|     Munsupported frontend protocol 65363.19778: server supports 2.0 to 3.0
+|     Fpostmaster.c
+|     L2065
+|_    RProcessStartupPacket
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+SF-Port5432-TCP:V=7.60%I=7%D=1/28%Time=5A6E3BF5%P=x86_64-apple-darwin17.0.
+SF:0%r(SMBProgNeg,8C,"E\0\0\0\x8bSFATAL\0VFATAL\0C0A000\0Munsupported\x20f
+SF:rontend\x20protocol\x2065363\.19778:\x20server\x20supports\x202\.0\x20t
+SF:o\x203\.0\0Fpostmaster\.c\0L2065\0RProcessStartupPacket\0\0");
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Sun Jan 28 22:09:09 2018 -- 1 IP address (1 host up) scanned in 6.55 seconds

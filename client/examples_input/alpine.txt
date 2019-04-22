@@ -1,0 +1,7 @@
+Installed:                                Available:
+musl-1.1.15                         < 1.1.16-r14
+apk-tools-2.7.2-r0                      < 2.7.5-r0
+musl-utils-1.1.15                   < 1.1.16-r14
+libressl2.5-libssl-2.5.4-r0             < 2.5.5-r0
+busybox-1.26.2-r5                       < 1.26.2-r9
+libressl2.5-libcrypto-2.5.4-r0          < 2.5.5-r0

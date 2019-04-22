@@ -1,0 +1,61 @@
+adns 1.5.1
+autoconf 2.69
+dcraw 9.27.0_2
+eigen 3.3.4
+ffmpeg 3.4.1
+freetype 2.9 2.8.1
+gdbm 1.13 1.14.1_1
+gettext 0.19.8.1
+glib 2.54.3 2.54.2
+gmp 6.1.2_1
+gnupg 2.2.3 2.2.4
+gnutls 3.5.16
+icu4c 60.2
+ilmbase 2.2.0
+imagemagick 7.0.7-21 7.0.7-15
+jasper 2.0.14
+jpeg 9b
+lame 3.99.5
+leptonica 1.74.4_1
+libassuan 2.5.1
+libdmtx 0.7.4
+libffi 3.2.1
+libgcrypt 1.8.2 1.8.1
+libgpg-error 1.27
+libksba 1.3.5
+libpng 1.6.34
+libtasn1 4.12
+libtiff 4.0.9
+libtool 2.4.6_1
+libunistring 0.9.8
+libusb 1.0.21
+little-cms2 2.9
+makedepend 1.0.5
+nettle 3.4
+nmap 7.60
+node 9.3.0_1
+npth 1.5
+numpy 1.13.3 1.14.0
+opencv 3.3.1_1 3.4.0
+openexr 2.2.0
+openssl 1.0.2n
+p11-kit 0.23.9
+pcre 8.41
+pinentry 1.1.0
+pkg-config 0.29.2
+postgresql 10.1
+pyenv 1.2.1
+pypy 5.10.0_1
+pypy3 5.10.1
+python 2.7.14_2 2.7.14
+python3 3.6.4_2 3.6.4
+readline 7.0.3_1
+sqlite 3.21.0 3.22.0
+sshpass 1.06
+tbb 2018_U2
+tesseract 3.05.01
+ufraw 0.22_2
+x264 r2795
+xvid 1.3.4
+xz 5.2.3
+zbar 0.10_8
