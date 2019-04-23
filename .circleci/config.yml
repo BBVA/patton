@@ -6,6 +6,10 @@ jobs:
 
     working_directory: ~/repo
 
+    branches:
+      only:
+        - master
+
     steps:
       - checkout
       - setup_remote_docker:
@@ -15,13 +19,7 @@ jobs:
       - deploy:
           name: Upload to pypi
           command: make upload-pypi
-          branches:
-            only:
-              - master
 
       - deploy:
           name: Upload to Dockerhub
           command: make upload-docker
-          branches:
-            only:
-              - master
