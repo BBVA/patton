@@ -4,6 +4,9 @@
 .. image:: https://img.shields.io/badge/style-flat-green.svg?longCache=true&style=flat&logo=docker
     :target: https://hub.docker.com/r/bbvalabs/patton-server/
 
+.. image:: https://img.shields.io/badge/style-flat-green.svg?longCache=true&style=flat&logo=docker
+    :target: https://hub.docker.com/r/bbvalabs/patton-cli/
+
 Patton - The vulnerability knowledge store
 ==========================================
 
@@ -14,7 +17,7 @@ Patton - The vulnerability knowledge store
 +----------------+-----------------------------------------------+
 |Issues          | https://github.com/bbva/patton/issues/        |
 +----------------+-----------------------------------------------+
-|Documentation   | https://patton-server.readthedocs.org/        |
+|Documentation   | https://patton.readthedocs.org/               |
 +----------------+-----------------------------------------------+
 |Python versions | 3.6 or above                                  |
 +----------------+-----------------------------------------------+
@@ -22,16 +25,16 @@ Patton - The vulnerability knowledge store
 What's Patton
 =============
 
-Patton is a set of tools that allow Admins and security auditors to search for vulnerabilities on software componentesPatton Server can resolve any library name to their CPE. Then returns the associated CVEs for this CPE.
+Patton is a set of tools that allow Admins and security auditors to search for vulnerabilities on software components.
 
 At this moment it contains two modules:
-  * `Patton-server <https://github.com/bbva/patton//tree/master/server>`_
-  * `Patton-cli <https://github.com/bbva/patton//tree/master/client>`_
+  * `Patton-server <https://github.com/bbva/patton//tree/master/server>`_: Resolves any library name to their CPE and then returns the associated CVEs for this CPE.
+  * `Patton-cli <https://github.com/bbva/patton//tree/master/client>`_: Is a powerful client for Patton-server that allows you to extract and check vulnerabilities for your systems in a many different ways.
 
 Documentation
 =============
 
-Go to documentation site: https://patton-server.readthedocs.org/
+You can find Patton's documentation at `Read the Docs <https://patton.readthedocs.org/>`_.
 
 Contributing
 ============
