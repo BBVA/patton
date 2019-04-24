@@ -44,8 +44,8 @@ You can specify a custom connection string using ``-C`` parameter in Patton-Serv
 
 .. note::
 
-    Be careful, the database must be created into PostgresSQL before Patton starts.
+    Be careful, the database must exist in PostgresSQL before Patton-server starts.
 
 .. note::
 
-    Be aware to put the ``-C`` option in the correct place. This option must be set **before** ``serve`` command.
+    Be aware to put the ``-C`` option in the correct place. This option must be set **before** the``serve`` command.

@@ -29,7 +29,7 @@ Patton is a set of tools that allow Admins and security auditors to search for v
 
 At this moment it contains two modules:
   * `Patton-server <https://github.com/bbva/patton//tree/master/server>`_: Resolves any library name to their CPE and then returns the associated CVEs for this CPE.
-  * `Patton-cli <https://github.com/bbva/patton//tree/master/client>`_: Is a powerful client for Patton-server that allows you to extract and check vulnerabilities for your systems in a many different ways.
+  * `Patton-cli <https://github.com/bbva/patton//tree/master/client>`_: Is a powerful commandline client for Patton-server that allows you to extract and check for vulnerabilities of your systems in a many different ways.
 
 Documentation
 =============

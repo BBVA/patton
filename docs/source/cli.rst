@@ -1,55 +1,31 @@
-Patton-cli - The knife of the Admin & Security auditor
+Patton-cli - The Swiss knife of the Admin & Security auditor
 ======================================================
 
-+----------------+--------------------------------------------+
-|Current version | 0.0.1                                      |
-+----------------+--------------------------------------------+
-|Project site    | https://github.com/bbva/patton-cli         |
-+----------------+--------------------------------------------+
-|Issues          | https://github.com/bbva/patton-cli/issues/ |
-+----------------+--------------------------------------------+
-|Python versions | 3.6 or above                               |
-+----------------+--------------------------------------------+
+What's Patton-cli?
+++++++++++++++++++
 
-What's Patton cli?
-==================
-
-Patton-cli (PC) born with the objective to be a knife for system admins and security auditors.
-
-PC could be filled with many different sources and report in many formats, being great for scripting.
-
-You can see a demo video running Patton-Server + Patton-CLI:
-
-.. image:: http://img.youtube.com/vi/g5pROiIQUzk/0.jpg
-   :target: http://www.youtube.com/watch?v=g5pROiIQUzk
-   :alt: patton demo
-   :align: center
+Patton-cli born with the objective to be a Swiss knife for system admins and security auditors, it could be filled with many different sources and report in many formats, being a great choice for scripting.
 
 Installation
-============
+++++++++++++
 
 **NOTE**
 
-    Patton-cli need a `Patton-server <https://github.com/BBVA/patton-server>`_. Be sure that the server is running!
+    Patton-cli need a `Patton-server <https://github.com/BBVA/patton-server>`_, be sure that you have a server already running!
 
 Using pip
 ---------
 
-Install Patton is easy:
+This is the easiest way of installing Patton-cli:
 
 .. code-block:: bash
 
     > python3.6 -m pip install patton-cli
 
-
-
 Using Docker
 ------------
 
-There is an included [Dockerfile](./Dockerfile). It can install
-`patton-cli` from either the pypi release, the github head, or from
-the current working directory. It accepts a `build-arg` for chose. Run
-one of:
+Patton-cli module includes a Dockerfile to generate a docker image. It can install `patton-cli` from either the pypi release, the github head, or from the current working directory. It accepts a `build-arg` for chose. Run one of:
 
 .. code-block:: bash
 
@@ -57,9 +33,68 @@ one of:
     docker build -t patton-cli . --build-arg source=github
     docker build -t patton-cli . --build-arg source=pypi
 
+There's already a `published image <https://hub.docker.com/r/bbvalabs/patton-cli>`_ ready to pull and run.
 
-Getting started
-===============
+Getting help
+------------
+
+Patton-cli has self-explained doc:
+
+.. code-block:: bash
+
+    > patton -h
+
+    usage: patton [-h] [-v] [--patton-host PATTON_HOST] [-F {table,json,csv}] [-q]
+              [-i FROM_FILE] [-o OUTPUT_FILE]
+              [-e {python,alpine,simple_parser,auto,nmap,dpkg}] [-s] [-D] [-B]
+              [-t {auto,nmap}] [-f]
+              [INPUT_LIST [INPUT_LIST ...]]
+
+    Patton cli
+
+    positional arguments:
+      INPUT_LIST
+
+    optional arguments:
+      -h, --help            show this help message and exit
+      -v                    log level
+      --patton-host PATTON_HOST
+                            patton server host
+      -F {table,json,csv}, --display-format {table,json,csv}
+                            display format options
+      -q, --quiet           do not display any information in stdout
+      -i FROM_FILE, --from-file FROM_FILE
+                            output file for results
+      -o OUTPUT_FILE, --output-file OUTPUT_FILE
+                            results file. formats: csv, json, raw
+      -e {python,alpine,simple_parser,auto,nmap,dpkg}, --source-type {python,alpine,simple_parser,auto,nmap,dpkg}
+                            use specific source parser
+      -s, --skip-on-fail    doesn't abort execution on dependency check fail
+
+    Working modes:
+      -D, --dependency      check libraries and versions (default)
+      -B, --banner          check banners (currently experimental)
+
+    Specific option for banners:
+      -t {auto,nmap}, --banner-type {auto,nmap}
+                            http, ftp, ...-
+      -f, --follow          read from stdin and do a continuously check
+
+    Examples:
+
+      * Checking specific library and output as table:
+        > patton django:1.2 flask:1.1.0
+
+      * Checking Python installed dependencies and output as CSV:
+        > pip freeze | patton -F csv
+        or
+        > patton -F csv -i requirements.txt
+
+      * Checking ubuntu dependencies display as table and dump in json file:
+        > dpkg -l | patton -e dpkg -F table -o results.json
+
+Usage examples
+==============
 
 Quick example
 -------------
@@ -143,70 +178,6 @@ Quick example
     |            |                                     | ------------------- |
     |            |                                     | CVE-2017-7233 (5.8) |
     +------------+-------------------------------------+---------------------+
-
-
-Getting help
-------------
-
-Patton-cli has self-explained doc:
-
-.. code-block:: bash
-
-    > patton -h
-
-    usage: patton [-h] [-v] [--patton-host PATTON_HOST] [-F {table,json,csv}] [-q]
-              [-i FROM_FILE] [-o OUTPUT_FILE]
-              [-e {python,alpine,simple_parser,auto,nmap,dpkg}] [-s] [-D] [-B]
-              [-t {auto,nmap}] [-f]
-              [INPUT_LIST [INPUT_LIST ...]]
-
-    Patton cli
-
-    positional arguments:
-      INPUT_LIST
-
-    optional arguments:
-      -h, --help            show this help message and exit
-      -v                    log level
-      --patton-host PATTON_HOST
-                            patton server host
-      -F {table,json,csv}, --display-format {table,json,csv}
-                            display format options
-      -q, --quiet           do not display any information in stdout
-      -i FROM_FILE, --from-file FROM_FILE
-                            output file for results
-      -o OUTPUT_FILE, --output-file OUTPUT_FILE
-                            results file. formats: csv, json, raw
-      -e {python,alpine,simple_parser,auto,nmap,dpkg}, --source-type {python,alpine,simple_parser,auto,nmap,dpkg}
-                            use specific source parser
-      -s, --skip-on-fail    doesn't abort execution on dependency check fail
-
-    Working modes:
-      -D, --dependency      check libraries and versions (default)
-      -B, --banner          check banners (currently experimental)
-
-    Specific option for banners:
-      -t {auto,nmap}, --banner-type {auto,nmap}
-                            http, ftp, ...-
-      -f, --follow          read from stdin and do a continuously check
-
-    Examples:
-
-      * Checking specific library and output as table:
-        > patton django:1.2 flask:1.1.0
-
-      * Checking Python installed dependencies and output as CSV:
-        > pip freeze | patton -F csv
-        or
-        > patton -F csv -i requirements.txt
-
-      * Checking ubuntu dependencies display as table and dump in json file:
-        > dpkg -l | patton -e dpkg -F table -o results.json
-
-
-
-Usage examples
-==============
 
 Getting vulnerabilities from different sources
 ----------------------------------------------
@@ -330,18 +301,3 @@ Finding critical vulnerabilities:
 .. code-block:: bash
 
     > dpkg -l | patton -e dpkg -F csv | grep "10\.0" > critial_vulns.txt
-
-
-Contributing
-============
-
-Any collaboration is welcome!
-
-There're many tasks to do.You can check the `Issues <https://github.com/bbva/patton-cli/issues/>`_ and send us a Pull Request.
-
-Also you can read the `TODO <https://github.com/bbva/patton-cli/blob/master/TODO.md>`_ file.
-
-License
-=======
-
-This project is distributed under `Apache 2 license <https://github.com/bbva/patton-cli/blob/master/LICENSE>`_
