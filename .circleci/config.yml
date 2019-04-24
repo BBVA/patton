@@ -8,7 +8,7 @@ jobs:
 
     branches:
       only:
-        - master
+        - refactor_patton_project
 
     steps:
       - checkout
@@ -16,10 +16,22 @@ jobs:
           docker_layer_caching: true
           version: 17.07.0-ce
 
-      - deploy:
+      - run:
           name: Upload to pypi
-          command: make upload-pypi
+          working_directory: server
+          command: cat make
 
-      - deploy:
+      - run:
+          name: Upload to pypi
+          working_directory: client
+          command: cat make
+
+      - run:
           name: Upload to Dockerhub
-          command: make upload-docker
+          working_directory: server
+          command: cat make
+
+      - run:
+          name: Upload to Dockerhub
+          working_directory: client
+          command: cat make

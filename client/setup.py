@@ -13,12 +13,9 @@ with open(join(here, 'requirements.txt')) as f:
 with open(join(abspath(dirname(__file__)), "VERSION"), "r") as v:
     VERSION = v.read().replace("\n", "")
 
-with open(join(abspath(dirname(__file__)), "PATCH"), "r") as v:
-    PATCH = v.read().replace("\n", "")
-
 setup(
     name='patton-cli',
-    version=f"{VERSION}.{PATCH}",
+    version=f"{VERSION}",
     packages=find_packages(),
     long_description=readme,
     install_requires=required,
@@ -40,4 +37,3 @@ setup(
         'Programming Language :: Python :: 3',
     ],
 )
-

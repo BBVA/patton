@@ -14,7 +14,6 @@ test: install-dev ## run tests quickly with the default Python
 	@pipenv run py.test
 
 upload-pypi:
-	echo $CIRCLE_BUILD_NUM > PATCH
 	pip install --upgrade pip setuptools wheel
 	pip install twine
 	sh deploy/pypi_upload.sh
