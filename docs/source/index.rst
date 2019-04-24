@@ -1,8 +1,8 @@
-Welcome to Patton-Server's documentation!
-=========================================
+Welcome to Patton's documentation!
+==================================
 
 +----------------+-----------------------------------------------+
-|Current version | 1.0.1                                         |
+|Current version | 1.0.3                                         |
 +----------------+-----------------------------------------------+
 |Project site    | https://github.com/bbva/patton                |
 +----------------+-----------------------------------------------+
@@ -13,10 +13,10 @@ Welcome to Patton-Server's documentation!
 |Python versions | 3.6 or above                                  |
 +----------------+-----------------------------------------------+
 
-What's Patton Server
-====================
+What's Patton
+=============
 
-Patton Server project provides with tools for helping admins and security auditors to search for vulnerabilities on software components. Currrently it has 2 main modules:
+Patton is a set of tools for helping admins and security auditors to search for vulnerabilities in software components. Currrently it has 2 main modules:
 
 - Patton-server: A service that builds a knowledge database about vulnerability information (CVEs). This information is then linked with product details (CPE) to finally allow to ask in a very clever way.
 - Patton-cli: A powerful command line client that allows to extract and check for vulnerabilities in your systems in a many different ways.

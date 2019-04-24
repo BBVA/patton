@@ -11,7 +11,7 @@ Patton - The vulnerability knowledge store
 ==========================================
 
 +----------------+-----------------------------------------------+
-|Current version | 1.0.3                                         |
+|Current version | .. include:: server/VERSION                                         |
 +----------------+-----------------------------------------------+
 |Project site    | https://github.com/bbva/patton                |
 +----------------+-----------------------------------------------+
@@ -25,11 +25,10 @@ Patton - The vulnerability knowledge store
 What's Patton
 =============
 
-Patton is a set of tools that allow Admins and security auditors to search for vulnerabilities on software components.
+Patton is a set of tools for helping admins and security auditors to search for vulnerabilities in software components. Currrently it has 2 main modules:
 
-At this moment it contains two modules:
-  * `Patton-server <https://github.com/bbva/patton//tree/master/server>`_: Resolves any library name to their CPE and then returns the associated CVEs for this CPE.
-  * `Patton-cli <https://github.com/bbva/patton//tree/master/client>`_: Is a powerful commandline client for Patton-server that allows you to extract and check for vulnerabilities of your systems in a many different ways.
+- Patton-server: A service that builds a knowledge database about vulnerability information (CVEs). This information is then linked with product details (CPE) to finally allow to ask in a very clever way.
+- Patton-cli: A powerful command line client that allows to extract and check for vulnerabilities in your systems in a many different ways.
 
 Documentation
 =============
