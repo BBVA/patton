@@ -11,7 +11,7 @@ Patton can resolve any library name to their CPE and then returns the associated
 How it works
 ++++++++++++
 
-Patton provides a small service (patton-server) that resolve CVEs and CPEs from NIST and perform intelligent queries to a postgres database. You can consume the service via api, a commandline client or using the Postman collection provided in this repository.
+Patton provides a small service (patton-server) that resolves CVEs and CPEs from NIST and perform intelligent queries to a postgres database. You can consume the service via api, a commandline client or using the Postman collection provided in this repository.
 
 .. image:: _static/patton-diagram.png
    :alt: Patton diagram

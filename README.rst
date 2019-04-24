@@ -1,12 +1,3 @@
-.. image:: https://badge.fury.io/py/patton-server.svg
-    :target: https://badge.fury.io/py/patton-server
-
-.. image:: https://img.shields.io/badge/style-flat-green.svg?longCache=true&style=flat&logo=docker
-    :target: https://hub.docker.com/r/bbvalabs/patton-server/
-
-.. image:: https://img.shields.io/badge/style-flat-green.svg?longCache=true&style=flat&logo=docker
-    :target: https://hub.docker.com/r/bbvalabs/patton-cli/
-
 Patton - The vulnerability knowledge store
 ==========================================
 
@@ -47,4 +38,4 @@ Also you can read the `TODO <https://github.com/bbva/patton/blob/master/TODO.md>
 License
 =======
 
-This project is distributed under `Apache 2 license <https://github.com/bbva/patton/blob/master/LICENSE>`_
+This project is distributed under `Apache 2 license <https://github.com/bbva/patton/blob/master/LICENSE>`_.

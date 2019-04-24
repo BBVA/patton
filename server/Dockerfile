@@ -22,8 +22,6 @@ COPY --from=python-base /usr/lib/libpq* /usr/lib/
 
 RUN pip install -U -r requirements.txt && apk update && apk add bash apk-cron
 RUN pip install patton-server
-#ADD ./ /tmp/patton_server/
-#RUN cd /tmp/patton_server && python setup.py install && cd && rm -rf /tmp/patton_server
 
 RUN rm -rf /root/.cache && rm -rf /var/cache/apk/*
 
