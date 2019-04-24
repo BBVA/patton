@@ -1,8 +1,11 @@
 Welcome to Patton's documentation!
 ==================================
 
+.. include:: ../../README.rst
+start-line:12
+end-line:31
 +----------------+-----------------------------------------------+
-|Current version | .. include:: ../../server/VERSION                                              |
+|Current version | 1.0.3                                         |
 +----------------+-----------------------------------------------+
 |Project site    | https://github.com/bbva/patton                |
 +----------------+-----------------------------------------------+
