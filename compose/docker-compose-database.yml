@@ -1,0 +1,21 @@
+version: "3"
+services:
+
+  postgres:
+    image: postgres:10.1
+    restart: always
+    env_file:
+      - db-credentials.env
+    volumes:
+      - patton-data:/var/lib/postgresql/data
+
+  patton:
+    environment:
+      - POSTGRES_HOST=postgres
+
+  patton-updater:
+    environment:
+      - POSTGRES_HOST=postgres
+
+volumes:
+  patton-data:

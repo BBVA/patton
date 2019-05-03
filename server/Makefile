@@ -48,3 +48,4 @@ upload-docker:
 	docker push bbvalabs/patton-server:`cat VERSION`
 	docker tag patton-server bbvalabs/patton-server:latest
 	docker push bbvalabs/patton-server:latest
+	docker logout

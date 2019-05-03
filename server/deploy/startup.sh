@@ -4,11 +4,21 @@ function usage () {
   echo -e "\nusage: ${1#./} COMMAND [OPTIONS]"
   echo -e "\nCommands:"
   echo "  help             Show this help and exit"
-  echo "  start-server      Start patton-server"
+  echo "  start-server     Start patton-server"
   echo "  update-database  Launch database update"
   echo -e "\nOptions:"
   echo "  -c, --cron-expr  A cron expression to program update executions. If not provided only one run is executed"
   echo "  -w, --webhook    URL to be called after the update process finish"
+  echo -e "\nEnvironmental variables:"
+  echo "  WORKERS (1. Do not change this value if you're not really sure you're doing!)"
+  echo "  BACKLOG (512)"
+  echo "  LISTEN_PORT (9000)"
+  echo "  PATTON_DEBUG (0)"
+  echo "  POSTGRES_HOST (127.0.0.1)"
+  echo "  POSTGRES_PORT (5432)"
+  echo "  POSTGRES_DB (patton)"
+  echo "  POSTGRES_USER (postgres)"
+  echo "  POSTGRES_PASSWORD (postgres)"
 }
 
 cron_expr=""
@@ -16,7 +26,11 @@ webhook=""
 
 # Get command to execute
 command=$1
-if [ ${command} == 'help' ]; then
+
+if [ -z ${command} ]; then
+  usage $0
+  exit 1
+elif [ ${command} == 'help' ]; then
   usage $0
   exit 0
 elif [ ${command} != 'start-server' -a ${command} != 'update-database' ]; then
@@ -34,11 +48,10 @@ while [ "$1" != "" ]; do
       --cron-expr=*) cron_expr="${1#*=}" ; shift;;
       -w) webhook="-W $2" ; shift 2;;
       --webhook=*) webhook="-W ${1#*=}" ; shift;;
-      *) echo mira lo que viene ---"$i"---
+      *) echo Invalid option "$1" ; usage $0 ; exit 1
   esac
 done
 
-echo "$cron_expr $webhook"
 # Get env variables and build connection string
 if [ -z ${WORKERS} ]; then
     export WORKERS=1
@@ -81,9 +94,14 @@ export CONNECTION_STRING=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POST
 echo "[*] Waiting por PostgresDB"
 /usr/local/bin/wait-for-it.sh ${POSTGRES_HOST}:${POSTGRES_PORT}
 
-# Launch patton-server
+if [ $? -eq 143 ]; then
+   echo "No database server found."
+   exit 1
+fi
+
+# Launch patton command
 if [ ${command} == 'update-database' ]; then
-  if [ -n ${cron_expr} ]; then
+  if [ -n "${cron_expr}" ]; then
     # Create job
     echo "[*] Building crontab"
     echo "${cron_expr} patton-server -C ${CONNECTION_STRING} -v update-db ${webhook}" > /etc/crontabs/update-patton
@@ -93,7 +111,7 @@ if [ ${command} == 'update-database' ]; then
     # Run in foreground
     touch /var/log/cron.log
     echo "[*] Launching cron tasks"
-    exec crond -n
+    exec crond -f
   else
     exec patton-server -C ${CONNECTION_STRING} -v update-db ${webhook}
   fi

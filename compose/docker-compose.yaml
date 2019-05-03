@@ -1,0 +1,20 @@
+version: "3"
+services:
+
+  patton:
+    image: bbvalabs/patton-server
+    restart: always
+    ports:
+      - 8000:8000
+    command: "start-server"
+    env_file:
+      - db-credentials.env
+      - patton-config.env
+
+  patton-updater:
+    image: bbvalabs/patton-server
+    restart: always
+    command: ['update-database','--cron-expr="0 */4 * * *"']
+    env_file:
+      - db-credentials.env
+      - patton-config.env

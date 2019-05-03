@@ -7,14 +7,12 @@ RUN apk update && \
 
 RUN pip install patton-server==1.0.2
 
-ADD ./deploy/run_patton.sh /usr/local/bin/
+ADD ./deploy/startup.sh /usr/local/bin/
 ADD ./deploy/wait-for-it.sh /usr/local/bin/
-ADD ./deploy/make_cron_task.sh /usr/local/bin/
-ADD ./deploy/update_vulns.sh /usr/local/bin/
 
 RUN apk del .build-deps && \
     apk add bash apk-cron libxslt libpq && \
     rm -rf /root/.cache /var/cache/apk/* && \
     chmod +x /usr/local/bin/*.sh
 
-ENTRYPOINT ["/usr/local/bin/run_patton.sh"]
+ENTRYPOINT ["/usr/local/bin/startup.sh"]

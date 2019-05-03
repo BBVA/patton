@@ -11,7 +11,7 @@ Installation
 
 **NOTE**
 
-    Patton-cli need a `Patton-server <https://github.com/BBVA/patton-server>`_, be sure that you have a server already running!
+    Patton-cli need a Patton-server, be sure that you have a server already running!
 
 Using pip
 ---------
