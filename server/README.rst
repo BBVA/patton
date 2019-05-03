@@ -7,9 +7,15 @@
 patton-server - The vulnerability knowledge store
 =================================================
 
-.. include:: ../README.rst
-    :start-line: 3
-    :end-line: 14
++----------------+-----------------------------------------------+
+|Project site    | https://github.com/bbva/patton                |
++----------------+-----------------------------------------------+
+|Issues          | https://github.com/bbva/patton/issues/        |
++----------------+-----------------------------------------------+
+|Documentation   | https://patton.readthedocs.org/               |
++----------------+-----------------------------------------------+
+|Python versions | 3.6 or above                                  |
++----------------+-----------------------------------------------+
 
 What's patton-server?
 =====================

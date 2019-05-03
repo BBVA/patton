@@ -47,7 +47,7 @@ patton-server -C ${CONNECTION_STRING} -v init-db
 
 # Run the service
 echo "[*] Launching Patton service"
-exec gosu 1000:1 patton-server -C ${CONNECTION_STRING} \
+exec  patton-server -C ${CONNECTION_STRING} \
                   serve \
                   --listen 0.0.0.0 \
                   --port ${LISTEN_PORT} \
