@@ -39,7 +39,7 @@ def download_assets(download_path: str,
                       f"nvdcve-2.0-{x}.xml.gz"
                       for x in range(2002, LAST_YEAR_CVE + 1)])
 
-    log.info(f"Donwloading CPE and CVE files")
+    log.info(f"Downloading CPE and CVE files")
     for f in files:
         results_file_name = f[f.rfind("/") + 1:].replace(".gz", "")
 
