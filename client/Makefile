@@ -23,7 +23,7 @@ upload-pypi:
 
 .PHONY: upload-docker
 upload-docker:
-	docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
+	docker login -u $${DOCKER_USER} -p $${DOCKER_PASS}
 	docker build -t patton-cli .
 	docker tag patton-cli bbvalabs/patton-cli:`cat VERSION`
 	docker push bbvalabs/patton-cli:`cat VERSION`

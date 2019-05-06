@@ -40,5 +40,4 @@ If when you try to run Patton you get a message similar like that:
 Try to do the fix that proposes in `cdotson blog <http://www.cdotson.com/2017/01/sslerror-with-python-3-6-x-on-macos-sierra/>`_. In summary:
 
 - Install the `certifi package <https://pypi.python.org/pypi/certifi>`_.
-- Run the download script provided with the installer – /Applications/Python 3.6/Install Certificates.command.
-
+- Run the download script provided with the installer – /Applications/Python 3.6/Install Certificates command.

@@ -10,7 +10,7 @@ patton-cli quick run with Docker
 
     > docker run --rm bbvalabs/patton-cli -h
 
-Will show up patton-cli commandline help.
+Will show up patton-cli command-line help.
 
 .. code-block:: console
 

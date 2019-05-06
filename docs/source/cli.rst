@@ -1,22 +1,22 @@
 Patton-cli - The Swiss knife of the Admin & Security auditor
 ======================================================
 
-What's Patton-cli?
+What's patton-cli?
 ++++++++++++++++++
 
-Patton-cli born with the objective to be a Swiss knife for system admins and security auditors, it could be filled with many different sources and report in many formats, being a great choice for scripting.
+patton-cli born with the objective to be a Swiss knife for system admins and security auditors, it could be filled with many different sources and report in many formats, being a great choice for scripting.
 
 Installation
 ++++++++++++
 
 **NOTE**
 
-    Patton-cli need a Patton-server, be sure that you have a server already running!
+    patton-cli needs a patton-server, so be sure that you have a server already running!
 
 Using pip
 ---------
 
-This is the easiest way of installing Patton-cli:
+This is the easiest way of installing patton-cli:
 
 .. code-block:: bash
 
@@ -25,7 +25,7 @@ This is the easiest way of installing Patton-cli:
 Using Docker
 ------------
 
-Patton-cli module includes a Dockerfile to generate a docker image. It can install `patton-cli` from either the pypi release, the github head, or from the current working directory. It accepts a `build-arg` for chose. Run one of:
+patton-cli module includes a Dockerfile to generate a docker image. It can install `patton-cli` from either the pypi release, the github head, or from the current working directory. It accepts a `build-arg` for chose. Run one of:
 
 .. code-block:: bash
 
@@ -38,7 +38,7 @@ There's already a `published image <https://hub.docker.com/r/bbvalabs/patton-cli
 Getting help
 ------------
 
-Patton-cli has self-explained doc:
+patton-cli has self-explained doc:
 
 .. code-block:: bash
 
