@@ -61,7 +61,7 @@ The default entrypoint of the docker image is a wrapper script that manages and 
   - -c, --cron-expr. The cron expresion to program executions of the update process. If not present the update process runs once.
   - -w --webhook. The URL to use as webhook.
 
-patton-server docker imgge uses the following environment variables to customize execution:
+patton-server docker image uses the following environment variables to customize execution:
 
 - WORKERS (default: 1. Do not change this value if you're not really sure you're doing!)
 - BACKLOG (default: 512)
@@ -77,8 +77,8 @@ patton-server docker imgge uses the following environment variables to customize
 
     > docker run --rm -e BACKLOG=512 -e LISTEN_PORT=8080 -e POSTGRES_USER=my_user -p 8080:8080 bbvalabs/patton-server start-server
 
-Customizing execution of paton-server container
------------------------------------------------
+paton-server deployment with docker-compose
+-------------------------------------------
 
 In order to ease deployment some files are provided in the compose directory to allow users to star a server from scratch using docker-compose. These are the files and their purpose:
 - db-credentials.env Contains the environmental variable values needed to authenticate against a database server.
