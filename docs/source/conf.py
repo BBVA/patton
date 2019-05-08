@@ -104,8 +104,8 @@ exclude_patterns = []
 #show_authors = False
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'sphinx'
-highlight_language = "python3"
+# pygments_style = 'sphinx'
+# highlight_language = "python3"
 
 # A list of ignored prefixes for module index sorting.
 #modindex_common_prefix = []
@@ -118,19 +118,6 @@ todo_include_todos = False
 
 
 # -- Options for HTML output ----------------------------------------------
-
-# The theme to use for HTML and HTML Help pages.  See the documentation for
-# a list of builtin themes.
-html_theme = 'sphinx_rtd_theme'
-
-# Theme options are theme-specific and customize the look and feel of a theme
-# further.  For a list of options available for each theme, see the
-# documentation.
-
-html_theme_options = {
-    'logo_only': True,
-}
-
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
@@ -151,6 +138,18 @@ html_static_path = ['_static']
 html_use_smartypants = True
 
 # Custom sidebar templates, maps document names to template names.
+html_theme = "sphinx_rtd_theme"
+html_show_sourcelink = True
+html_logo = "_static/images/patton-logo.png"
+html_theme_options = {
+    'collapse_navigation': False,
+    'logo_only': False,
+    'display_version': True,
+    'style_nav_header_background': 'white',
+    'navigation_depth': 4,
+    'includehidden': True,
+    'titles_only': False
+}
 html_sidebars = {
     '**': [
         'about.html',

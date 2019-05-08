@@ -1,6 +1,8 @@
 Rest API
 ========
 
+Patton server has a REST API to work with. This document describe the two main usages:
+
 Getting CVEs from library names
 +++++++++++++++++++++++++++++++
 

@@ -1,20 +1,32 @@
-Installation
-============
+Running using Pip
+=================
 
-This document gives you quick introduction to install an evaluation Patton-server instance.
+Installing from Pypi
+--------------------
 
-Before running Patton-server
-++++++++++++++++++++++++++++
+.. note::
 
-1 - Install Patton Server
--------------------------
+    Patton runs with Python 3.6. Be sure that you have correct the version
+
+To install Patton from :samp:`Pypi` you can run:
 
 .. code-block:: console
 
   > python3.6 -m pip install patton-server
 
-2 - Install PostgresSQL
------------------------
+.. note::
+
+    If you prefer running Patton using **Docker**, go to the :ref:`Install with Docker <install_with_docker>`.
+
+Before running Patton-server
+----------------------------
+
+.. note::
+
+    **BEFORE** running Patton at the first time, you **must follow** the next steps
+
+1 - Install PostgresSQL
++++++++++++++++++++++++
 
 Patton uses a PostgresSQL database. The easiest way to install it is using Docker:
 
@@ -24,12 +36,12 @@ Patton uses a PostgresSQL database. The easiest way to install it is using Docke
 
 .. note::
 
-    Pay attention to the Postgres version. Patton-Server was tested only with PostgresSQL 10.1. We recommend use that version.
+    **PAY ATTENTION** to the Postgres version. Patton-Server was tested only with PostgresSQL 10.1. We recommend use that version.
 
-3 - Initialize database
------------------------
+2 - Bootstrapping database
+++++++++++++++++++++++++++
 
-In order to be able to resolve CPEs and serach for CVEs we need to populate database:
+In order to be able to resolve CPEs and search for CVEs we need to populate database:
 
 .. code-block:: console
 
@@ -37,11 +49,10 @@ In order to be able to resolve CPEs and serach for CVEs we need to populate data
 
 .. note::
 
-  This process could take some time. I our benchmarks, time should last between 4 and 6 minutes.
-
+  This process could take some time. In our benchmarks, the time is between 4 and 6 minutes.
 
 Running Patton Server
-+++++++++++++++++++++
+---------------------
 
 After install and populate the Patton database, we can start Patton server:
 
@@ -51,7 +62,7 @@ After install and populate the Patton database, we can start Patton server:
 
 
 Updating Patton database
-++++++++++++++++++++++++
+------------------------
 
 Patton borrows the vulnerability information from NIST database, and provides a way for update its own database with new information retrieved from NIST.
 

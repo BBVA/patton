@@ -1,33 +1,30 @@
-Patton-cli - The Swiss knife of the Admin & Security auditor
-======================================================
+Patton-cli
+==========
 
-What's patton-cli?
-++++++++++++++++++
-
-patton-cli born with the objective to be a Swiss knife for system admins and security auditors, it could be filled with many different sources and report in many formats, being a great choice for scripting.
+patton-cli is a Patton Client, born with the objective to be a Swiss knife for system admins and security auditors, it could be filled with many different sources and report in many formats, being a great choice for scripting.
 
 Installation
-++++++++++++
+============
 
-**NOTE**
+.. note::
 
-    patton-cli needs a patton-server, so be sure that you have a server already running!
+    patton-cli needs a patton-server, so be sure that you have the server already running!
 
-Using pip
----------
+With pip
+--------
 
 This is the easiest way of installing patton-cli:
 
-.. code-block:: bash
+.. code-block:: console
 
     > python3.6 -m pip install patton-cli
 
-Using Docker
-------------
+With Docker
+-----------
 
 patton-cli module includes a Dockerfile to generate a docker image. It can install `patton-cli` from either the pypi release, the github head, or from the current working directory. It accepts a `build-arg` for chose. Run one of:
 
-.. code-block:: bash
+.. code-block:: console
 
     docker build -t patton-cli . --build-arg source=cwd
     docker build -t patton-cli . --build-arg source=github
@@ -36,11 +33,11 @@ patton-cli module includes a Dockerfile to generate a docker image. It can insta
 There's already a `published image <https://hub.docker.com/r/bbvalabs/patton-cli>`_ ready to pull and run.
 
 Getting help
-------------
+============
 
 patton-cli has self-explained doc:
 
-.. code-block:: bash
+.. code-block:: console
 
     > patton -h
 
@@ -99,7 +96,7 @@ Usage examples
 Quick example
 -------------
 
-.. code-block:: bash
+.. code-block:: console
 
     > patton django:1.9
 
@@ -185,40 +182,40 @@ Getting vulnerabilities from different sources
 From Ubuntu
 +++++++++++
 
-.. code-block:: bash
+.. code-block:: console
 
     > dpkg -l | patton -e dpkg
 
 From Brew
 +++++++++
 
-.. code-block:: bash
+.. code-block:: console
 
     > brew list --versions | patton
 
 From Alpine
 +++++++++++
 
-.. code-block:: bash
+.. code-block:: console
 
     > apk version -v | patton -e alpine
 
 From python requirements
 ++++++++++++++++++++++++
 
-.. code-block:: bash
+.. code-block:: console
 
     > pip freeze | patton -e python
 
 or
 
-.. code-block:: bash
+.. code-block:: console
 
     > cat requirements.txt | patton -e python
 
 or
 
-.. code-block:: bash
+.. code-block:: console
 
     > patton -i requirements.txt -e python
 
@@ -226,7 +223,7 @@ or
 From Golang requirements
 ++++++++++++++++++++++++
 
-.. code-block:: bash
+.. code-block:: console
 
     > cat Gopkg.lock | patton -e golang
 
@@ -242,15 +239,15 @@ Patton-cli can display results in these formats:
 - JSON
 - CSV
 
-.. code-block:: bash
+.. code-block:: console
 
     > cat requirements.txt | patton -e python -F csv
 
-.. code-block:: bash
+.. code-block:: console
 
     > cat requirements.txt | patton -e python -F json
 
-.. code-block:: bash
+.. code-block:: console
 
     > cat requirements.txt | patton -e python -F table
 
@@ -265,15 +262,15 @@ Patton-cli can export the results in format:
 
 The format of file is determined by the extension:
 
-.. code-block:: bash
+.. code-block:: console
 
     > cat requirements.txt | patton -e python -o report.json
 
-.. code-block:: bash
+.. code-block:: console
 
     > cat requirements.txt | patton -e python -o report.csv
 
-.. code-block:: bash
+.. code-block:: console
 
     > cat requirements.txt | patton -e python -o report.raw
 
@@ -283,7 +280,7 @@ Quiet mode
 If you don't want that Patton-cli reports anything by the terminal, you can use **-q** option:
 
 
-.. code-block:: bash
+.. code-block:: console
 
     > cat requirements.txt | patton -e python -q -o report.csv
 
@@ -292,12 +289,12 @@ Some funny examples
 
 Listing dependencies and check te vulns:
 
-.. code-block:: bash
+.. code-block:: console
 
     > dpkg -l | tee patton -e dpkg -q -o reports.csv
 
 Finding critical vulnerabilities:
 
-.. code-block:: bash
+.. code-block:: console
 
     > dpkg -l | patton -e dpkg -F csv | grep "10\.0" > critial_vulns.txt

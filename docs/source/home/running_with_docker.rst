@@ -3,8 +3,10 @@ Running using Docker
 
 Both, `patton-server <https://hub.docker.com/r/bbvalabs/patton-server>`_ and `patton-cli <https://hub.docker.com/r/bbvalabs/patton-cli>`_, are available as a docker image so you can pull and run from a container.
 
+.. _install_with_docker:
+
 patton-cli quick run with Docker
------------------------------------
+--------------------------------
 
 .. code-block:: console
 
@@ -58,8 +60,8 @@ The default entrypoint of the docker image is a wrapper script that manages and 
 - help . Shows the usage message and exit.
 - start-server. Start the patton-server.
 - update-database. Launches the updater process. it supports the following options:
-  - -c, --cron-expr. The cron expresion to program executions of the update process. If not present the update process runs once.
-  - -w --webhook. The URL to use as webhook.
+- -c, --cron-expr. The cron expresion to program executions of the update process. If not present the update process runs once.
+- -w --webhook. The URL to use as webhook.
 
 patton-server docker image uses the following environment variables to customize execution:
 
@@ -76,24 +78,3 @@ patton-server docker image uses the following environment variables to customize
 .. code-block:: console
 
     > docker run --rm -e BACKLOG=512 -e LISTEN_PORT=8080 -e POSTGRES_USER=my_user -p 8080:8080 bbvalabs/patton-server start-server
-
-paton-server deployment with docker-compose
--------------------------------------------
-
-In order to ease deployment some files are provided in the compose directory to allow users to star a server from scratch using docker-compose. These are the files and their purpose:
-- db-credentials.env Contains the environmental variable values needed to authenticate against a database server.
-- patton-config.env Contains the environmental variable values to configure the paton-server instance.
-- docker-compose.yml Starts a container for the server and another one for the updater, programmed to execute every 4 hours. POSTGRES_HOST environment variable must be provided in order to provide the database to the containers.
-- docker-compose-database.yml Starts a container with a postgresql database and configures the patton-server containers to connect to this instance.
-
-In order to start a fully containerized environment run:
-
-.. code-block:: console
-
-    > docker-compose -f docker-compose.yml -f docker-compose-database.yml up
-
-If you want to run against an existing database server run:
-
-.. code-block:: console
-
-    > docker-compose -f docker-compose.yml -f docker-compose-database.yml -e POSTGRES_HOST=somehost up

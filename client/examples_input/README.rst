@@ -23,7 +23,7 @@ Usage examples
 Getting Vulnerabilities from Ubuntu-like system
 -----------------------------------------------
 
-.. code-block:: bash
+.. code-block:: console
 
    > dpkg -l | awk '{print $2":"$3}' | sed 's/:amd64//g' |  sed '1,/.*:/s/.*://' | patton-cli check-dependencies
 
@@ -69,7 +69,7 @@ Getting vulnerabilities from a Python dependencies file
 
 You can choose one of these modes:
 
-.. code-block:: bash
+.. code-block:: console
 
    > cat requirements.txt | patton-cli check-dependencies
     +--------------------------------------------+------------------+
@@ -89,7 +89,7 @@ You can choose one of these modes:
 or:
 
 
-.. code-block:: bash
+.. code-block:: console
 
    > patton-cli -i requirements-dev.txt check-dependencies
     +--------------------------------------------+------------------+
@@ -111,7 +111,7 @@ Getting Vulnerabilities from brew (OS X)
 
 Obtaining vulnerabilities from your local dependencies:
 
-.. code-block:: bash
+.. code-block:: console
 
   > brew list --versions | patton-cli check-dependencies
     +---------------------------------+----------------+

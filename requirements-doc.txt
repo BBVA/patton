@@ -1,5 +1,3 @@
--r server/requirements.txt
-
 sphinx
 sphinx_rtd_theme
 sphinxcontrib.spelling

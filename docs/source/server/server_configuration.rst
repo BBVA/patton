@@ -1,8 +1,8 @@
 Server Configuration
 ====================
 
-Customizing Server
-------------------
+Server options
+--------------
 
 By default Patton-Serve will listen at **port 8000**.
 
