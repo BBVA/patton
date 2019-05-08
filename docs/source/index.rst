@@ -3,8 +3,8 @@ Welcome to Patton's documentation!
 
 .. include:: ../../README.rst
 
-Contents
-========
+Documentation Index
+===================
 
 .. toctree::
    :maxdepth: 2
