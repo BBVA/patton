@@ -2,8 +2,6 @@ Welcome to Patton's documentation!
 ==================================
 
 .. include:: ../../README.rst
-    :start-line: 3
-    :end-line: 14
 
 Contents
 ========
