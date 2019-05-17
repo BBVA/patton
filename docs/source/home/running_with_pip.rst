@@ -18,7 +18,7 @@ To install Patton from :samp:`Pypi` you can run:
 
     If you prefer running Patton using **Docker**, go to the :ref:`Install with Docker <install_with_docker>`.
 
-Before running Patton-server
+Before running patton-server
 ----------------------------
 
 .. note::
@@ -36,7 +36,7 @@ Patton uses a PostgresSQL database. The easiest way to install it is using Docke
 
 .. note::
 
-    **PAY ATTENTION** to the Postgres version. Patton-Server was tested only with PostgresSQL 10.1. We recommend use that version.
+    **PAY ATTENTION** to the Postgres version you're using. patton-Server was tested only with PostgresSQL 10.1. We recommend using that version.
 
 2 - Bootstrapping database
 ++++++++++++++++++++++++++

@@ -65,7 +65,7 @@ The default entrypoint of the docker image is a wrapper script that manages and 
 
 patton-server docker image uses the following environment variables to customize execution:
 
-- WORKERS (default: 1. Do not change this value if you're not really sure you're doing!)
+- WORKERS (default: 1. Do not change this value if you're not really sure what you're doing!)
 - BACKLOG (default: 512)
 - LISTEN_PORT (default: 9000)
 - PATTON_DEBUG (default: 0)

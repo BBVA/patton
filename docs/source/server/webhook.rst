@@ -1,14 +1,14 @@
 WebHook
 =======
 
-What's Patton-Server WebHook
+What's patton-server webhook
 ----------------------------
 
-Each time patton-server updates its database from new CVEs feeds, you can set a webhook that Patton-Server will call when the update process is finished. Patton-server will only send to the WebHook the new CVEs found since last check.
+Each time patton-server updates its database from new CVEs feeds, you can set a webhook that patton-server will call when the update process is finished. patton-server will only send to the WebHook the new CVEs found since last check.
 
 This is useful if you want to notify to some other system with news CVE and you don't want to write the code to parse feeds, downloads, etc.
 
-Set WebHook in Patton-Server
+Set WebHook in patton-server
 ----------------------------
 
 To setup the webhook you only need to specify the remote end-point URL when updating the database:

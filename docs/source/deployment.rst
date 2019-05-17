@@ -1,7 +1,7 @@
 Using docker-compose
 ====================
 
-In order to ease deployment some files are provided in the compose directory to allow users to star a server from scratch using docker-compose. These are the files and their purpose:
+In order to ease deployment some files are provided in the compose directory to allow users to start a server from scratch using docker-compose. These are the files and their purpose:
 
 - db-credentials.env Contains the environmental variable values needed to authenticate against a database server.
 - patton-config.env Contains the environmental variable values to configure the paton-server instance.
@@ -24,4 +24,4 @@ If you want to run against an existing database server run:
 
 .. code-block:: console
 
-    > docker-compose -f docker-compose.yml -f docker-compose-database.yml -e POSTGRES_HOST=somehost up
+    > docker-compose -f docker-compose.yml -e POSTGRES_HOST=somehost up

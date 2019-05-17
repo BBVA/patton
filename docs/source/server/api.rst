@@ -8,7 +8,7 @@ Getting CVEs from library names
 
 .. http:post:: /api/v1/check-dependencies/?(int:cpeDetailed)
 
-   Parameter ``cpeDetailed`` is optional. By default their value is '0'. Setting their value to 1 makes Patton-server to return a more detailed list of CPE and CVEs
+   Parameter ``cpeDetailed`` is optional. By default their value is '0'. Setting their value to 1 makes patton-server to return a more detailed list of CPE and CVEs
 
    JSON parameter ``source`` could take these values:
 

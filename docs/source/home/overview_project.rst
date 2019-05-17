@@ -41,4 +41,4 @@ Unlike CVE-Search (and other projects) Patton doesn't need a CPE as its input, i
 Be updated
 ----------
 
-Patton can alert you when new vulnerabilities are released, as you can configure a server webhook that Patton-server will invoke ONLY when new vulnerabilities are published.
+Patton can alert you when new vulnerabilities are released, as you can configure a server webhook that patton-server will invoke ONLY when new vulnerabilities are published.
