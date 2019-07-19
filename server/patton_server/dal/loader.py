@@ -208,7 +208,7 @@ async def _update_cves(cve_file: str,
 async def first_populate_cve_loader(db_pool, download_path: str,):
     total_cves_loaded = set()
 
-    for year in range(2002, LAST_YEAR_CVE):
+    for year in range(2002, LAST_YEAR_CVE + 1):
         file_path = f'{download_path}/nvdcve-2.0-{year}.xml'
         total_cves_loaded.update(await _update_cves(file_path,
                                                     db_pool))
