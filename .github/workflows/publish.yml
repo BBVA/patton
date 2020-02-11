@@ -2,7 +2,7 @@ name: Cook CVE database and publish it
 
 on:
   schedule:
-    - cron:  '*/5 * * * *'
+    - cron:  '0 11 * * *'
 
 jobs:
   build:
