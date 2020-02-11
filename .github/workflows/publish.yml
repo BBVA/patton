@@ -1,0 +1,21 @@
+name: Cook CVE database and publish it
+
+on:
+  schedule:
+    - cron:  '0 13 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Clone current repo
+      uses: actions/checkout@v2
+      with:
+        ref: patton-v2-github-actions-WIP
+    - name: Run make
+      run: make -j8
+    - name: Upload database artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: nvdcve.tsv
+        path: nvdcve.tsv
