@@ -3,6 +3,9 @@ name: Cook CVE database and publish it
 on:
   schedule:
     - cron:  '0 11 * * *'
+  push:
+    branches:
+      - master
 
 jobs:
   build:
@@ -11,11 +14,34 @@ jobs:
     - name: Clone current repo
       uses: actions/checkout@v2
       with:
-        ref: patton-v2-github-actions-WIP
+        ref: master
     - name: Run make
       run: make -j8
-    - name: Upload database artifact
-      uses: actions/upload-artifact@v1
+    - name: Obtain current date
+      id: current-date
+      run: |
+        echo ::set-output name=date::$(date +%Y%m%d)
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        name: nvdcve.tsv
-        path: nvdcve.tsv
+        tag_name: latest
+        release_name: Release ${{ steps.current-date.outputs.date }}
+        body: |
+          Changes in this Release
+          - First Change
+          - Second Change
+        draft: false
+        prerelease: true
+    - name: Upload Release Asset
+      id: upload-release-asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./patton.db.gz
+        asset_name: patton.db.gz
+        asset_content_type: application/gzip
