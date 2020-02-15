@@ -3,7 +3,7 @@ YEAR = $(shell date +%Y)
 NVDCVES_JSON = $(shell echo nvdcve-1.1-{2002..$(YEAR)}.reduced.json)
 
 patton.db.xz: patton.db
-	xz -9 --keep --force "$<"
+	xz -9e --keep --force "$<"
 
 patton.db: $(NVDCVES_JSON)
 	cat $? > "$@"
