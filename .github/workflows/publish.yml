@@ -21,6 +21,13 @@ jobs:
       id: current-date
       run: |
         echo ::set-output name=date::$(date +%Y%m%d)
+    - name: Delete release with hub
+      shell: bash
+      run: |
+        curl -fsSL https://github.com/github/hub/raw/master/script/get | bash -s 2.14.1
+        bin/hub release delete latest
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
@@ -28,12 +35,13 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: latest
-        release_name: Release ${{ steps.current-date.outputs.date }}-2
+        release_name: Release ${{ steps.current-date.outputs.date }}
         body: |
           Changes in this Release
           - First Change
           - Second Change
           - Third Change
+          - Fourth Change
         draft: false
         prerelease: true
     - name: Upload Release Asset
@@ -43,6 +51,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./patton.db.gz
-        asset_name: patton.db.gz
-        asset_content_type: application/gzip
+        asset_path: ./patton.db.xz
+        asset_name: patton.db.xz
+        asset_content_type: application/xz
