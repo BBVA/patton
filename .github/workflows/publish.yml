@@ -50,3 +50,8 @@ jobs:
         asset_path: ./patton.db.xz
         asset_name: patton.db.xz
         asset_content_type: application/xz
+    - name: Test docker
+      run: |
+        docker images
+        docker run alpine:3.10 sh -c 'echo hola'
+        docker pull nilp0inter/cpelst2tree
