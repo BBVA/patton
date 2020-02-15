@@ -16,7 +16,7 @@ jobs:
       with:
         ref: master
     - name: Run make
-      run: make -j8
+      run: make -j8 -l2
     - name: Obtain current date
       id: current-date
       run: |
