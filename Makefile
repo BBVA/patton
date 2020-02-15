@@ -2,8 +2,8 @@ SHELL = /bin/bash
 YEAR = $(shell date +%Y)
 NVDCVES_JSON = $(shell echo nvdcve-1.1-{2002..$(YEAR)}.stripped.json)
 
-patton.db.gz: patton.db
-	gzip -c "$<" > "$@"
+patton.db.xz: patton.db
+	xz -9 --keep "$<"
 
 patton.db: $(NVDCVES_JSON)
 	cat $? > "$@"
