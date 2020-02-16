@@ -22,3 +22,4 @@ nvdcve-1.1-%.cpes.json: nvdcve-1.1-%.stripped.json
 
 nvdcve-1.1-%.reduced.json: nvdcve-1.1-%.cpes.json nvdcve-1.1-%.stripped.json
 	python3 -c 'import sys as s,json as j; [print(j.dumps(l[:2]+[r])) for l, r in zip(map(j.loads,open(s.argv[1]).readlines()),map(j.loads,open(s.argv[2]).readlines()))]' nvdcve-1.1-$*.stripped.json nvdcve-1.1-$*.cpes.json > "$@"
+
