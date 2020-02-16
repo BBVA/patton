@@ -6,7 +6,7 @@ patton.db.xz: patton.db
 	xz -9e --keep --force "$<"
 
 patton.db: $(NVDCVES_JSON)
-	cat $? > "$@"
+	jq -c 'if (.[2] == null) and (.[1] | test("\\*\\* REJECT \\*\\*")) then empty else . end' $? > "$@"
 
 nvdcve-1.1-%.json.gz:
 	curl -s -o "$@" "https://nvd.nist.gov/feeds/json/cve/1.1/$@"
