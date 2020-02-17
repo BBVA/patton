@@ -15,4 +15,4 @@ nvdcve-1.1-%.json: nvdcve-1.1-%.json.gz
 	gzip -dc < "$<" > "$@"
 
 nvdcve-1.1-%.stripped.json: nvdcve-1.1-%.json
-	jq -c '.CVE_Items[] | [.cve.CVE_data_meta.ID, (.cve.description.description_data[] | [if .lang == "en" then .value else empty end] | join("\n")), [.configurations.nodes[] | .. | select(.vulnerable?) | .cpe23Uri]]' "$<" > "$@"
+	jq -c '.CVE_Items[] | [.cve.CVE_data_meta.ID, ([.cve.description.description_data[] | if .lang == "en" then .value else empty end] | join("\n")), [.configurations.nodes[] | .. | select(.vulnerable?) | .cpe23Uri]]' "$<" > "$@"
