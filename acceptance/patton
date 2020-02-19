@@ -1,0 +1,114 @@
+#!/bin/bash
+#
+#
+#
+#
+#
+
+VERSION=0.9
+
+usage() {
+  echo "Usage: $0 [OPTION]... [PATTERN]"
+  echo "Try '$0 -h|--help' for more information"
+  echo -e "  -h, --help           display this help text and exit"
+  echo -e "  -V, --version        display version information and exit"
+  echo -e "  -d, --database-file  path to database file"
+  echo -e "  -t, --search-type    type of search to execute fulltext|cpe|debian|rpm|alpine|archlinux|npm|maven|pip|golang"
+  echo -e "  -v, --pkg-version    cpe version when searching by cpe"
+  echo -e "  -n, --pkg-name       path to database file"
+  echo -e "  -w, --pkg-vendor     path to database file"
+
+  exit 1 ;
+}
+
+OPTIONS=$(getopt --options "hVd:t:v:n:w:" --longoptions "help,version,database-file:,search-type:,pkg-version:,pkg-name:,pkg-vendor:" -- $@)
+
+[ $? -eq 0 ] || {
+  echo error
+  exit 1
+}
+
+eval set -- "$OPTIONS"
+unset OPTIONS
+
+searchtype=fulltext
+while true; do
+    case "$1" in
+    -h|--help)
+      usage
+      exit 1
+    ;;
+    -V|--version)
+      echo "$0: version $VERSION"
+      exit 0
+    ;;
+    -d|--database-file)
+      shift
+      databasefile=$1
+    ;;
+    -t|--search-type)
+      shift
+      searchtype=$1
+    ;;
+    -v|--pkg-version)
+      shift
+      pkgversion=$1
+    ;;
+    -n|--pkg-name)
+      shift
+      pkgname=$1
+    ;;
+    -w|--pkg-vendor)
+      shift
+      pkgvendor=$1
+    ;;
+    --)
+      shift
+      break
+    ;;
+    esac
+    shift
+done
+
+pattern=$@
+
+ echo "database-file = ${databasefile}"
+ echo "search-type = ${searchtype}"
+ echo "pkg-version = ${pkgversion}"
+ echo "pkg-name = ${pkgname}"
+ echo "pkg-vendor = ${pkgvendor}"
+ echo "pattern = $pattern"
+
+
+case $searchtype in
+  debian)
+  
+  ;;
+  product)
+    echo "searching product $pattern $pkgversion ..."
+    zcat patton.db.gz | grep -i -E "$pattern.*$pkgversion"
+  ;;
+  *)
+    zcat patton.db.gz | grep -i -e "$pattern"
+  ;;
+esac
+
+
+exit 0
+
+
+## case $1 in
+##   "product")
+##     echo -e '["CVE-2019-10090","Descripción CVE-2019-10090",["","","","","",""]]\n["CVE-2019-10091","Descripción CVE-2019-10091",["","","","","",""]]\n["CVE-2019-10092","Descripción CVE-2019-10092",["","","","","",""]]\n'
+##     ;;
+##   "fulltext")
+##     echo -e '["CVE-2014-3845","Descripción CVE-2014-3845",["","","","","",""]]\n["CVE-2014-3846","Descripción CVE-2014-3846",["","","","","",""]]\n["CVE-2014-3847","Descripción CVE-2014-3847",["","","","","",""]]\n'
+##     ;;
+##   "pkg_ubuntu")
+##     echo -e '["CVE-2019-5736","Descripción CVE-2019-5736",["","","","","",""]]\n["CVE-2019-5737","Descripción CVE-2019-5737",["","","","","",""]]\n["CVE-2019-5738","Descripción CVE-2019-5738",["","","","","",""]]\n'
+##     ;;
+##   *)
+##     echo -e "\n"
+##     ;;
+## esac
+##
