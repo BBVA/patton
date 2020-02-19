@@ -1,6 +1,6 @@
 SHELL = /bin/bash
 YEAR = $(shell date +%Y)
-NVDCVES_JSON = $(shell echo nvdcve-1.1-{2002..$(YEAR)}.reduced.json)
+NVDCVES_JSON = $(shell echo nvdcve-1.1-{2002..$(YEAR)}.reduced.tsv)
 
 patton.db.xz: patton.db
 	xz -9e --keep --force "$<"
@@ -33,5 +33,5 @@ nvdcve-1.1-%.cpes.json: nvdcve-1.1-%.stripped.json
 	jq -c '.[2]' < "$<" | docker run -i nilp0inter/cpelst2tree > "$@"
 
 # Mix CVE, Description and CPE tree into a single file
-nvdcve-1.1-%.reduced.json: nvdcve-1.1-%.cves.json nvdcve-1.1-%.description.json nvdcve-1.1-%.cpes.json
-	python3 -c 'import sys as s,json as j; [print(j.dumps(list(x))) for x in zip(*(map(j.loads, open(f).readlines()) for f in s.argv[1:]))]' nvdcve-1.1-$*.cves.json nvdcve-1.1-$*.description.json nvdcve-1.1-$*.cpes.json > "$@"
+nvdcve-1.1-%.reduced.tsv: nvdcve-1.1-%.cves.json nvdcve-1.1-%.description.json nvdcve-1.1-%.cpes.json
+	paste nvdcve-1.1-$*.cves.json nvdcve-1.1-$*.description.json nvdcve-1.1-$*.cpes.json > "$@"
