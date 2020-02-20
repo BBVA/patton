@@ -32,6 +32,9 @@ eval set -- "$OPTIONS"
 unset OPTIONS
 
 searchtype=fulltext
+databasefile=patton.db.gz
+catcmd=zcat
+
 while true; do
     case "$1" in
     -h|--help)
@@ -72,6 +75,8 @@ done
 
 pattern=$@
 
+[[ "$databasefile" == *"db.xz" ]] && catcmd=xzcat
+
  echo "database-file = ${databasefile}"
  echo "search-type = ${searchtype}"
  echo "pkg-version = ${pkgversion}"
@@ -82,14 +87,14 @@ pattern=$@
 
 case $searchtype in
   debian)
-  
+
   ;;
   product)
     echo "searching product $pattern $pkgversion ..."
-    zcat patton.db.gz | grep -i -E "$pattern.*$pkgversion"
+    $catcmd "$databasefile" | grep -i -E "$pattern.*$pkgversion"
   ;;
   *)
-    zcat patton.db.gz | grep -i -e "$pattern"
+    $catcmd "$databasefile" | grep -i -E "${pattern//\ /\.\*}"
   ;;
 esac
 

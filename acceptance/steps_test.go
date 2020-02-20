@@ -22,9 +22,10 @@ type pattonOutput struct {
 	stdout   []string
 }
 type execution struct {
-	binaryPath string
-	params     *pattonParams
-	output     *pattonOutput
+	binaryPath,
+	databasePath string
+	params *pattonParams
+	output *pattonOutput
 }
 
 func (ex *execution) iHaveSearchTerm(searchTerm string) error {
@@ -41,7 +42,8 @@ func (ex *execution) iHaveSearchTermAndVersion(searchTerm, version string) error
 }
 
 func (ex *execution) itIsAWordpressPlugin() error {
-	return godog.ErrPending
+	// return godog.ErrPending
+	return nil
 }
 
 func (ex *execution) iHaveOutputOfPackageManager(distro string, rawPkgOutput *gherkin.DocString) error {
@@ -54,8 +56,9 @@ func (ex *execution) iHaveOutputOfPackageManager(distro string, rawPkgOutput *gh
 func (ex *execution) iExecutePattonSearchWithSearchType(searchType string) error {
 	ex.params.searchType = searchType
 
-	cmd := exec.Command(ex.binaryPath, ex.params.searchType)
+	cmd := exec.Command(ex.binaryPath, "-d", ex.databasePath, "-t", ex.params.searchType, "-v", ex.params.version, ex.params.searchTerm)
 	stdout, _ := cmd.StdoutPipe()
+
 	if err := cmd.Start(); err != nil {
 		return fmt.Errorf("Error starting command: %v", err)
 	}
@@ -78,8 +81,10 @@ func (ex *execution) iExecutePattonSearchWithSearchType(searchType string) error
 
 func (ex *execution) iGetAtLeastOneCve(table *gherkin.DataTable) error {
 	count := 0
+	// Remove titles from table
 	for _, row := range table.Rows[1:] {
 		for _, outLine := range ex.output.stdout {
+			// Check CVE match
 			if strings.Contains(outLine, row.Cells[0].Value) {
 				count++
 				break
@@ -87,6 +92,7 @@ func (ex *execution) iGetAtLeastOneCve(table *gherkin.DataTable) error {
 		}
 	}
 
+	// Don't take into account the title row
 	if count < (len(table.Rows) - 1) {
 		return fmt.Errorf("Only %d matches", count)
 	}
@@ -95,10 +101,14 @@ func (ex *execution) iGetAtLeastOneCve(table *gherkin.DataTable) error {
 }
 
 func FeatureContext(s *godog.Suite) {
-	exec := &execution{"patton", &pattonParams{}, &pattonOutput{stdout: make([]string, 0)}}
+	exec := &execution{"patton", "patton.db.gz", &pattonParams{}, &pattonOutput{stdout: make([]string, 0)}}
 
 	if binaryPath, ok := os.LookupEnv("PATTON_BINARY"); ok {
 		exec.binaryPath = binaryPath
+	}
+
+	if dbPath, ok := os.LookupEnv("PATTON_DATABASE"); ok {
+		exec.databasePath = dbPath
 	}
 
 	s.Step(`^I have search term "([^"]*)" and version "([^"]*)"$`, exec.iHaveSearchTermAndVersion)
