@@ -18,7 +18,7 @@ Feature: Search Software Vulnerabilities
   Scenario: Find vulnerabilities in a system running Ubuntu package manager
       Given I have the output of "Ubuntu" package manager
         """
-        ii  docker-ce   17.09.1~ce-0~ubuntu   amd64   Docker: the open-source application container engine
+        ii  docker   1.4.1   amd64   Docker: the open-source application container engine
         """
       When I execute Patton search with search type "pkg_ubuntu"
       Then I get at least one cve
@@ -527,4 +527,3 @@ Feature: Search Software Vulnerabilities
       | Library Name           | Library Version         | CVE ID                |
       | python3-cryptography   | 1.2.3-1ubuntu0.1        | CVE-2019-5736         |
       | python3-jwt            | 1.3.0-1ubuntu0.1        | CVE-2017-11424         |
-

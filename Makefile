@@ -2,6 +2,9 @@ SHELL = /bin/bash
 YEAR = $(shell date +%Y)
 NVDCVES_JSON = $(shell echo nvdcve-1.1-{2002..$(YEAR)}.reduced.tsv)
 
+patton.db.zst: patton.db
+	zstd -19 --force "$<"
+
 patton.db.xz: patton.db
 	xz -9e --keep --force "$<"
 
@@ -35,3 +38,9 @@ nvdcve-1.1-%.cpes.json: nvdcve-1.1-%.stripped.json
 # Mix CVE, Description and CPE tree into a single file
 nvdcve-1.1-%.reduced.tsv: nvdcve-1.1-%.cves.json nvdcve-1.1-%.description.json nvdcve-1.1-%.cpes.json
 	paste nvdcve-1.1-$*.cves.json nvdcve-1.1-$*.description.json nvdcve-1.1-$*.cpes.json > "$@"
+
+clean:
+	rm -f *.tsv patton.db
+
+distclean: clean
+	rm -f patton.db.zst

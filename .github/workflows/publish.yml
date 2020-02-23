@@ -15,12 +15,26 @@ jobs:
       uses: actions/checkout@v2
       with:
         ref: master
+    - name: Install zstd compressor
+      run: |
+        sudo apt update
+        sudo apt install zstd
+    - name: Setup go 1.13
+      id: go
+      uses: actions/setup-go@v1
+      with:
+        go-version: 1.13
+    - name: Setup godog
+      run: go get -v github.com/cucumber/godog/cmd/godog
     - name: Run make
       run: make -j8 -l2
-    - name: Obtain current date
-      id: current-date
+    - name: Verify acceptance tests
       run: |
-        echo ::set-output name=date::$(date +%Y%m%d)
+        cd acceptance
+        ~/go/bin/godog features/*.feature
+      env:
+        PATTON_BINARY: ../bin/patton
+        PATTON_DATABASE: ../patton.db.zst
     - name: Delete release with hub
       shell: bash
       run: |
@@ -28,6 +42,10 @@ jobs:
         bin/hub release delete latest
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Obtain current date
+      id: current-date
+      run: |
+        echo ::set-output name=date::$(date +%Y%m%d)
     - name: Create Release
       id: create-release
       uses: actions/create-release@v1
@@ -50,11 +68,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create-release.outputs.upload_url }}
-        asset_path: ./patton.db.xz
-        asset_name: patton.db.xz
-        asset_content_type: application/xz
-    - name: Test docker
-      run: |
-        docker images
-        docker run alpine:3.10 sh -c 'echo hola'
-        docker pull nilp0inter/cpelst2tree
+        asset_path: ./patton.db.zst
+        asset_name: patton.db.zst
+        asset_content_type: application/zstd

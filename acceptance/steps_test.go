@@ -101,7 +101,7 @@ func (ex *execution) iGetAtLeastOneCve(table *gherkin.DataTable) error {
 }
 
 func FeatureContext(s *godog.Suite) {
-	exec := &execution{"patton", "patton.db.gz", &pattonParams{}, &pattonOutput{stdout: make([]string, 0)}}
+	exec := &execution{"patton", "patton.db.zst", &pattonParams{}, &pattonOutput{stdout: make([]string, 0)}}
 
 	if binaryPath, ok := os.LookupEnv("PATTON_BINARY"); ok {
 		exec.binaryPath = binaryPath

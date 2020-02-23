@@ -1,0 +1,130 @@
+#!/usr/bin/env bash
+
+VERSION=0.9
+
+usage () {
+	cat <<-EOT
+		Usage: $0 [OPTION]... [PATTERN]
+		Try '$0 -h|--help' for more information
+		  -h, --help           display this help text and exit
+		  -V, --version        display version information and exit
+		  -d, --database-file  path to database file
+		  -t, --search-type    type of search to execute:
+		      		       	    fulltext|cpe|debian|rpm|
+					    alpine|archlinux|npm|maven|pip|golang
+		  -v, --pkg-version    cpe version when searching by cpe
+		  -n, --pkg-name       path to database file
+		  -w, --pkg-vendor     path to database file
+	EOT
+}
+
+OPTIONS=$(
+	getopt					\
+		--options hVd:t:v:n:w:		\
+		--longoptions help		\
+		--longoptions version		\
+		--longoptions database-file:	\
+		--longoptions search-type:	\
+		--longoptions pkg-version	\
+		--longoptions pkg-name:		\
+		--longoptions pkg-vendor:	\
+		-- "$@"
+)
+
+if [[ ! $? -eq 0 ]]; then
+	usage
+	exit 1
+fi
+
+eval set -- "$OPTIONS"
+unset OPTIONS
+
+# Default values
+searchtype=fulltext
+databasefile=patton.db.zst
+
+while true; do
+	case "$1" in
+		-h|--help)
+			usage
+			exit 0
+			;;
+		-V|--version)
+			echo "$0: version $VERSION"
+			exit 0
+			;;
+		-d|--database-file)
+			shift
+			databasefile="$1"
+			;;
+		-t|--search-type)
+			shift
+			searchtype="$1"
+			;;
+		-v|--pkg-version)
+			shift
+			pkgversion="$1"
+			;;
+		-n|--pkg-name)
+			shift
+			pkgname="$1"
+			;;
+		-w|--pkg-vendor)
+			shift
+			pkgvendor="$1"
+			;;
+		--)
+			shift
+			break
+			;;
+	esac
+	shift
+done
+
+pattern="$@"
+
+cat <<-EOT
+	database-file = $databasefile
+	search-type = $searchtype
+	pkg-version = $pkgversion
+	pkg-name = $pkgname
+	pkg-vendor = $pkgvendor
+	pattern = $pattern
+EOT
+
+case "$searchtype" in
+	debian)
+		:
+		;;
+	product)
+		echo "searching product $pattern $pkgversion ..."
+		zstdgrep -i -E "$pattern.*$pkgversion" "$databasefile"
+		;;
+	pkg_ubuntu)
+		pkgname=$(echo $pattern | awk '{ print $2 }')
+		pkgversion=$(echo $pattern | awk '{ print $3 }')
+		echo "searching ubuntu pkg ‘$pkgname’ version ‘$pkgversion’"
+		zstdgrep -i -E "$pkgname" "$databasefile"
+		;;
+	*)
+		zstdgrep -i -E "${pattern//\ /\.\*}" "$databasefile"
+		;;
+esac
+
+exit 0
+
+## case $1 in
+##   "product")
+##     echo -e '["CVE-2019-10090","Descripción CVE-2019-10090",["","","","","",""]]\n["CVE-2019-10091","Descripción CVE-2019-10091",["","","","","",""]]\n["CVE-2019-10092","Descripción CVE-2019-10092",["","","","","",""]]\n'
+##     ;;
+##   "fulltext")
+##     echo -e '["CVE-2014-3845","Descripción CVE-2014-3845",["","","","","",""]]\n["CVE-2014-3846","Descripción CVE-2014-3846",["","","","","",""]]\n["CVE-2014-3847","Descripción CVE-2014-3847",["","","","","",""]]\n'
+##     ;;
+##   "pkg_ubuntu")
+##     echo -e '["CVE-2019-5736","Descripción CVE-2019-5736",["","","","","",""]]\n["CVE-2019-5737","Descripción CVE-2019-5737",["","","","","",""]]\n["CVE-2019-5738","Descripción CVE-2019-5738",["","","","","",""]]\n'
+##     ;;
+##   *)
+##     echo -e "\n"
+##     ;;
+## esac
+##
