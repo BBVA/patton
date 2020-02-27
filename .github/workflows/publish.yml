@@ -21,11 +21,11 @@ jobs:
         sudo apt update
         sudo apt install zstd
 
-    - name: Setup go 1.13
+    - name: Setup go 1.14
       id: go
       uses: actions/setup-go@v1
       with:
-        go-version: 1.13
+        go-version: 1.14
 
     - name: Setup godog
       run: go get -v github.com/cucumber/godog/cmd/godog
