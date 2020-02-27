@@ -45,7 +45,7 @@ jobs:
       shell: bash
       run: |
         curl -fsSL https://github.com/github/hub/raw/master/script/get | bash -s 2.14.1
-        bin/hub release delete latest
+        bin/hub release --include-drafts | grep latest && bin/hub release delete latest || true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
