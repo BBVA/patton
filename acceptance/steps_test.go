@@ -100,6 +100,25 @@ func (ex *execution) iGetAtLeastOneCve(table *gherkin.DataTable) error {
 	return nil
 }
 
+func (ex *execution) iHaveTheRawOutputOfInstalledPackagesForPackageManager(distro string, rawPkgOutput *gherkin.DocString) error {
+	ex.params.distro = distro
+	ex.params.searchTerm = rawPkgOutput.Content
+
+	return nil
+}
+
+func (ex *execution) iExecutePattonSearchWithType(arg1 string) error {
+	return godog.ErrPending
+}
+
+func (ex *execution) iGetAtLeastTheseVulnerabilities(arg1 *gherkin.DataTable) error {
+	return godog.ErrPending
+}
+
+func (ex *execution) notFoundTheseFalsePositives(arg1 *gherkin.DataTable) error {
+	return godog.ErrPending
+}
+
 func FeatureContext(s *godog.Suite) {
 	exec := &execution{"patton", "patton.db.zst", &pattonParams{}, &pattonOutput{stdout: make([]string, 0)}}
 
@@ -117,6 +136,10 @@ func FeatureContext(s *godog.Suite) {
 	s.Step(`^I have the output of "([^"]*)" package manager$`, exec.iHaveOutputOfPackageManager)
 	s.Step(`^I execute Patton search with search type "([^"]*)"$`, exec.iExecutePattonSearchWithSearchType)
 	s.Step(`^I get at least one cve$`, exec.iGetAtLeastOneCve)
+	s.Step(`^I have the raw output of installed packages for "([^"]*)" package manager$`, exec.iHaveTheRawOutputOfInstalledPackagesForPackageManager)
+	s.Step(`^I execute Patton search with type "([^"]*)"$`, exec.iExecutePattonSearchWithType)
+	s.Step(`^I get at least these vulnerabilities$`, exec.iGetAtLeastTheseVulnerabilities)
+	s.Step(`^Not found these false positives$`, exec.notFoundTheseFalsePositives)
 
 	s.BeforeScenario(func(interface{}) {
 		exec.params = &pattonParams{}
