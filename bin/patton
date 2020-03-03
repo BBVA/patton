@@ -106,6 +106,14 @@ case "$searchtype" in
 		echo "searching ubuntu pkg ‘$pkgname’ version ‘$pkgversion’"
 		zstdgrep -i -E "$pkgname" "$databasefile"
 		;;
+	pkg_ubuntu2)
+		if [[ "$1" == - ]]; then
+			echo Reading output of dpkg -l from stdin...
+			# TODO
+			touch /tmp/dump
+			cat > /tmp/dump
+		fi
+		;;
 	*)
 		zstdgrep -i -E "${pattern//\ /\.\*}" "$databasefile"
 		;;

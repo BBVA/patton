@@ -3,6 +3,8 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io"
+	"log"
 	"os"
 	"os/exec"
 	"strings"
@@ -107,8 +109,31 @@ func (ex *execution) iHaveTheRawOutputOfInstalledPackagesForPackageManager(distr
 	return nil
 }
 
-func (ex *execution) iExecutePattonSearchWithType(arg1 string) error {
-	return godog.ErrPending
+func (ex *execution) iExecutePattonSearchWithType(searchType string) error {
+	ex.params.searchType = searchType
+
+	cmd := exec.Command(ex.binaryPath, "-d", ex.databasePath, "-t", ex.params.searchType, "-v", ex.params.version, "-")
+	stdin, err := cmd.StdinPipe()
+	if err != nil {
+		return fmt.Errorf("Error setting stdin pipe for command: %v", err)
+	}
+
+	go func() {
+		defer stdin.Close()
+		_, err := io.WriteString(stdin, ex.params.searchTerm)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}()
+
+	stdout, _ := cmd.StdoutPipe()
+
+	scanner := bufio.NewScanner(stdout)
+	for scanner.Scan() {
+		ex.output.stdout = append(ex.output.stdout, scanner.Text())
+	}
+
+	return nil
 }
 
 func (ex *execution) iGetAtLeastTheseVulnerabilities(arg1 *gherkin.DataTable) error {
