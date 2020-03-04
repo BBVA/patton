@@ -1,0 +1,10 @@
+*
+- https://lists.debian.org/debian-tex-maint/2007/06/msg00018.html
+- dpkg-query
+- /var/lib/dpkg/status
+- http://deb.debian.org/debian/pool/main/a/attr/attr_2.4.48-4.dsc
+- http://manpages.ubuntu.com/manpages/xenial/man1/dpkg-query.1.html
+- dpkg-query --show --showformat='Package: "${Package}"\tSource: "${Source}"\tVersion: "${Version}"\n'
+  - The field "Source" will be available only if the Package and the Source package are not the same
+  - The Source package should be used if available
+  - The version may include an epoch prefix that should be dealt with
