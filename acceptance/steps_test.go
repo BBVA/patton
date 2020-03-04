@@ -151,8 +151,25 @@ func (ex *execution) iExecutePattonSearchWithType(searchType string) error {
 	return nil
 }
 
-func (ex *execution) iGetAtLeastTheseVulnerabilities(arg1 *gherkin.DataTable) error {
-	return godog.ErrPending
+func (ex *execution) iGetAtLeastTheseVulnerabilities(table *gherkin.DataTable) error {
+	count := 0
+	// Remove titles from table
+	for _, row := range table.Rows[1:] {
+		for _, outLine := range ex.output.stdout {
+			// Check CVE match
+			if strings.Contains(outLine, row.Cells[0].Value) {
+				count++
+				break
+			}
+		}
+	}
+
+	// Don't take into account the title row
+	if count < (len(table.Rows) - 1) {
+		return fmt.Errorf("Only %d matches", count)
+	}
+
+	return nil
 }
 
 func (ex *execution) notFoundTheseFalsePositives(arg1 *gherkin.DataTable) error {

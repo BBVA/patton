@@ -108,10 +108,13 @@ case "$searchtype" in
 		;;
 	pkg_ubuntu2)
 		if [[ "$1" == - ]]; then
-			echo Reading output of dpkg -l from stdin...
-			# TODO
-			touch /tmp/dump
-			cat > /tmp/dump
+			echo 1>&2 Reading output of dpkg -l from stdin...
+
+			awk '/^ii/ { print $2 , "\t" , $3 }' |
+				while read pkgname pkgversion
+				do
+					zstdgrep -i -E --with-filename --label="$pkgname" "$pkgname.*$pkgversion" "$databasefile"
+				done | tee /tmp/report
 		fi
 		;;
 	*)
