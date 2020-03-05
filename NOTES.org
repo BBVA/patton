@@ -8,3 +8,5 @@
   - The field "Source" will be available only if the Package and the Source package are not the same
   - The Source package should be used if available
   - The version may include an epoch prefix that should be dealt with
+- https://www.debian.org/doc/debian-policy/ here we'll be able to determine the naming conventions
+that apply (e.g., python libraries get named python-somelib or python2-somelib)
