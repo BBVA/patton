@@ -10,3 +10,5 @@
   - The version may include an epoch prefix that should be dealt with
 - https://www.debian.org/doc/debian-policy/ here we'll be able to determine the naming conventions
 that apply (e.g., python libraries get named python-somelib or python2-somelib)
+  - https://www.debian.org/doc/packaging-manuals/python-policy/module_packages.html#package_names
+  - https://www.debian.org/doc/packaging-manuals/perl-policy/ch-module_packages.html#s-package-names
