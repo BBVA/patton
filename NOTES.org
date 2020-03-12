@@ -51,7 +51,7 @@ Luego lo pasas por un programa que lo entiende que le dará a Patton uno (o más
                package: "fdisk"
               version: "2.1.0-1ubuntu"
    query:
-         software: "ufil-lib"
+         software: "util-linux"
         version: "2.1.0"
 
 a lo mejor original sin la anidación de data es suficiente
