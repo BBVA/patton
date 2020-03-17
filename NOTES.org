@@ -28,10 +28,9 @@ cat /var/lib/dpkg/status | <produce json lines enriching the content | simple pr
    meta:
        source: "debian"
        type: "status file"
-   data:
-       source: "util-linux"
-       package: "fdisk"
-       version: "2.1.0-1ubuntu"
+   source: "util-linux"
+   package: "fdisk"
+   version: "2.1.0-1ubuntu"
 
 which can be easily transformed to JSON with https://onlinejsontools.com/convert-yaml-to-json
 {"meta":{"source":"debian","type":"status file"},"data":{"source":"util-linux","package":"fdisk","version":"2.1.0-1ubuntu"}}
@@ -42,17 +41,33 @@ docker run -it ubuntu:bionic dpkg-query --show --showformat='{"meta":{"source":"
 
 Luego lo pasas por un programa que lo entiende que le dará a Patton uno (o más) datos a consultar
 
+meta: holds data that will help process actual data later on
+
    meta:
        source: "debian"
        type: "status file"
-       original:
-           data:
-               source: "util-linux"
-               package: "fdisk"
+       debian_policy_version: xxxx
+       ingest:
+              source: "util-linux"
+              package: "fdisk"
               version: "2.1.0-1ubuntu"
-   query:
-         software: "util-linux"
-        version: "2.1.0"
+   // actual query
+   software: "util-linux"
+   version: "2.1.0"
+
+   meta:
+       data_version: 20200317T1030
+       source: "debian"
+       type: "status file"
+       ingest:
+              source: "util-linux"
+              package: "fdisk"
+              version: "2.1.0-1ubuntu"
+       query:
+              software: "util-linux"
+              version: "2.1.0"
+   cve: [ CVE-2323, CVE-23444 ]
+
 
 a lo mejor original sin la anidación de data es suficiente
 
