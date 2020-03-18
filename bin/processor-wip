@@ -4,26 +4,52 @@ import sys
 import json
 
 
-def _no_match(line):
-    sys.stderr.write(line)
-
-
-_processors = [_no_match]
+_processors = []
 
 
 def case(f):
     global _processors
-    _processors = [f, _processors]
+    _processors = [f, *_processors]
+
     return f
 
 
+def preserve_lineage(parent, child):
+    preserved = dict()
+    preserved['meta'] = parent['meta'].copy()
+    preserved['meta']['ingest'] = {k: v for k, v in parent.items() if k != 'meta'}
+    preserved.update(child)
+
+    return preserved
+
+
 @case
-def debian_status_file(line):
-    return line
+def debian_status_file(meta, data):
+    if meta['source'] != 'debian' or meta['type'] != 'status file':
+        return None
+    processed = dict()
+    if data['source'] == "":
+        processed['software'] = data['package']
+    else:
+        processed['software'] = data['source']
+    processed['version'] = data['version']
+
+    # TODO: Process perl- packages
+    # TODO: Process python- packages
+    # TODO: Process lib- packages
+
+    return processed
 
 
 if __name__ == "__main__":
     for line in sys.stdin:
-        result = next(map(lambda f: f(line), _processors))
-        if result:
-            sys.stdout.write(result)
+        data = json.loads(line)
+        meta = data['meta']
+        processed = map(lambda f: f(meta, data), _processors)
+        valid = filter(lambda x: x is not None, processed)
+        found = next(valid, None)
+        if found:
+            preserved_package = preserve_lineage(data, found)
+            json.dump(preserved_package, sys.stdout)
+        else:
+            sys.stderr.write(line)
