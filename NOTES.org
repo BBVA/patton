@@ -27,8 +27,10 @@ which can be easily transformed to JSON with https://onlinejsontools.com/convert
 {"meta":{"source":"debian","type":"status file"},"data":{"source":"util-linux","package":"fdisk","version":"2.1.0-1ubuntu"}}
 
 
-docker run -it ubuntu:bionic dpkg-query --show --showformat='{"meta":{"source":"debian","type":"status file"},"data":{"source":"${Source}","package":"${Package}","version":"${Version}"}}\n'
+docker run -i ubuntu:bionic dpkg-query --show --showformat='{"meta":{"source":"debian","type":"status file"},"data":{"source":"${Source}","package":"${Package}","version":"${Version}"}}\n'
 
+CAVEAT EMPTOR: DON'T add the -t flag to docker, since the terminal handling will be mangled.
+YE BE WARNED!
 
 Luego lo pasas por un programa que lo entiende que le dará a Patton uno (o más) datos a consultar
 
