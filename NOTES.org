@@ -28,6 +28,8 @@ which can be easily transformed to JSON with https://onlinejsontools.com/convert
 
 
 docker run -i ubuntu:bionic dpkg-query --show --showformat='{"meta":{"source":"debian","type":"status file"},"data":{"source":"${Source}","package":"${Package}","version":"${Version}"}}\n'
+docker run -i ubuntu:bionic dpkg-query --show --showformat='{"meta":{"source":"debian","type":"status file"},"source":"${Source}","package":"${Package}","version":"${Version}"}'\
+   |jq -c 'if .source != "" then .source else .package end'
 
 CAVEAT EMPTOR: DON'T add the -t flag to docker, since the terminal handling will be mangled.
 YE BE WARNED!
@@ -82,3 +84,16 @@ evitarás código basado en suposiciones si necesitas filtrar
 esta técnica se llama linaje¹
 
 ¹: https://en.wikipedia.org/wiki/Data_lineage
+
+
+
+* Programación Tácita (research this concept)
+
+TODO:
+
+json por medio de la lambda
+
+debian_status_file():
+    aplica la linea?
+    if not , return None
+    if yes, process it?

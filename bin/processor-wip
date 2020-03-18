@@ -1,0 +1,29 @@
+#!/usr/bin/env python3
+
+import sys
+import json
+
+
+def _no_match(line):
+    sys.stderr.write(line)
+
+
+_processors = [_no_match]
+
+
+def case(f):
+    global _processors
+    _processors = [f, _processors]
+    return f
+
+
+@case
+def debian_status_file(line):
+    return line
+
+
+if __name__ == "__main__":
+    for line in sys.stdin:
+        result = next(map(lambda f: f(line), _processors))
+        if result:
+            sys.stdout.write(result)
