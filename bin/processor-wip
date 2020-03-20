@@ -2,6 +2,8 @@
 
 import sys
 import json
+from itertools import takewhile
+from functools import partial
 
 
 _processors = []
@@ -23,6 +25,32 @@ def preserve_lineage(parent, child):
     return preserved
 
 
+def strip_affixes(separator, prefixes, suffixes, text):
+    tokens = text.split(separator)
+    start = 0
+
+    if len(tokens) == 1:
+        return text
+
+    if tokens[0] in prefixes:
+        start = 1
+
+    def is_not_suffix(part):
+        return part not in suffixes
+
+    processed = takewhile(is_not_suffix, tokens[start:])
+
+    return separator.join(processed)
+
+
+debian_affix_processor = partial(
+    strip_affixes,
+    "-",
+    ['python3', 'python2', 'python'],
+    ['dbg', 'dev', 'doc', 'examples', 'minimal', 'plugins', 'extra',
+     'perl', 'jni', 'java', 'ruby1.9', 'ruby1.8', 'ruby'])
+
+
 @case
 def debian_status_file(meta, data):
     if meta['source'] != 'debian' or meta['type'] != 'status file':
@@ -33,19 +61,18 @@ def debian_status_file(meta, data):
     else:
         software_candidate = data['source']
     processed['version'] = data['version']
+    software_candidate = debian_affix_processor(software_candidate)
 
-    # TODO: check if an alternate implementation where affixes are expressed as regexes
-    # that are consumed and tried every time an affix is stripped, until exhausted
-    processed['software'] = strip_affixes(
-        ['python3-', 'python2-', 'python-', 'lib'],
-        ['-dbg', '-dev', '-doc', '-examples', '-minimal', '-plugins', '-extra',
-         '-perl', '-jni', '-java', '-ruby1.9', '-ruby1.8', '-ruby'],
-        software_candidate)
+    # Drop lib prefix
+    if software_candidate.startswith("lib"):
+        software_candidate = software_candidate[len("lib"):]
+
+    processed['software'] = software_candidate
 
     return processed
 
 
-def strip_affixes(prefixes, suffixes, text):
+def strip_affixes_old(prefixes, suffixes, text):
     for prefix in prefixes:
         if text.startswith(prefix):
             text = text[len(prefix):]
