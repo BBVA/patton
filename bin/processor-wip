@@ -29,16 +29,30 @@ def debian_status_file(meta, data):
         return None
     processed = dict()
     if data['source'] == "":
-        processed['software'] = data['package']
+        software_candidate = data['package']
     else:
-        processed['software'] = data['source']
+        software_candidate = data['source']
     processed['version'] = data['version']
 
-    # TODO: Process perl- packages
-    # TODO: Process python- packages
-    # TODO: Process lib- packages
+    # TODO: check if an alternate implementation where affixes are expressed as regexes
+    # that are consumed and tried every time an affix is stripped, until exhausted
+    processed['software'] = strip_affixes(
+        ['python3-', 'python2-', 'python-', 'lib'],
+        ['-dbg', '-dev', '-doc', '-examples', '-minimal', '-plugins', '-extra',
+         '-perl', '-jni', '-java', '-ruby1.9', '-ruby1.8', '-ruby'],
+        software_candidate)
 
     return processed
+
+
+def strip_affixes(prefixes, suffixes, text):
+    for prefix in prefixes:
+        if text.startswith(prefix):
+            text = text[len(prefix):]
+    for suffix in suffixes:
+        if text.startswith(prefix):
+            text = text[:len(prefix)]
+    return text
 
 
 if __name__ == "__main__":
