@@ -20,6 +20,7 @@ argument"
 that apply (e.g., python libraries get named python-somelib or python2-somelib)
   - https://www.debian.org/doc/packaging-manuals/python-policy/module_packages.html#package_names
   - https://www.debian.org/doc/packaging-manuals/perl-policy/ch-module_packages.html#s-package-names
+
 * César proposes this for handling complexity
 
 cat /var/lib/dpkg/status | <produce json lines enriching the content | simple program that generates the data to work on, considering meta-data | finally, patton
@@ -89,11 +90,23 @@ esta técnica se llama linaje¹
 
 * Programación Tácita (research this concept)
 
-TODO:
+* Run these two
+- watch -d -n 2 'bin/processor-wip < dump.0 > /dev/null'
+- watch -d -n 2 'bin/processor-wip < dump.0 2>/dev/null'
 
-json por medio de la lambda
+* TODO:
 
-debian_status_file():
-    aplica la linea?
-    if not , return None
-    if yes, process it?
+** DONE json por medio de la lambda
+   CLOSED: [2020-03-18 Wed 18:00]
+
+** DONE debian_status_file():
+   CLOSED: [2020-03-18 Wed 18:00]
+     aplica la linea?
+     if not , return None
+     if yes, process it?
+
+** TODO Process perl- packages
+
+** TODO Process python- packages
+
+** TODO Process lib- packages
