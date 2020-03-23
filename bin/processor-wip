@@ -92,11 +92,11 @@ if __name__ == "__main__":
     for line in sys.stdin:
         data = json.loads(line)
         meta = data['meta']
-        processed = map(lambda f: f(meta, data), _processors)
-        valid = filter(None, processed)
-        found = next(valid, None)
-        if found:
-            preserved_package = preserve_lineage(data, found)
-            json.dump(preserved_package, sys.stdout)
+        findings = [preserve_lineage(data, found)
+                    for processor in _processors
+                    if found := processor(meta, data) is not None]
+        if findings:
+            for found in findings:
+                json.dump(found, sys.stdout)
         else:
             sys.stderr.write(line)
