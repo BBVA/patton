@@ -17,12 +17,11 @@ def case(f):
 
 
 def preserve_lineage(parent, child):
-    preserved = dict()
-    preserved['meta'] = parent['meta'].copy()
-    preserved['meta']['ingest'] = {k: v for k, v in parent.items() if k != 'meta'}
-    preserved.update(child)
-
-    return preserved
+    return {'meta': {'ingest': {k: v
+                                for k, v in parent.items()
+                                if k != 'meta'},
+                     **parent},
+            **child}
 
 
 def strip_affixes(separator, prefixes, suffixes, text):
