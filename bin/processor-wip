@@ -11,7 +11,7 @@ _processors = []
 
 def case(f):
     global _processors
-    _processors = [f, *_processors]
+    _processors.append(f)
 
     return f
 
@@ -56,6 +56,9 @@ def debian_status_file(meta, data):
     if meta['source'] != 'debian' or meta['type'] != 'status file':
         return None
     processed = dict()
+
+    # TODO: explain why this is the case
+    # http://deb.debian.org/debian/pool/main/u/util-linux/util-linux_2.33.1-0.1.dsc
     if data['source'] == "":
         software_candidate = data['package']
     else:
@@ -82,12 +85,15 @@ def strip_affixes_old(prefixes, suffixes, text):
     return text
 
 
+# TODO: run all processors that yield not None
+# this will tackle cases such as 'liberty', 'lib' is not a proper prefix in
+# this case
 if __name__ == "__main__":
     for line in sys.stdin:
         data = json.loads(line)
         meta = data['meta']
         processed = map(lambda f: f(meta, data), _processors)
-        valid = filter(lambda x: x is not None, processed)
+        valid = filter(None, processed)
         found = next(valid, None)
         if found:
             preserved_package = preserve_lineage(data, found)
