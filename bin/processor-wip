@@ -46,9 +46,9 @@ def strip_affixes(separator, prefixes, suffixes, text):
 debian_affix_processor = partial(
     strip_affixes,
     "-",
-    ['python3', 'python2', 'python'],
-    ['dbg', 'dev', 'doc', 'examples', 'minimal', 'plugins', 'extra',
-     'perl', 'jni', 'java', 'ruby1.9', 'ruby1.8', 'ruby'])
+    ('python3', 'python2', 'python'),
+    ('dbg', 'dev', 'doc', 'examples', 'minimal', 'plugins', 'extra',
+     'perl', 'jni', 'java', 'ruby1.9', 'ruby1.8', 'ruby'))
 
 
 @case
