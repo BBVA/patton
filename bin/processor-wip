@@ -26,20 +26,12 @@ def preserve_lineage(parent, child):
 
 def strip_affixes(separator, prefixes, suffixes, text):
     tokens = text.split(separator)
-    start = 0
-
     if len(tokens) == 1:
         return text
-
-    if tokens[0] in prefixes:
-        start = 1
-
-    def is_not_suffix(part):
-        return part not in suffixes
-
-    processed = takewhile(is_not_suffix, tokens[start:])
-
-    return separator.join(processed)
+    else:
+        tokens = tokens if tokens[0] not in prefixes else tokens[1:]
+        tokens = takewhile(lambda p: p not in suffixes, tokens)
+        return separator.join(tokens)
 
 
 debian_affix_processor = partial(
@@ -67,16 +59,6 @@ def debian_status_file(meta, data):
 
     return {'version': data['version'],
             'software': software_candidate}
-
-
-def strip_affixes_old(prefixes, suffixes, text):
-    for prefix in prefixes:
-        if text.startswith(prefix):
-            text = text[len(prefix):]
-    for suffix in suffixes:
-        if text.startswith(prefix):
-            text = text[:len(prefix)]
-    return text
 
 
 # TODO: run all processors that yield not None
