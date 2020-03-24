@@ -17,72 +17,48 @@ def case(f):
 
 
 def preserve_lineage(parent, child):
-    preserved = dict()
-    preserved['meta'] = parent['meta'].copy()
-    preserved['meta']['ingest'] = {k: v for k, v in parent.items() if k != 'meta'}
-    preserved.update(child)
-
-    return preserved
+    return {'meta': {'ingest': {k: v
+                                for k, v in parent.items()
+                                if k != 'meta'},
+                     **parent},
+            **child}
 
 
 def strip_affixes(separator, prefixes, suffixes, text):
     tokens = text.split(separator)
-    start = 0
-
     if len(tokens) == 1:
         return text
-
-    if tokens[0] in prefixes:
-        start = 1
-
-    def is_not_suffix(part):
-        return part not in suffixes
-
-    processed = takewhile(is_not_suffix, tokens[start:])
-
-    return separator.join(processed)
+    else:
+        tokens = tokens if tokens[0] not in prefixes else tokens[1:]
+        tokens = takewhile(lambda p: p not in suffixes, tokens)
+        return separator.join(tokens)
 
 
 debian_affix_processor = partial(
     strip_affixes,
     "-",
-    ['python3', 'python2', 'python'],
-    ['dbg', 'dev', 'doc', 'examples', 'minimal', 'plugins', 'extra',
-     'perl', 'jni', 'java', 'ruby1.9', 'ruby1.8', 'ruby'])
+    ('python3', 'python2', 'python'),
+    ('dbg', 'dev', 'doc', 'examples', 'minimal', 'plugins', 'extra',
+     'perl', 'jni', 'java', 'ruby1.9', 'ruby1.8', 'ruby'))
 
 
 @case
 def debian_status_file(meta, data):
     if meta['source'] != 'debian' or meta['type'] != 'status file':
         return None
-    processed = dict()
 
     # TODO: explain why this is the case
     # http://deb.debian.org/debian/pool/main/u/util-linux/util-linux_2.33.1-0.1.dsc
-    if data['source'] == "":
-        software_candidate = data['package']
-    else:
-        software_candidate = data['source']
-    processed['version'] = data['version']
+    software_candidate = data['source' if data['source'] else 'package']
+    
     software_candidate = debian_affix_processor(software_candidate)
 
     # Drop lib prefix
     if software_candidate.startswith("lib"):
         software_candidate = software_candidate[len("lib"):]
 
-    processed['software'] = software_candidate
-
-    return processed
-
-
-def strip_affixes_old(prefixes, suffixes, text):
-    for prefix in prefixes:
-        if text.startswith(prefix):
-            text = text[len(prefix):]
-    for suffix in suffixes:
-        if text.startswith(prefix):
-            text = text[:len(prefix)]
-    return text
+    return {'version': data['version'],
+            'software': software_candidate}
 
 
 # TODO: run all processors that yield not None
@@ -92,11 +68,11 @@ if __name__ == "__main__":
     for line in sys.stdin:
         data = json.loads(line)
         meta = data['meta']
-        processed = map(lambda f: f(meta, data), _processors)
-        valid = filter(None, processed)
-        found = next(valid, None)
-        if found:
-            preserved_package = preserve_lineage(data, found)
-            json.dump(preserved_package, sys.stdout)
+        findings = [preserve_lineage(data, found)
+                    for processor in _processors
+                    if found := processor(meta, data) is not None]
+        if findings:
+            for found in findings:
+                json.dump(found, sys.stdout)
         else:
             sys.stderr.write(line)
