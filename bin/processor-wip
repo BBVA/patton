@@ -6,13 +6,11 @@ from itertools import takewhile
 from functools import partial
 
 
-_processors = []
+_PROCESSORS = []
 
 
 def case(f):
-    global _processors
-    _processors.append(f)
-
+    _PROCESSORS.append(f)
     return f
 
 
@@ -50,7 +48,7 @@ def debian_status_file(meta, data):
     # TODO: explain why this is the case
     # http://deb.debian.org/debian/pool/main/u/util-linux/util-linux_2.33.1-0.1.dsc
     software_candidate = data['source' if data['source'] else 'package']
-    
+
     software_candidate = debian_affix_processor(software_candidate)
 
     # Drop lib prefix
@@ -61,18 +59,22 @@ def debian_status_file(meta, data):
             'software': software_candidate}
 
 
+def run_processors(data):
+    """Return a list of all the positive results of all processors"""
+    meta = data['meta']
+    return [preserve_lineage(data, found)
+            for processor in _PROCESSORS
+            if (found := processor(meta, data)) is not None]
+
+
 # TODO: run all processors that yield not None
 # this will tackle cases such as 'liberty', 'lib' is not a proper prefix in
 # this case
 if __name__ == "__main__":
     for line in sys.stdin:
         data = json.loads(line)
-        meta = data['meta']
-        findings = [preserve_lineage(data, found)
-                    for processor in _processors
-                    if found := processor(meta, data) is not None]
-        if findings:
+        if findings := run_processors(data):
             for found in findings:
-                json.dump(found, sys.stdout)
+                print(json.dumps(found))
         else:
-            sys.stderr.write(line)
+            print(line, file=sys.stderr)
