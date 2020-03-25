@@ -18,7 +18,7 @@ def preserve_lineage(parent, child):
     return {'meta': {'ingest': {k: v
                                 for k, v in parent.items()
                                 if k != 'meta'},
-                     **parent},
+                     **parent['meta']},
             **child}
 
 
