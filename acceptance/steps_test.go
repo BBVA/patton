@@ -9,8 +9,9 @@ import (
 	"os/exec"
 	"strings"
 
+	gherkin "github.com/cucumber/gherkin-go"
 	"github.com/cucumber/godog"
-	"github.com/cucumber/godog/gherkin"
+	messages "github.com/cucumber/messages-go/v10"
 )
 
 type pattonParams struct {
@@ -198,7 +199,7 @@ func FeatureContext(s *godog.Suite) {
 	s.Step(`^I get at least these vulnerabilities$`, exec.iGetAtLeastTheseVulnerabilities)
 	s.Step(`^Not found these false positives$`, exec.notFoundTheseFalsePositives)
 
-	s.BeforeScenario(func(interface{}) {
+	s.BeforeScenario(func(*messages.Pickle) {
 		exec.params = &pattonParams{}
 		exec.output = &pattonOutput{stdout: make([]string, 0)}
 	})
