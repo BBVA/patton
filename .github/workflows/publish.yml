@@ -29,6 +29,8 @@ jobs:
 
     - name: Setup godog
       run: go get -v github.com/cucumber/godog/cmd/godog@v0.8.0
+      env:
+        GO111MODULE: on
 
     - name: Run make
       run: make -j8 -l2
