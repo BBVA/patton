@@ -38,7 +38,7 @@ jobs:
     - name: Verify acceptance tests
       run: |
         cd acceptance
-        ~/go/bin/godog features/*.feature
+        ~/go/bin/godog
       env:
         PATTON_BINARY: ../bin/patton
         PATTON_DATABASE: ../patton.db.zst

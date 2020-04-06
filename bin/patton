@@ -106,25 +106,20 @@ case "$searchtype" in
 		echo "searching ubuntu pkg ‘$pkgname’ version ‘$pkgversion’"
 		zstdgrep -i -E "$pkgname" "$databasefile"
 		;;
+	pkg_ubuntu2)
+		if [[ "$1" == - ]]; then
+			echo 1>&2 Reading output of dpkg -l from stdin...
+
+			awk '/^ii/ { print $2 , "\t" , $3 }' |
+				while read pkgname pkgversion
+				do
+					zstdgrep -i -E --with-filename --label="$pkgname" "$pkgname.*$pkgversion" "$databasefile"
+				done | tee /tmp/report
+		fi
+		;;
 	*)
 		zstdgrep -i -E "${pattern//\ /\.\*}" "$databasefile"
 		;;
 esac
 
 exit 0
-
-## case $1 in
-##   "product")
-##     echo -e '["CVE-2019-10090","Descripción CVE-2019-10090",["","","","","",""]]\n["CVE-2019-10091","Descripción CVE-2019-10091",["","","","","",""]]\n["CVE-2019-10092","Descripción CVE-2019-10092",["","","","","",""]]\n'
-##     ;;
-##   "fulltext")
-##     echo -e '["CVE-2014-3845","Descripción CVE-2014-3845",["","","","","",""]]\n["CVE-2014-3846","Descripción CVE-2014-3846",["","","","","",""]]\n["CVE-2014-3847","Descripción CVE-2014-3847",["","","","","",""]]\n'
-##     ;;
-##   "pkg_ubuntu")
-##     echo -e '["CVE-2019-5736","Descripción CVE-2019-5736",["","","","","",""]]\n["CVE-2019-5737","Descripción CVE-2019-5737",["","","","","",""]]\n["CVE-2019-5738","Descripción CVE-2019-5738",["","","","","",""]]\n'
-##     ;;
-##   *)
-##     echo -e "\n"
-##     ;;
-## esac
-##

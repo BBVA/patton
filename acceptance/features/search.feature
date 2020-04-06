@@ -515,7 +515,7 @@ Feature: Search Software Vulnerabilities
       ii  zlib1g:amd64                      1:1.2.8.dfsg-2ubuntu4 amd64                 compression library - runtime
       """
 
-    When I execute Patton search with type "pkg_ubuntu"
+    When I execute Patton search with type "pkg_ubuntu2"
     Then I get at least these vulnerabilities
       | Library Name           | Library Version         | CVE ID                |
       | libpython3.5:amd64     | 3.5.2-2ubuntu0~16.04.   | CVE-2019-5736         |

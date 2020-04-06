@@ -1,0 +1,80 @@
+#!/usr/bin/env python3
+
+import sys
+import json
+from itertools import takewhile
+from functools import partial
+
+
+_PROCESSORS = []
+
+
+def case(f):
+    _PROCESSORS.append(f)
+    return f
+
+
+def preserve_lineage(parent, child):
+    return {'meta': {'ingest': {k: v
+                                for k, v in parent.items()
+                                if k != 'meta'},
+                     **parent['meta']},
+            **child}
+
+
+def strip_affixes(separator, prefixes, suffixes, text):
+    tokens = text.split(separator)
+    if len(tokens) == 1:
+        return text
+    else:
+        tokens = tokens if tokens[0] not in prefixes else tokens[1:]
+        tokens = takewhile(lambda p: p not in suffixes, tokens)
+        return separator.join(tokens)
+
+
+debian_affix_processor = partial(
+    strip_affixes,
+    "-",
+    ('python3', 'python2', 'python'),
+    ('dbg', 'dev', 'doc', 'examples', 'minimal', 'plugins', 'extra',
+     'perl', 'jni', 'java', 'ruby1.9', 'ruby1.8', 'ruby'))
+
+
+@case
+def debian_status_file(meta, data):
+    if meta['source'] != 'debian' or meta['type'] != 'status file':
+        return None
+
+    # TODO: explain why this is the case
+    # http://deb.debian.org/debian/pool/main/u/util-linux/util-linux_2.33.1-0.1.dsc
+    software_candidate = data['source' if data['source'] else 'package']
+
+    software_candidate = debian_affix_processor(software_candidate)
+
+    # Drop lib prefix
+    if software_candidate.startswith("lib"):
+        software_candidate = software_candidate[len("lib"):]
+
+    return {'version': data['version'],
+            'software': software_candidate}
+
+
+def run_processors(data):
+    """Return a list of all the positive results of all processors"""
+    meta = data['meta']
+    return [preserve_lineage(data, found)
+            for processor in _PROCESSORS
+            if (found := processor(meta, data)) is not None]
+
+
+# TODO: run all processors that yield not None
+# this will tackle cases such as 'liberty', 'lib' is not a proper prefix in
+# this case
+if __name__ == "__main__":
+    for line in sys.stdin:
+        data = json.loads(line)
+        if findings := run_processors(data):
+            for found in findings:
+                print(json.dumps(found))
+        else:
+            print(line, file=sys.stderr)
