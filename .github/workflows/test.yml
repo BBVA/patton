@@ -1,4 +1,4 @@
-name: Cook CVE database and publish it
+name: Acceptance tests
 
 on:
   push:
