@@ -1,0 +1,43 @@
+name: Cook CVE database and publish it
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Clone current repo
+      uses: actions/checkout@v2
+      with:
+        ref: develop
+
+    - name: Install zstd compressor
+      run: |
+        sudo apt update
+        sudo apt install zstd
+
+    - name: Setup go 1.14
+      id: go
+      uses: actions/setup-go@v1
+      with:
+        go-version: 1.14
+
+    - name: Setup godog
+      run: go get -v github.com/cucumber/godog/cmd/godog@v0.8.0
+      env:
+        GO111MODULE: on
+
+    - name: Download latest stable database (provisional)
+      run: wget -O patton.db.zst https://github.com/BBVA/patton/releases/download/untagged-3dd961b30ead4ac45819/patton.db.zst
+
+    - name: Verify acceptance tests
+      run: |
+        cd acceptance
+        ~/go/bin/godog
+      env:
+        PATTON_BINARY: ../bin/patton
+        PATTON_DATABASE: ../patton.db.zst
+

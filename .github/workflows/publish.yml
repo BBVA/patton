@@ -3,9 +3,6 @@ name: Cook CVE database and publish it
 on:
   schedule:
     - cron:  '0 11 * * *'
-  push:
-    branches:
-      - develop
 
 jobs:
   build:
@@ -21,27 +18,8 @@ jobs:
         sudo apt update
         sudo apt install zstd
 
-    - name: Setup go 1.14
-      id: go
-      uses: actions/setup-go@v1
-      with:
-        go-version: 1.14
-
-    - name: Setup godog
-      run: go get -v github.com/cucumber/godog/cmd/godog@v0.8.0
-      env:
-        GO111MODULE: on
-
     - name: Run make
       run: make -j8 -l2
-
-    - name: Verify acceptance tests
-      run: |
-        cd acceptance
-        ~/go/bin/godog
-      env:
-        PATTON_BINARY: ../bin/patton
-        PATTON_DATABASE: ../patton.db.zst
 
     - name: Delete release with hub
       shell: bash
