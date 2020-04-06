@@ -30,8 +30,8 @@ jobs:
       env:
         GO111MODULE: on
 
-    - name: Download latest stable database (provisional)
-      run: wget -O patton.db.zst https://github.com/BBVA/patton/releases/download/untagged-3dd961b30ead4ac45819/patton.db.zst
+    - name: Download latest stable database
+      run: wget -O patton.db.zst https://github.com/BBVA/patton/releases/download/latest/patton.db.zst
 
     - name: Verify acceptance tests
       run: |
