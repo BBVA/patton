@@ -2,6 +2,8 @@
 
 VERSION=0.9
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
 usage () {
 	cat <<-EOT
 		Usage: $0 [OPTION]... [PATTERN]
@@ -110,11 +112,7 @@ case "$searchtype" in
 		if [[ "$1" == - ]]; then
 			echo 1>&2 Reading output of dpkg -l from stdin...
 
-			awk '/^ii/ { print $2 , "\t" , $3 }' |
-				while read pkgname pkgversion
-				do
-					zstdgrep -i -E --with-filename --label="$pkgname" "$pkgname.*$pkgversion" "$databasefile"
-				done | tee /tmp/report
+			awk -f <(awk -v s2rp="$DIR/soft2re-exe" 'BEGIN{print "BEGIN{IGNORECASE=1}"} /ii/ && length($2) > 3 {cmd=s2rp" \""$2"\" \""$3"\""; cmd | getline result; print "/"result"/ {print \""$2":\"$0}"; close(cmd) }') <(zstdcat "$databasefile") | tee /tmp/report
 		fi
 		;;
 	*)
