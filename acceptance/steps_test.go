@@ -172,8 +172,15 @@ func (ex *execution) iGetAtLeastTheseVulnerabilities(table *gherkin.DataTable) e
 	return nil
 }
 
-func (ex *execution) notFoundTheseFalsePositives(arg1 *gherkin.DataTable) error {
-	return godog.ErrPending
+func (ex *execution) notFoundTheseFalsePositives(table *gherkin.DataTable) error {
+	for _, row := range table.Rows[1:] {
+		for _, outLine := range ex.output.stdout {
+			if strings.HasPrefix(outLine, row.Cells[0].Value+":") {
+				return fmt.Errorf("%v should not match", row.Cells[0].Value)
+			}
+		}
+	}
+	return nil
 }
 
 func FeatureContext(s *godog.Suite) {
