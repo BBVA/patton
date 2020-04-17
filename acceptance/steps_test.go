@@ -152,21 +152,21 @@ func (ex *execution) iExecutePattonSearchWithType(searchType string) error {
 }
 
 func (ex *execution) iGetAtLeastTheseVulnerabilities(table *gherkin.DataTable) error {
-	count := 0
 	// Remove titles from table
 	for _, row := range table.Rows[1:] {
+		found := false
+		name := row.Cells[0].Value
+		cve := row.Cells[2].Value
 		for _, outLine := range ex.output.stdout {
 			// Check CVE match
-			if strings.Contains(outLine, row.Cells[0].Value) {
-				count++
+			if strings.Contains(outLine, name) && strings.Contains(outLine, cve) {
+				found = true
 				break
 			}
 		}
-	}
-
-	// Don't take into account the title row
-	if count < (len(table.Rows) - 1) {
-		return fmt.Errorf("Only %d matches", count)
+		if !found {
+			return fmt.Errorf("Vulnerability %q for package %q not found!", cve, name)
+		}
 	}
 
 	return nil
@@ -174,9 +174,12 @@ func (ex *execution) iGetAtLeastTheseVulnerabilities(table *gherkin.DataTable) e
 
 func (ex *execution) notFoundTheseFalsePositives(table *gherkin.DataTable) error {
 	for _, row := range table.Rows[1:] {
+		name := row.Cells[0].Value
+		cve := row.Cells[2].Value
 		for _, outLine := range ex.output.stdout {
-			if strings.HasPrefix(outLine, row.Cells[0].Value+":") {
-				return fmt.Errorf("%v should not match", row.Cells[0].Value)
+			// Check CVE match
+			if strings.Contains(outLine, name) && strings.Contains(outLine, cve) {
+				return fmt.Errorf("False positive %q for package %q found!", cve, name)
 			}
 		}
 	}

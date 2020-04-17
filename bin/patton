@@ -102,6 +102,10 @@ case "$searchtype" in
 		echo "searching product $pattern $pkgversion ..."
 		zstdgrep -i -E "$pattern.*$pkgversion" "$databasefile"
 		;;
+	pkg_debian)
+		docker run -i patton-debian --format=simple | awk '{ print $2 ": " $1 }' | tee /tmp/patton-debian
+		;;
+
 	pkg_ubuntu)
 		pkgname=$(echo $pattern | awk '{ print $2 }')
 		pkgversion=$(echo $pattern | awk '{ print $3 }')

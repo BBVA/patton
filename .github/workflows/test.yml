@@ -33,6 +33,9 @@ jobs:
     - name: Download latest stable database
       run: wget -O patton.db.zst https://github.com/BBVA/patton/releases/download/latest/patton.db.zst
 
+    - name: Build scanner container images
+      run: docker build -t patton-debian scanners/debian
+
     - name: Verify acceptance tests
       run: |
         cd acceptance
@@ -40,4 +43,3 @@ jobs:
       env:
         PATTON_BINARY: ../bin/patton
         PATTON_DATABASE: ../patton.db.zst
-

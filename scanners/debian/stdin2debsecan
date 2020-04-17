@@ -1,0 +1,7 @@
+#!/bin/sh
+
+STATUS=/tmp/dpkg-status
+
+cat > "$STATUS"
+
+debsecan --status="$STATUS" "$@"
