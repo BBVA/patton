@@ -11,9 +11,9 @@ usage () {
 		  -h, --help           display this help text and exit
 		  -V, --version        display version information and exit
 		  -d, --database-file  path to database file
-		  -t, --search-type    type of search to execute:
-		      		       	    fulltext|cpe|debian|rpm|
-					    alpine|archlinux|npm|maven|pip|golang
+		  -t, --search-type    type of search to execute: product|pkg_debian|pkg_ubuntu|fulltext
+		  -s, --search-subtype for search-type:(debian|ubuntu), sets the suite
+					    e.g.: buster, potato, fossa, xenial, precise, trusty...
 		  -v, --pkg-version    cpe version when searching by cpe
 		  -n, --pkg-name       path to database file
 		  -w, --pkg-vendor     path to database file
@@ -22,11 +22,12 @@ usage () {
 
 OPTIONS=$(
 	getopt					\
-		--options hVd:t:v:n:w:		\
+		--options hVd:t:s:v:n:w:	\
 		--longoptions help		\
 		--longoptions version		\
 		--longoptions database-file:	\
 		--longoptions search-type:	\
+		--longoptions search-subtype:	\
 		--longoptions pkg-version	\
 		--longoptions pkg-name:		\
 		--longoptions pkg-vendor:	\
@@ -63,6 +64,10 @@ while true; do
 			shift
 			searchtype="$1"
 			;;
+		-s|--search-subtype)
+			shift
+			searchsubtype="$1"
+			;;
 		-v|--pkg-version)
 			shift
 			pkgversion="$1"
@@ -88,6 +93,7 @@ pattern="$@"
 cat <<-EOT
 	database-file = $databasefile
 	search-type = $searchtype
+	search-subtype = $searchsubtype
 	pkg-version = $pkgversion
 	pkg-name = $pkgname
 	pkg-vendor = $pkgvendor
@@ -95,32 +101,31 @@ cat <<-EOT
 EOT
 
 case "$searchtype" in
-	debian)
-		:
-		;;
 	product)
 		echo "searching product $pattern $pkgversion ..."
 		zstdgrep -i -E "$pattern.*$pkgversion" "$databasefile"
 		;;
 	pkg_debian)
-		docker run -i patton-debian --format=simple | awk '{ print $2 ": " $1 }' | tee /tmp/patton-debian
+		: "${searchsubtype:=GENERIC}"
+		docker run -i patton-debian		\
+		       --format=simple			\
+		       --suite="$searchsubtype"		\
+		| awk '{ print $2 ": " $1 }'
 		;;
-
 	pkg_ubuntu)
-		pkgname=$(echo $pattern | awk '{ print $2 }')
-		pkgversion=$(echo $pattern | awk '{ print $3 }')
-		echo "searching ubuntu pkg ‘$pkgname’ version ‘$pkgversion’"
-		zstdgrep -i -E "$pkgname" "$databasefile"
+		: "${searchsubtype:=GENERIC}"
+		docker run -i patton-debian							\
+		       --format=simple								\
+		       --suite="$searchsubtype"							\
+		       --source="https://github.com/nilp0inter/testdebsecan/raw/master/"	\
+		| awk '{ print $2 ": " $1 }'
 		;;
-	pkg_ubuntu2)
-		if [[ "$1" == - ]]; then
-			echo 1>&2 Reading output of dpkg -l from stdin...
-
-			awk -f <(awk -v s2rp="$DIR/soft2re-exe" 'BEGIN{print "BEGIN{IGNORECASE=1}"} /ii/ && length($2) > 3 {cmd=s2rp" \""$2"\" \""$3"\""; cmd | getline result; print "/"result"/ {print \""$2":\"$0}"; close(cmd) }') <(zstdcat "$databasefile") | tee /tmp/report
-		fi
+	fulltext)
+		zstdgrep -i -E "${pattern//\ /\.\*}" "$databasefile"
 		;;
 	*)
-		zstdgrep -i -E "${pattern//\ /\.\*}" "$databasefile"
+		echo "wrong option!" >&2
+		exit 1
 		;;
 esac
 
