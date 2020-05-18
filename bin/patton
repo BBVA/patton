@@ -112,6 +112,7 @@ case "$searchtype" in
 		       --suite="$searchsubtype"		\
 		| awk '{ print $2 ": " $1 }'
 		;;
+	# TODO: add Python support when this gets solved (https://github.com/pypa/packaging.python.org/issues/701)
 	pkg_ubuntu)
 		: "${searchsubtype:=GENERIC}"
 		docker run -i patton-debian							\
