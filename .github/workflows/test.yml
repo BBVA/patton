@@ -34,7 +34,7 @@ jobs:
       run: wget -O patton.db.zst https://github.com/BBVA/patton/releases/download/latest/patton.db.zst
 
     - name: Build scanner container images
-      run: docker build -t patton-debian scanners/debian
+      run: docker build -t bbvalabsci/patton-debian scanners/debian
 
     - name: Verify acceptance tests
       run: |

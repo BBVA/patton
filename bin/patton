@@ -107,7 +107,7 @@ case "$searchtype" in
 		;;
 	pkg_debian)
 		: "${searchsubtype:=GENERIC}"
-		docker run -i patton-debian		\
+		docker run -i bbvalabsci/patton-debian		\
 		       --format=simple			\
 		       --suite="$searchsubtype"		\
 		| awk '{ print $2 ": " $1 }'
@@ -115,7 +115,7 @@ case "$searchtype" in
 	# TODO: add Python support when this gets solved (https://github.com/pypa/packaging.python.org/issues/701)
 	pkg_ubuntu)
 		: "${searchsubtype:=GENERIC}"
-		docker run -i patton-debian							\
+		docker run -i bbvalabsci/patton-debian							\
 		       --format=simple								\
 		       --suite="$searchsubtype"							\
 		       --source="https://github.com/nilp0inter/testdebsecan/raw/master/"	\
