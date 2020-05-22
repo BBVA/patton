@@ -1,0 +1,29 @@
+name: Publish Docker images
+
+on:
+  push:
+    branches:
+      - develop
+    paths:
+      - 'scanners/**'
+      - .github/workflows/docker.yml
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Clone current repo
+      uses: actions/checkout@v2
+
+    - name: Docker Login
+      env:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      run: |
+        echo "${DOCKER_PASSWORD}" | docker login --username "${DOCKER_USERNAME}" --password-stdin
+
+    - name: Build scanner container images
+      run: docker build -t bbvalabsci/patton-debian scanners/debian
+
+    - name: Push to Docker registry
+      run: docker push bbvalabsci/patton-debian
