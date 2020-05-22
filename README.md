@@ -20,7 +20,7 @@ sudo install patton /usr/local/bin
 
 ``` plain
 Usage: patton [OPTION]... [PATTERN]
-Try 'bin/patton -h|--help' for more information
+Try '/usr/local/bin/patton -h|--help' for more information
   -h, --help           display this help text and exit
   -V, --version        display version information and exit
   -d, --database-file  path to database file
@@ -56,4 +56,6 @@ patton -d patton.db.zst -t fulltext openssl
 ```
 
 
-## TODO: rename scanners/debian to scanners/debian-debsecan consistenly
+## TODO:
+
+- [ ] rename scanners/debian to scanners/debian-debsecan consistenly
