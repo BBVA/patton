@@ -106,8 +106,8 @@ case "$searchtype" in
 		zstdgrep -i -E "$pattern.*$pkgversion" "$databasefile"
 		;;
 	pkg_debian)
-		: "${searchsubtype:=GENERIC}"
-		docker run -i bbvalabsci/patton-debian		\
+		: "${searchsubtype:=GENERIC}"		\
+		docker run -i bbvalabsci/patton-debian	\
 		       --format=simple			\
 		       --suite="$searchsubtype"		\
 		| awk '{ print $2 ": " $1 }'
@@ -115,9 +115,9 @@ case "$searchtype" in
 	# TODO: add Python support when this gets solved (https://github.com/pypa/packaging.python.org/issues/701)
 	pkg_ubuntu)
 		: "${searchsubtype:=GENERIC}"
-		docker run -i bbvalabsci/patton-debian							\
-		       --format=simple								\
-		       --suite="$searchsubtype"							\
+		docker run -i bbvalabsci/patton-debian					\
+		       --format=simple							\
+		       --suite="$searchsubtype"						\
 		       --source=https://raw.githubusercontent.com/BBVA/ust2dsa/data/	\
 		| awk '{ print $2 ": " $1 }'
 		;;
