@@ -106,7 +106,7 @@ case "$searchtype" in
 		zstdgrep -i -E "$pattern.*$pkgversion" "$databasefile"
 		;;
 	pkg_debian)
-		: "${searchsubtype:=GENERIC}"		\
+		: "${searchsubtype:=GENERIC}"
 		docker run -i bbvalabsci/patton-debian	\
 		       --format=simple			\
 		       --suite="$searchsubtype"		\
