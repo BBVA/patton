@@ -1,24 +1,22 @@
 # Patton
 
+## Setup
 
-# Setup
+### Prerequisites
 
-
-## Prerequisites
 - zstd
 - Docker
 
+### Install
 
-## Install
-```
+```sh
 wget https://raw.githubusercontent.com/BBVA/patton/develop/bin/patton
 sudo install patton /usr/local/bin
 ```
 
-
 ## Usage
 
-``` plain
+```console
 Usage: patton [OPTION]... [PATTERN]
 Try '/usr/local/bin/patton -h|--help' for more information
   -h, --help           display this help text and exit
@@ -33,29 +31,25 @@ Try '/usr/local/bin/patton -h|--help' for more information
 
 ```
 
-
 ### Debian
 
-```
+```sh
 patton -t pkg_debian < /var/lib/dpkg/status
 ```
 
-
 ### Ubuntu
 
-```
+```sh
 patton -t pkg_ubuntu < /var/lib/dpkg/status
 ```
 
-
 ### Fulltext search
 
-```
+```sh
 wget https://github.com/BBVA/patton/releases/download/latest/patton.db.zst
 patton -d patton.db.zst -t fulltext openssl
 ```
 
+## TODO
 
-## TODO:
-
-- [ ] rename scanners/debian to scanners/debian-debsecan consistenly
+- [ ] rename scanners/debian to scanners/debian-debsecan consistently
