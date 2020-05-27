@@ -17,6 +17,7 @@ sudo install patton /usr/local/bin
 ## Usage
 
 ```console
+$ patton --help
 Usage: patton [OPTION]... [PATTERN]
 Try '/usr/local/bin/patton -h|--help' for more information
   -h, --help           display this help text and exit
