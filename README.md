@@ -23,7 +23,7 @@ Try '/usr/local/bin/patton -h|--help' for more information
   -h, --help           display this help text and exit
   -V, --version        display version information and exit
   -d, --database-file  path to database file
-  -t, --search-type    type of search to execute: product|pkg_debian|pkg_ubuntu|fulltext
+  -t, --search-type    type of search to execute: product|pkg_debian|pkg_ubuntu|pkg_rhel|fulltext
   -s, --search-subtype for search-type:(debian|ubuntu), sets the suite
     e.g.: buster, potato, fossa, xenial, precise, trusty...
   -v, --pkg-version    cpe version when searching by cpe
@@ -42,6 +42,12 @@ patton -t pkg_debian < /var/lib/dpkg/status
 
 ```sh
 patton -t pkg_ubuntu < /var/lib/dpkg/status
+```
+
+### Red Hat Enterprise Linux
+
+```sh
+patton -t pkg_rhel
 ```
 
 ### Fulltext search

@@ -11,7 +11,7 @@ usage () {
 		  -h, --help           display this help text and exit
 		  -V, --version        display version information and exit
 		  -d, --database-file  path to database file
-		  -t, --search-type    type of search to execute: product|pkg_debian|pkg_ubuntu|fulltext
+		  -t, --search-type    type of search to execute: product|pkg_debian|pkg_ubuntu|pkg_rhel|fulltext
 		  -s, --search-subtype for search-type:(debian|ubuntu), sets the suite
 					    e.g.: buster, potato, fossa, xenial, precise, trusty...
 		  -v, --pkg-version    cpe version when searching by cpe
@@ -120,6 +120,9 @@ case "$searchtype" in
 		       --suite="$searchsubtype"						\
 		       --source=https://raw.githubusercontent.com/BBVA/ust2dsa/data/	\
 		| awk '{ print $2 ": " $1 }'
+		;;
+	pkg_rhel)
+		dnf updateinfo list cves | grep CVE | awk '{ print $3 ": " $1 }'
 		;;
 	fulltext)
 		zstdgrep -i -E "${pattern//\ /\.\*}" "$databasefile"
