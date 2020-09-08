@@ -49,6 +49,7 @@ patton -t pkg_ubuntu < /var/lib/dpkg/status
 ```sh
 patton -t pkg_rhel
 ```
+**NOTE**: Have to be run on RHEL 8 or newer
 
 ### Fulltext search
 
