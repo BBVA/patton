@@ -23,4 +23,4 @@ jobs:
       - name: Remove pull requests
         run: git for-each-ref --format 'delete %(refname)' refs/pull | git update-ref --stdin
       - name: Push to remote mirror
-        run: git push --mirror ssh://git@github.com/f0rked/test_mirrored.git
+        run: git push --mirror ssh://git@github.com/OWASP/Patton.git
