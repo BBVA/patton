@@ -11,7 +11,7 @@ jobs:
     - name: Clone current repo
       uses: actions/checkout@v2
       with:
-        ref: develop
+        ref: master
 
     - name: Install zstd compressor
       run: |

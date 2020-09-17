@@ -3,7 +3,7 @@ name: Publish Docker images
 on:
   push:
     branches:
-      - develop
+      - master
     paths:
       - 'scanners/**'
       - .github/workflows/docker.yml

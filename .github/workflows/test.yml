@@ -3,7 +3,7 @@ name: Acceptance tests
 on:
   push:
     branches:
-      - develop
+      - master
 
 jobs:
   build:
