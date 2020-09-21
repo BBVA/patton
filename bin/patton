@@ -122,7 +122,7 @@ case "$searchtype" in
 		| awk '{ print $2 ": " $1 }'
 		;;
 	pkg_rhel)
-		dnf updateinfo list cves | grep CVE | awk '{ print $3 ": " $1 }'
+		yum updateinfo list cves | grep CVE | awk '{ print $3 ": " $1 }'
 		;;
 	fulltext)
 		zstdgrep -i -E "${pattern//\ /\.\*}" "$databasefile"
